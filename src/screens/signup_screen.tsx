@@ -34,7 +34,7 @@ const SignupScreen = ({navigation}: SignupScreenProps) => {
           <Button mt="2" colorScheme="indigo">
             Sign up
           </Button>
-          <Button variant={"outline"} colorScheme="indigo" onPress={() => navigation.navigate('Login')}>
+          <Button variant="outline" colorScheme="indigo" onPress={() => navigation.navigate('Login')}>
             Back
           </Button>
         </VStack>
