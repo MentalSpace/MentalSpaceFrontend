@@ -35,6 +35,7 @@ function SubscribeMenu() {
   // The dropdown menu will allow the user to choose there option for their class, teacher, and Period
   // For the button once the user fills out what they will subscribe to, they have the option press subscribe to sumbit it 
   // still need to figure out how to prevent a user from submitting less than 3 fields
+  //to-do: backend
   
 }
 
