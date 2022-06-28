@@ -31,10 +31,10 @@ const SignupScreen = ({navigation}: SignupScreenProps) => {
             <FormControl.Label>Confirm Password</FormControl.Label>
             <Input type="password" />
           </FormControl>
-          <Button mt="2" colorScheme="indigo">
+          <Button mt="2">
             Sign up
           </Button>
-          <Button variant="outline" colorScheme="indigo" onPress={() => navigation.navigate('Login')}>
+          <Button variant="outline" onPress={() => navigation.navigate('Login')}>
             Back
           </Button>
         </VStack>

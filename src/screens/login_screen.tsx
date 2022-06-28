@@ -35,11 +35,11 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
               Forget Password?
             </Link>
           </FormControl>
-          <Button mt="2" colorScheme="amber" onPress={() => navigation.navigate('Home')}>
+          <Button mt="2" onPress={() => navigation.navigate('Home')}>
             Sign in
           </Button>
           <TextDivider msg={"or"}/>
-          <Button variant="outline" colorScheme="amber" onPress={() => navigation.navigate('Signup')}>
+          <Button variant="outline" onPress={() => navigation.navigate('Signup')}>
             Sign Up
           </Button>
         </VStack>
