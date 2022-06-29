@@ -1,0 +1,70 @@
+main {
+  text-align: center;
+  margin:auto;
+}
+
+div{
+  position: center;
+}
+
+button.b1{
+  display: block;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: white;
+  background-color: #1697b7;
+  margin-top: 45px;
+  margin-bottom: 55px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 10px;
+  border-width: 2px;
+}
+
+button.b2{
+  display: block;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: white;
+  background-color: #1697b7;
+  margin-top: 45px;
+  margin-bottom: 55px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 10px;
+  border-width: 2px;
+}
+button.b3{
+  display: block;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: white;
+  background-color: #1697b7;
+  margin-top: 45px;
+  margin-bottom: 55px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 10px;
+  border-width: 2px;
+}
+button.b4{
+  display: block;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: white;
+  background-color: #1697b7;
+  margin-top: 45px;
+  margin-bottom: 55px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 10px;
+  border-width: 2px;
+}
+button.b5{
+  display: block;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: white;
+  background-color: #1697b7;
+  margin-top: 45px;
+  margin-bottom: 55px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 10px;
+  border-width: 2px;
+}

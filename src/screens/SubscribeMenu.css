@@ -1,0 +1,113 @@
+main {
+  text-align: center;
+}
+div.d1{
+}
+div.d2{
+  
+}
+div.d3{
+  
+}
+
+h1{
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: #1697b7;
+  margin-top: 45px;
+  margin-bottom: 55px;
+  font-size: 45px;
+  text-align: center;
+}
+
+h4{
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: #1697b7;
+}
+
+h3.teach{
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: #1697b7;
+  margin-top: 5px;
+  margin-bottom: -10px;
+  font-size: 30px;
+  text-align: center;
+
+}
+
+h3.class{
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: #1697b7;
+  margin-top: 25px;
+  margin-bottom:-10px;
+  font-size: 30px;
+  text-align: center;
+
+}
+
+h3.period{
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: #1697b7;
+  margin-top: 25px;
+  margin-bottom: -10px;
+  font-size: 30px;
+  text-align: center;
+
+}
+
+select.sTeach{
+  border-color: #003f5a;
+  color: white;
+  background-color: #1697b7;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 15px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  border-radius: 15px;
+  border-width: 2px;
+  margin-top: 15px;
+}
+select.sClass{
+  border-color: #003f5a;
+  color: white;
+  background-color: #1697b7;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 15px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  border-radius: 15px;
+  border-width: 2px;
+  margin-top: 15px;
+
+}
+select.sPeriod{
+  border-color: #003f5a;
+  color: white;
+  background-color: #1697b7;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 15px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  border-radius: 15px;
+  border-width: 2px;
+  margin-top: 15px;
+}
+
+.sub{
+  border-color: #de6600;
+  color: white;
+  background-color: #fea02f;
+  padding: 15px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 40px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  border-radius: 15px;
+  margin-top: 15px;
+  
+
+}
+
+
