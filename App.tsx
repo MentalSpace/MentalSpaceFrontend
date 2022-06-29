@@ -6,7 +6,7 @@ export default function App() {
   const appTheme = extendTheme({
     colors: {
       primary: theme.colors.amber,
-      secondary: theme.colors.cyan,
+      secondary: theme.colors.lightBlue,
     }
   })
 
