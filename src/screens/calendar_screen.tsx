@@ -11,10 +11,14 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
   const theme = useTheme();
 
   return (
-    <CalendarStrip 
+    <CalendarStrip
+      calendarHeaderStyle={{
+        fontFamily: theme.fonts.heading, 
+        fontWeight: "400",
+      }}
       style={{
         height: 150,
-        paddingTop: 20
+        paddingTop: 20,
       }}
       highlightDateNumberStyle={{
         color: '#fff',
