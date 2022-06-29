@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Box, Center, Heading, VStack, Button, FormControl, HStack, Input, Link, Text, Divider } from "native-base";
+import { Box, Center, Heading, VStack, Button, FormControl, Input, Link } from "native-base";
 import { LoginStackList } from "../components/login_stack";
 import TextDivider from "../components/text_divider";
 
