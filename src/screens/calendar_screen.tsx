@@ -23,9 +23,9 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
       highlightDateNumberStyle={{
         color: '#fff',
         backgroundColor: theme.colors.primary[500],
-        height: 40,
-        width: 40,
-        borderRadius: 20,
+        height: 45,
+        width: 45,
+        borderRadius: 22.5,
         justifyContent: 'center',
         alignItems: 'center',
         display: "flex"
