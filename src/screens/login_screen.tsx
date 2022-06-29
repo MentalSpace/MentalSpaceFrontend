@@ -31,7 +31,7 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
             fontSize: "xs",
             fontWeight: "500",
             color: "indigo.500"
-          }} alignSelf="flex-end" mt="1">
+          }} alignSelf="flex-end" mt="1" onPress={() => navigation.navigate('Reset')}>
               Forget Password?
             </Link>
           </FormControl>
