@@ -39,16 +39,16 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
       <Menu trigger={triggerProps => {
         return (
           <Pressable 
-            position="absolute" 
-            height="60" 
-            width="60" 
-            borderRadius="30" 
+            position='absolute' 
+            height='60' 
+            width='60' 
+            borderRadius='30'
             bottom='30'
             right='30'
-            justifyContent="center"
-            alignItems="center"
+            justifyContent='center'
+            alignItems='center'
             backgroundColor={theme.colors.primary[600]} 
-            accessibilityLabel="More options menu" {...triggerProps}
+            accessibilityLabel='More options menu' {...triggerProps}
           >
               <HamburgerIcon color='#fff'/>
           </Pressable>);
