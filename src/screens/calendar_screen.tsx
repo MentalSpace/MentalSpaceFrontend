@@ -14,25 +14,27 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
       <CalendarStrip
         calendarHeaderStyle={{
           fontFamily: theme.fonts.heading, 
-          fontWeight: "400",
+          fontSize: theme.fontSizes.lg
         }}
+        dateNumberStyle={{fontSize: theme.fontSizes.xl}}
         style={{
           height: 150,
-          paddingTop: 20,
+          paddingTop: 20
         }}
         highlightDateNumberStyle={{
           color: '#fff',
           backgroundColor: theme.colors.primary[500],
-          height: 45, 
-          width: 45,
-          borderRadius: 22.5,
+          height: 40, 
+          width: 40,
+          borderRadius: 20,
           justifyContent: 'center',
           alignItems: 'center',
           // hacks to make the circle and text consistent on both mobile and web
           fontSize: theme.fontSizes.xl,
-          padding: 8,
+          paddingTop: 5
         }}
         highlightDateNameStyle={{color: theme.colors.primary[700]}}
+        iconContainer={{ flex: 0.15 }}
       />
       <Menu trigger={triggerProps => {
         return (
