@@ -16,6 +16,9 @@ function AddClassScreen({ navigation }: AddClassScreenProps) {
             Enter a Class Code
            </Heading>
            <Input placeholder = "Class Code"/>
+           <Button>
+              Enter Code
+           </Button>
            <Button onPress={() => navigation.navigate('Calendar')}>
               Go back to the calendar
            </Button>
