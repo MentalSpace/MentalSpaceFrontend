@@ -32,7 +32,12 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
           alignItems: 'center',
           // hacks to make the circle and text consistent on both mobile and web
           fontSize: theme.fontSizes.xl,
-          paddingTop: 5
+          paddingTop: 5,
+          //adds shadow around calendar number highlight
+          shadowColor: "black",
+          shadowOffset: { width: 0, height: 0 },
+          shadowRadius: 10,
+          elevation: 5
         }}
         highlightDateNameStyle={{color: theme.colors.primary[700]}}
         iconContainer={{ flex: 0.15 }}
