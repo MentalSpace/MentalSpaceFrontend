@@ -6,8 +6,7 @@ import AddClassScreen from "../screens/add_class_screen";
 
 export type SideBarList = {
     Calendar: undefined;
-    AddClass: undefined;
-    SubscribeMenu: undefined;
+    AddClass: undefined;   
 };
 
 const Drawer = createDrawerNavigator<SideBarList>();
