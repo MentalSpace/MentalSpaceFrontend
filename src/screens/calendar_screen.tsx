@@ -1,5 +1,5 @@
 import React from "react";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SideBarList } from "../components/main_stack";
 import { Box, HamburgerIcon, Menu, Pressable, useTheme, View } from "native-base";
 import CalendarStrip from 'react-native-calendar-strip';
@@ -39,21 +39,21 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
       <Menu trigger={triggerProps => {
         return (
           <Pressable 
-            position='absolute' 
-            height='60' 
-            width='60' 
-            borderRadius='30'
+            position="absolute" 
+            height="60" 
+            width="60" 
+            borderRadius="30" 
             bottom='30'
             right='30'
-            justifyContent='center'
-            alignItems='center'
+            justifyContent="center"
+            alignItems="center"
             backgroundColor={theme.colors.primary[600]} 
-            accessibilityLabel='More options menu' {...triggerProps}
+            accessibilityLabel="More options menu" {...triggerProps}
           >
               <HamburgerIcon color='#fff'/>
           </Pressable>);
       }}>
-        <Menu.Item>Subscribe to Classes</Menu.Item>
+        <Menu.Item onPress={() => navigation.navigate('SubscribeMenu')} >Subscribe to Classes</Menu.Item>
         <Menu.Item>See Assignments</Menu.Item>
         <Menu.Item>See and Edit Schedule</Menu.Item>
         <Menu.Item>Edit Homework Priorities</Menu.Item>
@@ -63,4 +63,4 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
   );
 }
 
-export default CalendarScreen;
+export default CalendarScreen; 
