@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SideBarList } from "../components/main_stack";
-import { Box, HamburgerIcon, Menu, Pressable, useTheme, View } from "native-base";
+import { Box, HamburgerIcon, Menu, Pressable, ScrollView, useTheme, View, Text } from "native-base";
 import CalendarStrip from 'react-native-calendar-strip';
 
 type CalendarScreenProps = NativeStackScreenProps<SideBarList, 'Calendar'>;
 
 function CalendarScreen({ navigation }: CalendarScreenProps) {
+  const [schedule, setSchedule] = useState([]);
   const theme = useTheme();
 
   return (
@@ -59,6 +60,28 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
         <Menu.Item>Edit Homework Priorities</Menu.Item>
         <Menu.Item>Edit non-homework activities</Menu.Item>
       </Menu>
+      <View alignItems='center'>
+        <ScrollView>
+          <Box height='100' width='350' style={{
+              // Shadow is really broken and inconsistent on mobile
+              // elevation: 10,
+              // shadowRadius: 2, 
+              // shadowOpacity: 0.25,
+              shadowColor: theme.colors.secondary[800],
+              borderRadius: 10,
+              borderWidth: 3,
+              borderColor: theme.colors.secondary[300],
+              marginVertical: 10
+            }}>
+            <View style={{marginLeft: 12, marginVertical: 10}}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{height: 12, width: 12, borderRadius: 6, marginRight: 8}} backgroundColor={theme.colors.primary[500]}/>
+                <Text fontWeight={theme.fontWeights.bold} fontSize={theme.fontSizes.lg} color={theme.colors.secondary[600]}>Test Event</Text>
+              </View>
+            </View>
+          </Box>
+        </ScrollView>
+      </View>
     </Box>
   );
 }
