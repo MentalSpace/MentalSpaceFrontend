@@ -39,8 +39,17 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
             Sign in
           </Button>
           <TextDivider msg={"or"}/>
-          <Button variant="outline" onPress={() => navigation.navigate('Signup')}>
-            Sign Up
+          <Heading mt="1" _dark={{
+        color: "warmGray.200"
+      }} color="coolGray.600" fontWeight="medium" size="xs">
+          Sign up to create an account!
+        </Heading>
+
+          <Button variant="outline" onPress={() => navigation.navigate('Teacher')}>
+            Teacher 
+          </Button>
+          <Button variant="outline" onPress={() => navigation.navigate('Student')}>
+            Student 
           </Button>
         </VStack>
       </Box>
