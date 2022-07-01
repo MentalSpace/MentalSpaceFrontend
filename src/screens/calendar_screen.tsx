@@ -15,14 +15,19 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
       <CalendarStrip
         calendarHeaderStyle={{
           fontSize: theme.fontSizes["2xl"],
+          color: theme.colors.darkBlue[700]
         }}
-        dateNumberStyle={{fontSize: theme.fontSizes.xl}}
+        dateNameStyle={{color: theme.colors.darkBlue[800]}}
+        dateNumberStyle={{
+          fontSize: theme.fontSizes.xl,
+          color: theme.colors.darkBlue[700]
+        }}
         style={{
           height: 150,
           paddingTop: 20
         }}
         highlightDateContainerStyle={{
-          backgroundColor: theme.colors.primary[500],
+          backgroundColor: theme.colors.primary[600],
           height: 55, 
           width: 55,
           borderRadius: 27.5,
@@ -74,7 +79,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
               shadowColor: theme.colors.secondary[800],
               borderRadius: 10,
               borderWidth: 3,
-              borderColor: theme.colors.secondary[300],
+              borderColor: '#154c79',
               marginVertical: 10
             }}>
             <View style={{marginLeft: 12, marginVertical: 10}}>
@@ -88,7 +93,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View 
                   style={{height: 12, width: 12, borderRadius: 6, marginRight: 8}} 
-                  backgroundColor={theme.colors.primary[500]}
+                  backgroundColor={theme.colors.primary[600]}
                 />
                 <Text
                   fontWeight={theme.fontWeights.bold} 
