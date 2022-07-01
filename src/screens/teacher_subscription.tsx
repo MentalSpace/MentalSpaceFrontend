@@ -1,6 +1,6 @@
 import React from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { SideBarList } from "../components/main_stack";
+import { SideBarList } from "../components/teacherDirectory/teacher_stack";
 import {Select, CheckIcon, Center, View, Box, VStack, Text} from "native-base";
 
 type SubscribeScreenProps = NativeStackScreenProps<SideBarList, 'TeacherSubscription'>
