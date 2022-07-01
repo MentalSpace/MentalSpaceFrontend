@@ -86,7 +86,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
               shadowRadius: 4,
               elevation: 7,
               borderRadius: 10,
-              borderWidth: 3,
+              borderWidth: 0,
               borderColor: '#154c79',
               marginVertical: 10
             }}>
