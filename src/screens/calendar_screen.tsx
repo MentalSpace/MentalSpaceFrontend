@@ -31,6 +31,12 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
           height: 55, 
           width: 55,
           borderRadius: 27.5,
+          //calendar shadow
+          shadowOpacity: 0.5,
+          shadowColor: "#154c79",
+          shadowOffset: { width: 0, height: 2 },
+          shadowRadius: 4,
+          elevation: 12
         }}
         highlightDateNumberStyle={{
           color: '#fff',
@@ -71,14 +77,16 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
       </Menu>
       <View alignItems='center'>
         <ScrollView>
-          <Box height='100' width='350' style={{
-              // Shadow is really broken and inconsistent on mobile
-              // elevation: 10,
-              // shadowRadius: 2, 
-              // shadowOpacity: 0.25,
-              shadowColor: theme.colors.secondary[800],
+          <Box height='100' width='325' style={{
+              backgroundColor: "white",
+              margin: 10,
+              shadowOffset: { width: 0, height: 0 },
+              shadowColor:"#154c79",
+              shadowOpacity: 0.7,
+              shadowRadius: 4,
+              elevation: 7,
               borderRadius: 10,
-              borderWidth: 3,
+              borderWidth: 0,
               borderColor: '#154c79',
               marginVertical: 10
             }}>
