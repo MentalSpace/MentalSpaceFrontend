@@ -14,33 +14,32 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
     <Box flex={1}>
       <CalendarStrip
         calendarHeaderStyle={{
-          fontFamily: theme.fonts.heading, 
-          fontSize: theme.fontSizes.lg
+          fontSize: theme.fontSizes["2xl"],
         }}
         dateNumberStyle={{fontSize: theme.fontSizes.xl}}
         style={{
           height: 150,
           paddingTop: 20
         }}
+        highlightDateContainerStyle={{
+          backgroundColor: theme.colors.primary[500],
+          height: 55, 
+          width: 55,
+          borderRadius: 27.5,
+        }}
         highlightDateNumberStyle={{
           color: '#fff',
-          backgroundColor: theme.colors.primary[500],
-          height: 40, 
-          width: 40,
-          borderRadius: 20,
           justifyContent: 'center',
           alignItems: 'center',
-          // hacks to make the circle and text consistent on both mobile and web
           fontSize: theme.fontSizes.xl,
-          paddingTop: 5,
           //adds shadow around calendar number highlight
-          shadowColor: "black",
-          shadowOffset: { width: 0, height: 0 },
-          shadowRadius: 10,
-          elevation: 5
+          // shadowColor: "black",
+          // shadowOffset: { width: 0, height: 0 },
+          // shadowRadius: 10,
+          // elevation: 5
         }}
-        highlightDateNameStyle={{color: theme.colors.primary[700]}}
-        iconContainer={{ flex: 0.15 }}
+        highlightDateNameStyle={{color: '#fff'}}
+        iconContainer={{ flex: 0.1 }}
       />
       <Menu trigger={triggerProps => {
         return (
@@ -79,10 +78,32 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
               marginVertical: 10
             }}>
             <View style={{marginLeft: 12, marginVertical: 10}}>
+              <Text 
+                color={theme.colors.trueGray[600]}
+                style={{marginLeft: 20}}
+                fontSize={theme.fontSizes.xs}  
+              >
+                12:00 PM - 12:45 PM
+              </Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{height: 12, width: 12, borderRadius: 6, marginRight: 8}} backgroundColor={theme.colors.primary[500]}/>
-                <Text fontWeight={theme.fontWeights.bold} fontSize={theme.fontSizes.lg} color={theme.colors.secondary[600]}>Test Event</Text>
+                <View 
+                  style={{height: 12, width: 12, borderRadius: 6, marginRight: 8}} 
+                  backgroundColor={theme.colors.primary[500]}
+                />
+                <Text
+                  fontWeight={theme.fontWeights.bold} 
+                  fontSize={theme.fontSizes.lg} 
+                  color={theme.colors.secondary[600]}
+                >
+                  Test Event
+                </Text>
               </View>
+              <Text 
+                color={theme.colors.trueGray[500]}
+                style={{marginLeft: 20}}  
+              >
+                Test text
+              </Text>
             </View>
           </Box>
         </ScrollView>
