@@ -43,11 +43,6 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
           justifyContent: 'center',
           alignItems: 'center',
           fontSize: theme.fontSizes.xl,
-          //adds shadow around calendar number highlight
-          // shadowColor: "black",
-          // shadowOffset: { width: 0, height: 0 },
-          // shadowRadius: 10,
-          // elevation: 5
         }}
         highlightDateNameStyle={{color: '#fff'}}
         iconContainer={{ flex: 0.1 }}
