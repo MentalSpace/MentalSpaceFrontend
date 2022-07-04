@@ -3853,6 +3853,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/luxon@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "@types/luxon@npm:2.3.2"
+  checksum: b9fe79118681f4bb9f2e37696a7df992a82683ba4448e7ad1af8cc241443ffc64ef08fdeaad749de9e6259b42b0d4b6540d7e880bca39bb504e0f3863d503c98
+  languageName: node
+  linkType: hard
+
 "@types/minimatch@npm:*":
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5"
@@ -11007,6 +11014,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"luxon@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "luxon@npm:2.4.0"
+  checksum: 6071028d65cc3d3bdab5e6a3995dd97411c92bb3b3163a02deb7b7014318ad3a6fd750ae77131c42141b717c14aef8880d3130f265281d500ef2365f7265b3f3
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^2.0.0, make-dir@npm:^2.1.0":
   version: 2.1.0
   resolution: "make-dir@npm:2.1.0"
@@ -11182,12 +11196,14 @@ __metadata:
     "@react-navigation/drawer": ^6.4.2
     "@react-navigation/native": ^6.0.10
     "@react-navigation/native-stack": ^6.6.2
+    "@types/luxon": ^2.3.2
     "@types/react": ~17.0.21
     "@types/react-native": ~0.66.13
     babel-plugin-styled-components: ^2.0.7
     expo: ~45.0.0
     expo-cli: ^5.4.12
     expo-status-bar: ~1.3.0
+    luxon: ^2.4.0
     native-base: ^3.4.7
     react: 17.0.2
     react-dom: 17.0.2
@@ -11199,6 +11215,7 @@ __metadata:
     react-native-screens: ~3.11.1
     react-native-svg: ^12.3.0
     react-native-web: 0.17.7
+    rrule: ^2.7.0
     styled-components: ^5.3.5
     typescript: ~4.3.5
   languageName: unknown
@@ -14805,6 +14822,15 @@ __metadata:
   version: 1.0.0
   resolution: "router-ips@npm:1.0.0"
   checksum: 2081637f35c4d6b0f24401b5b2cf73a4ee91f728bca83ce6fddaa019b3fd933bc8008a33ef110ba5f291f6ca7aa0ab4017cd7ed6c9552522e8ac3119bbd217b4
+  languageName: node
+  linkType: hard
+
+"rrule@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "rrule@npm:2.7.0"
+  dependencies:
+    tslib: ^1.10.0
+  checksum: 26d028297b11ea94ac34e4c9779178f56e02f9844adbbdf0642ad6c8838a85742a49323e8591c07bed6561411ddd41f49fd8847e99f83d055a4a6abf550cba6b
   languageName: node
   linkType: hard
 

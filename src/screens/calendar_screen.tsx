@@ -2,12 +2,55 @@ import React, { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SideBarList } from "../components/main_stack";
 import { Box, HamburgerIcon, Menu, Pressable, ScrollView, useTheme, View, Text } from "native-base";
-import CalendarStrip from 'react-native-calendar-strip';
+import CalendarStrip from "react-native-calendar-strip";
+import { TouchableOpacity } from "react-native";
+
+import { DateTime } from "luxon";
 
 type CalendarScreenProps = NativeStackScreenProps<SideBarList, 'Calendar'>;
 
+type ScheduleRRuleType = {
+  eventId: number,
+  name: string,
+  description: string,
+  rrule: string,
+  duration: number
+};
+
 function CalendarScreen({ navigation }: CalendarScreenProps) {
-  const [schedule, setSchedule] = useState([]);
+  const [schedule, setSchedule] = useState([
+  {
+    eventId: 1,
+    name: "Test Event",
+    description: "Test text",
+  },
+  {
+    eventId: 2,
+    name: "Test Event 2",
+    description: "Test text",
+  },
+  {
+    eventId: 3,
+    name: "Test Event",
+    description: "Test text",
+  },
+  {
+    eventId: 4,
+    name: "Test Event",
+    description: "Test text",
+  },
+  {
+    eventId: 5,
+    name: "Test Event",
+    description: "Test text",
+  },
+  {
+    eventId: 6,
+    name: "Test Event",
+    description: "Test text",
+  },
+  ] as ScheduleRRuleType[]);
+  const [weekEvents, setWeekEvents] = useState([]);
   const theme = useTheme();
 
   return (
@@ -46,45 +89,55 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
         }}
         highlightDateNameStyle={{color: '#fff'}}
         iconContainer={{ flex: 0.1 }}
+        onDateSelected={(date) => console.log(DateTime.fromMillis(date.valueOf()).toISO())}
       />
-      <Menu trigger={triggerProps => {
-        return (
-          <Pressable 
-            position='absolute' 
-            height='60' 
-            width='60' 
-            borderRadius='30'
-            bottom='30'
-            right='30'
-            justifyContent='center'
-            alignItems='center'
-            backgroundColor={theme.colors.primary[600]} 
-            accessibilityLabel='More options menu' {...triggerProps}
-          >
-              <HamburgerIcon color='#fff'/>
-          </Pressable>);
-      }}>
+      <Menu
+        trigger={triggerProps => {
+          return (
+            <Pressable 
+              position='absolute' 
+              zIndex='1'
+              height='60' 
+              width='60' 
+              borderRadius='30'
+              bottom='30'
+              right='30'
+              justifyContent='center'
+              alignItems='center'
+              backgroundColor={theme.colors.primary[600]} 
+              accessibilityLabel='More options menu' {...triggerProps}
+            >
+                <HamburgerIcon color='#fff'/>
+            </Pressable>);
+        }}
+      >
         <Menu.Item>Subscribe to Classes</Menu.Item>
         <Menu.Item>See Assignments</Menu.Item>
         <Menu.Item>See and Edit Schedule</Menu.Item>
         <Menu.Item>Edit Homework Priorities</Menu.Item>
         <Menu.Item>Edit non-homework activities</Menu.Item>
       </Menu>
-      <View alignItems='center'>
+      <View alignItems='center' style={{flex: 1}}>
         <ScrollView>
-          <Box height='100' width='325' style={{
-              backgroundColor: "white",
-              margin: 10,
-              shadowOffset: { width: 0, height: 0 },
-              shadowColor:"#154c79",
-              shadowOpacity: 0.7,
-              shadowRadius: 4,
-              elevation: 7,
-              borderRadius: 10,
-              borderWidth: 0,
-              borderColor: '#154c79',
-              marginVertical: 10
-            }}>
+          {schedule.map((event) => (
+            <TouchableOpacity key={event.eventId}
+              style={{
+                backgroundColor: "white",
+                margin: 10,
+                shadowOffset: { width: 0, height: 0 },
+                shadowColor:"#154c79",
+                shadowOpacity: 0.7,
+                shadowRadius: 4,
+                elevation: 7,
+                borderRadius: 10,
+                borderWidth: 0,
+                borderColor: '#154c79',
+                marginVertical: 10,
+                height: 100,
+                width: 325
+              }}
+              delayPressIn={50}
+            >
             <View style={{marginLeft: 12, marginVertical: 10}}>
               <Text 
                 color={theme.colors.trueGray[600]}
@@ -103,17 +156,18 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
                   fontSize={theme.fontSizes.lg} 
                   color={theme.colors.secondary[600]}
                 >
-                  Test Event
+                  {event.name}
                 </Text>
               </View>
               <Text 
                 color={theme.colors.trueGray[500]}
                 style={{marginLeft: 20}}  
               >
-                Test text
+                {event.description}
               </Text>
             </View>
-          </Box>
+          </TouchableOpacity>
+          ))}
         </ScrollView>
       </View>
     </Box>
