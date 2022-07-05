@@ -3,7 +3,7 @@ import { Box, Button, Center, FormControl, Heading, Input, VStack } from "native
 import React from "react";
 import { LoginStackList } from "../components/login_stack";
 
-type StudentSignupProps = NativeStackScreenProps<LoginStackList, 'Student'>;
+type StudentSignupProps = NativeStackScreenProps<LoginStackList, 'StudentSignup'>;
 
 const StudentSignup = ({navigation}: StudentSignupProps) => {
   return <Center w="100%">
@@ -35,22 +35,10 @@ const StudentSignup = ({navigation}: StudentSignupProps) => {
             <FormControl.Label>School</FormControl.Label>
             <Input />
           </FormControl>
-          <FormControl>
-            <FormControl.Label>Email</FormControl.Label>
-            <Input />
-          </FormControl>
-          <FormControl>
-            <FormControl.Label>Password</FormControl.Label>
-            <Input type="password" />
-          </FormControl>
-          <FormControl>
-            <FormControl.Label>Confirm Password</FormControl.Label>
-            <Input type="password" />
-          </FormControl>
           <Button mt="2" onPress={() => navigation.navigate('Home')}>
-            Sign up
+           Sign up
           </Button>
-          <Button variant="outline" onPress={() => navigation.navigate('Login')}>
+          <Button variant="outline" onPress={() => navigation.navigate('StudentRegistration')}>
             Back
           </Button>
         </VStack>
