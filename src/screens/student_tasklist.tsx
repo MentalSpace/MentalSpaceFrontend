@@ -44,7 +44,6 @@ function TaskListScreen({ navigation }: TaskListScreenProps) {
             </Button>
 
             </HStack>
-            <br></br>
             <Text fontSize = {"lg"} TextAlign = {'center'}>
               <br/>
                 <table style = {{justifyContent: "center", display: 'flex', width: '100%'}}>
