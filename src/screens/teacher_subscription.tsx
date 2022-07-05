@@ -22,7 +22,6 @@ function TeacherSubscription ({navigation}: SubscribeScreenProps) {
                 </tr>
             </table>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <br></br>
             </View>
           </VStack>
           </Box>
