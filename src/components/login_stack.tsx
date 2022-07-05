@@ -5,8 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/login_screen';
 import TeacherSignup from '../screens/teacher_signup';
 import StudentSignup from '../screens/student_signup';
-import TeacherRegistration from '../screens/teacher_Registration';
-import StudentRegistration from '../screens/student_Registration';
+import TeacherRegistration from '../screens/teacher_registration';
+import StudentRegistration from '../screens/student_registration';
 import MainStack from './main_stack';
 import ResetScreen from '../screens/password_reset';
 
