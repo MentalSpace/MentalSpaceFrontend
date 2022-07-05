@@ -54,7 +54,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
           </Pressable>);
       }}>
         <Menu.Item>Subscribe to Classes</Menu.Item>
-        <Menu.Item>See Assignments</Menu.Item>
+        <Menu.Item  onPress={() => navigation.navigate('Assignments')}>See Assignments</Menu.Item>
         <Menu.Item>See and Edit Schedule</Menu.Item>
         <Menu.Item>Edit Homework Priorities</Menu.Item>
         <Menu.Item>Edit non-homework activities</Menu.Item>
