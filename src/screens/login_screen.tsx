@@ -45,10 +45,10 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
           Sign up to create an account!
         </Heading>
 
-          <Button variant="outline" onPress={() => navigation.navigate('Teacher')}>
+          <Button variant="outline" onPress={() => navigation.navigate('TeacherRegistration')}>
             Teacher 
           </Button>
-          <Button variant="outline" onPress={() => navigation.navigate('Student')}>
+          <Button variant="outline" onPress={() => navigation.navigate('StudentRegistration')}>
             Student 
           </Button>
         </VStack>

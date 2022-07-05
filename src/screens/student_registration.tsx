@@ -3,15 +3,15 @@ import { Box, Button, Center, FormControl, Heading, Input, VStack } from "native
 import React from "react";
 import { LoginStackList } from "../components/login_stack";
 
-type TeacherSignupProps = NativeStackScreenProps<LoginStackList, 'TeacherSignup'>;
+type StudentRegistrationProps = NativeStackScreenProps<LoginStackList, 'StudentRegistration'>;
 
-const TeacherSignup = ({navigation}: TeacherSignupProps) => {
+const StudentRegistration = ({navigation}: StudentRegistrationProps) => {
   return <Center w="100%">
       <Box safeArea p="2" w="90%" maxW="290" py="8">
         <Heading size="lg" color="coolGray.800" _dark={{
         color: "warmGray.50"
       }} fontWeight="semibold">
-          Teacher Sign Up
+          Student Sign Up
         </Heading>
         <Heading mt="1" color="coolGray.600" _dark={{
         color: "warmGray.200"
@@ -19,22 +19,22 @@ const TeacherSignup = ({navigation}: TeacherSignupProps) => {
           Sign up to continue!
         </Heading>
         <VStack space={3} mt="5">
-        <FormControl>
-            <FormControl.Label>First name</FormControl.Label>
+          <FormControl>
+            <FormControl.Label>Email</FormControl.Label>
             <Input />
           </FormControl>
           <FormControl>
-            <FormControl.Label>Last name</FormControl.Label>
-            <Input />
+            <FormControl.Label>Password</FormControl.Label>
+            <Input type="password" />
           </FormControl>
           <FormControl>
-            <FormControl.Label>School</FormControl.Label>
-            <Input />
+            <FormControl.Label>Confirm Password</FormControl.Label>
+            <Input type="password" />
           </FormControl>
-          <Button mt="2" onPress={() => navigation.navigate('Home')}>
-            Sign up
+          <Button mt="2" onPress={() => navigation.navigate('StudentSignup')}>
+           Continue
           </Button>
-          <Button variant="outline" onPress={() => navigation.navigate('TeacherRegistration')}>
+          <Button variant="outline" onPress={() => navigation.navigate('Login')}>
             Back
           </Button>
         </VStack>
@@ -42,4 +42,4 @@ const TeacherSignup = ({navigation}: TeacherSignupProps) => {
     </Center>;
 }
 
-export default TeacherSignup;
+export default StudentRegistration;
