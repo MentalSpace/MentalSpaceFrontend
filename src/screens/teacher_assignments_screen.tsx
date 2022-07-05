@@ -74,7 +74,7 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
 
 
     return (
-      <ScrollView pa>
+      <ScrollView>
         <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'flex-start', padding:"10px"}}>
         <Button onPress={() => navigation.navigate('Calendar')}>
             Back to Calendar
