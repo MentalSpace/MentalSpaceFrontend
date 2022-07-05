@@ -1,40 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SideBarList } from "../components/main_stack";
-import { Box, HamburgerIcon, Menu, Pressable, useTheme, View } from "native-base";
+import { Box, HamburgerIcon, Menu, Pressable, ScrollView, useTheme, View, Text } from "native-base";
 import CalendarStrip from 'react-native-calendar-strip';
 
 type CalendarScreenProps = NativeStackScreenProps<SideBarList, 'Calendar'>;
 
 function CalendarScreen({ navigation }: CalendarScreenProps) {
+  const [schedule, setSchedule] = useState([]);
   const theme = useTheme();
 
   return (
     <Box flex={1}>
       <CalendarStrip
         calendarHeaderStyle={{
-          fontFamily: theme.fonts.heading, 
-          fontSize: theme.fontSizes.lg
+          fontSize: theme.fontSizes["2xl"],
+          color: theme.colors.darkBlue[700]
         }}
-        dateNumberStyle={{fontSize: theme.fontSizes.xl}}
+        dateNameStyle={{color: theme.colors.darkBlue[800]}}
+        dateNumberStyle={{
+          fontSize: theme.fontSizes.xl,
+          color: theme.colors.darkBlue[700]
+        }}
         style={{
           height: 150,
           paddingTop: 20
         }}
+        highlightDateContainerStyle={{
+          backgroundColor: theme.colors.primary[600],
+          height: 55, 
+          width: 55,
+          borderRadius: 27.5,
+          //calendar shadow
+          shadowOpacity: 0.5,
+          shadowColor: "#154c79",
+          shadowOffset: { width: 0, height: 2 },
+          shadowRadius: 4,
+          elevation: 12
+        }}
         highlightDateNumberStyle={{
           color: '#fff',
-          backgroundColor: theme.colors.primary[500],
-          height: 40, 
-          width: 40,
-          borderRadius: 20,
           justifyContent: 'center',
           alignItems: 'center',
-          // hacks to make the circle and text consistent on both mobile and web
           fontSize: theme.fontSizes.xl,
-          paddingTop: 5
         }}
-        highlightDateNameStyle={{color: theme.colors.primary[700]}}
-        iconContainer={{ flex: 0.15 }}
+        highlightDateNameStyle={{color: '#fff'}}
+        iconContainer={{ flex: 0.1 }}
       />
       <Menu trigger={triggerProps => {
         return (
@@ -59,6 +70,52 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
         <Menu.Item>Edit Homework Priorities</Menu.Item>
         <Menu.Item>Edit non-homework activities</Menu.Item>
       </Menu>
+      <View alignItems='center'>
+        <ScrollView>
+          <Box height='100' width='325' style={{
+              backgroundColor: "white",
+              margin: 10,
+              shadowOffset: { width: 0, height: 0 },
+              shadowColor:"#154c79",
+              shadowOpacity: 0.7,
+              shadowRadius: 4,
+              elevation: 7,
+              borderRadius: 10,
+              borderWidth: 0,
+              borderColor: '#154c79',
+              marginVertical: 10
+            }}>
+            <View style={{marginLeft: 12, marginVertical: 10}}>
+              <Text 
+                color={theme.colors.trueGray[600]}
+                style={{marginLeft: 20}}
+                fontSize={theme.fontSizes.xs}  
+              >
+                12:00 PM - 12:45 PM
+              </Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View 
+                  style={{height: 12, width: 12, borderRadius: 6, marginRight: 8}} 
+                  backgroundColor={theme.colors.primary[600]}
+                />
+                <Text
+                  fontWeight={theme.fontWeights.bold} 
+                  fontSize={theme.fontSizes.lg} 
+                  color={theme.colors.secondary[600]}
+                >
+                  Test Event
+                </Text>
+              </View>
+              <Text 
+                color={theme.colors.trueGray[500]}
+                style={{marginLeft: 20}}  
+              >
+                Test text
+              </Text>
+            </View>
+          </Box>
+        </ScrollView>
+      </View>
     </Box>
   );
 }
