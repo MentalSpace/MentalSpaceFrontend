@@ -3,7 +3,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import React from "react";
 import CalendarScreen from "../screens/calendar_screen";
 import AddClassScreen from "../screens/add_class_screen";
-import TaskListScreen from "../screens/g1";
+import TaskListScreen from "../screens/student_tasklist";
 
 export type SideBarList = {
     Calendar: undefined;
