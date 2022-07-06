@@ -3,6 +3,7 @@ import { Box, Button, Center, FormControl, Heading, Input, VStack } from "native
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { LoginStackList } from "../components/login_stack";
+import { apiUrl } from "../constants";
 
 type StudentRegistrationProps = NativeStackScreenProps<LoginStackList, 'StudentRegistration'>;
 
@@ -23,21 +24,17 @@ const StudentRegistration = ({navigation}: StudentRegistrationProps) => {
     },
     body: JSON.stringify({
        type: 'Student',
-       email: email,
+       email: email.trim(),
        password: password 
     })
   };
-  const request = useQuery<RegisterUserResponse>('registerUser', async () => await (await fetch('https://stoplight.io/mocks/probablyanasian/school-project/71988164/user/register', requestOptions)).json(), {enabled: false});
+  const request = useQuery<RegisterUserResponse>('registerUser', async () => await (await fetch(apiUrl + '/user/register', requestOptions)).json(), {enabled: false});
   useEffect(() => {
     if (request.isSuccess) {
       console.log(request.data.status);
       navigation.navigate('StudentSignup');
     }
   }, [request.isSuccess]);
-
-  const continueSignup = () => {
-    request.refetch();
-  };
 
   return (
     <Center w="100%">
@@ -67,7 +64,7 @@ const StudentRegistration = ({navigation}: StudentRegistrationProps) => {
             <FormControl.Label>Confirm Password</FormControl.Label>
             <Input type="password" />
           </FormControl>
-          <Button mt="2" onPress={continueSignup}>
+          <Button mt="2" onPress={() => request.refetch()}>
            Continue
           </Button>
           <Button variant="outline" onPress={() => navigation.navigate('Login')}>
