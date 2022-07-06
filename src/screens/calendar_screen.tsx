@@ -53,12 +53,12 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
     name: "Test Event 4",
     description: "Test text 4",
     rrule: "RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=SA;BYHOUR=13;BYMINUTE=15;BYSECOND=0",
-    duration: 0
+    duration: 30 * 60 * 1000
   },
   ] as ScheduleRRuleType[]);
   const [weekEvents, setWeekEvents] = useState([[], [], [], [], [], [], []] as ScheduleEventType[][]);
   const [currWeek, setCurrWeek] = useState([] as string[]);
-  const [currDateIndex, setCurrDateIndex] = useState(0);
+  const [currDateIndex, setCurrDateIndex] = useState<number>();
   const theme = useTheme();
 
   function* daysInInterval(interval: Interval) {
@@ -111,6 +111,8 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
         }}
         onWeekChanged={async (start, end) => {
           if (currWeek[0] !== DateTime.fromJSDate(start.toDate()).toISODate()) {
+            setCurrDateIndex(undefined);
+
             const weekInterval = Interval.fromDateTimes(DateTime.fromISO(start.toISOString()), DateTime.fromISO(end.toISOString()));
             const weekDays = Array.from(daysInInterval(weekInterval)).map(weekDay => weekDay.toISODate());
 
@@ -127,7 +129,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
                   eventId: scheduleRRule.eventId,
                   name: scheduleRRule.name,
                   description: scheduleRRule.description,
-                  time: DateTime.fromJSDate(event).toLocaleString(DateTime.TIME_SIMPLE)
+                  time: DateTime.fromJSDate(event).toLocaleString(DateTime.TIME_SIMPLE) + ' - ' + DateTime.fromMillis(event.getTime() + scheduleRRule.duration).toLocaleString(DateTime.TIME_SIMPLE)
                 })
               }
             }
@@ -163,7 +165,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
       </Menu>
       <View alignItems='center' style={{flex: 1}}>
         <ScrollView>
-          {weekEvents[currDateIndex].map((event) => (
+          {currDateIndex != undefined ? weekEvents[currDateIndex].map((event) => (
             <TouchableOpacity key={event.eventId}
               style={{
                 backgroundColor: "white",
@@ -210,7 +212,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
               </Text>
             </View>
           </TouchableOpacity>
-          ))}
+          )) : undefined}
         </ScrollView>
       </View>
     </Box>
