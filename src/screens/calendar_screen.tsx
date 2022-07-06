@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SideBarList } from "../components/main_stack";
 import { Box, HamburgerIcon, Menu, Pressable, ScrollView, useTheme, View, Text } from "native-base";
@@ -7,7 +7,6 @@ import { TouchableOpacity } from "react-native";
 
 import { DateTime, Interval } from "luxon";
 import { RRule } from 'rrule';
-import ReactNativeCalendarStrip from "react-native-calendar-strip";
 
 type CalendarScreenProps = NativeStackScreenProps<SideBarList, 'Calendar'>;
 
@@ -28,25 +27,32 @@ type ScheduleEventType = {
 
 function CalendarScreen({ navigation }: CalendarScreenProps) {
   const [scheduleRRules, setScheduleRRules] = useState([
-  // {
-  //   eventId: 1,
-  //   name: "Test Event",
-  //   description: "Test text",
-  //   rrule: "RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU;BYHOUR=12;BYMINUTE=15;BYSECOND=0",
-  //   duration: 0
-  // },
-  // {
-  //   eventId: 2,
-  //   name: "Test Event 2",
-  //   description: "Test text 2",
-  //   rrule: "RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=SA;BYHOUR=19;BYMINUTE=30;BYSECOND=0",
-  //   duration: 0
-  // },
+  {
+    eventId: 1,
+    name: "Test Event",
+    description: "Test text",
+    rrule: "RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU;BYHOUR=12;BYMINUTE=15;BYSECOND=0",
+    duration: 0
+  },
+  {
+    eventId: 2,
+    name: "Test Event 2",
+    description: "Test text 2",
+    rrule: "RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=SA;BYHOUR=19;BYMINUTE=30;BYSECOND=0",
+    duration: 0
+  },
   {
     eventId: 3,
     name: "Test Event 3",
     description: "Test text 3",
     rrule: "RRULE:FREQ=WEEKLY;COUNT=10;INTERVAL=1;WKST=MO;BYDAY=MO;BYHOUR=6;BYMINUTE=10;BYSECOND=0",
+    duration: 0
+  },
+  {
+    eventId: 4,
+    name: "Test Event 4",
+    description: "Test text 4",
+    rrule: "RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=SA;BYHOUR=13;BYMINUTE=15;BYSECOND=0",
     duration: 0
   },
   ] as ScheduleRRuleType[]);
@@ -111,6 +117,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
             setCurrWeek(weekDays);
             let newWeekEvents = [[], [], [], [], [], [], []] as ScheduleEventType[][];
   
+            // TODO: sort RRules in order before parsing
             for (const scheduleRRule of scheduleRRules) {
               const eventRRule = RRule.fromString(scheduleRRule.rrule);
               const events = eventRRule.between(start.startOf('day').toDate(), end.endOf('day').toDate());
