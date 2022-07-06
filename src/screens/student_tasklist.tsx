@@ -6,7 +6,6 @@ import { LoginStackList } from "../components/login_stack";
 import { propsFlattener } from "native-base/lib/typescript/hooks/useThemeProps/propsFlattener";
 import CalendarScreen from "../screens/calendar_screen";
 import AddClassScreen from "../screens/add_class_screen";
-import "react-datepicker/dist/react-datepicker.css";
 import { useTheme } from "native-base";
 
 {/*const Please = () => {
@@ -44,7 +43,7 @@ function TaskListScreen({ navigation }: TaskListScreenProps) {
             </Button>
 
             </HStack>
-            <Text fontSize = {"lg"} TextAlign = {'center'}>
+            <Text fontSize = {"lg"} textAlign = {'center'}>
               <br/>
                 <table style = {{justifyContent: "center", display: 'flex', width: '100%'}}>
                     <tr>
