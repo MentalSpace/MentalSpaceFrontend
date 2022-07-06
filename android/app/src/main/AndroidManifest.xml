@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="dev.mentalspace.butter_pecan">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="dev.mentalspace.sprinkles">
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -26,7 +26,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="dev.mentalspace.butter_pecan"/>
+        <data android:scheme="dev.mentalspace.sprinkles"/>
         <data android:scheme="exp+mentalspace"/>
       </intent-filter>
     </activity>

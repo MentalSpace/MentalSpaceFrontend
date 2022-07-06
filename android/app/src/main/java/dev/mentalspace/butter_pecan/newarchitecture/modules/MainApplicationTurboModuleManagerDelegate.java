@@ -1,4 +1,4 @@
-package dev.mentalspace.butter_pecan.newarchitecture.modules;
+package dev.mentalspace.sprinkles.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

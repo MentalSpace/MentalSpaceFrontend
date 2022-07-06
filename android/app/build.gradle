@@ -141,7 +141,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId 'dev.mentalspace.butter_pecan'
+        applicationId 'dev.mentalspace.sprinkles'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

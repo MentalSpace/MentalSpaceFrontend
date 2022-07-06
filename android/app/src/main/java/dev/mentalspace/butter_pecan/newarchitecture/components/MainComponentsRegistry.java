@@ -1,4 +1,4 @@
-package dev.mentalspace.butter_pecan.newarchitecture.components;
+package dev.mentalspace.sprinkles.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

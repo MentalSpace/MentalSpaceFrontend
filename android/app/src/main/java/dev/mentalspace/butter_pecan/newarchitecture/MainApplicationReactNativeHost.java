@@ -1,4 +1,4 @@
-package dev.mentalspace.butter_pecan.newarchitecture;
+package dev.mentalspace.sprinkles.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import dev.mentalspace.butter_pecan.BuildConfig;
-import dev.mentalspace.butter_pecan.newarchitecture.components.MainComponentsRegistry;
-import dev.mentalspace.butter_pecan.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import dev.mentalspace.sprinkles.BuildConfig;
+import dev.mentalspace.sprinkles.newarchitecture.components.MainComponentsRegistry;
+import dev.mentalspace.sprinkles.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

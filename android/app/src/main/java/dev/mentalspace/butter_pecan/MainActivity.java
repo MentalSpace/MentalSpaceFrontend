@@ -1,4 +1,4 @@
-package dev.mentalspace.butter_pecan;
+package dev.mentalspace.sprinkles;
 
 import android.os.Build;
 import android.os.Bundle;
