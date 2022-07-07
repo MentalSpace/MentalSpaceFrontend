@@ -10,9 +10,9 @@ const ResetScreen = ({navigation}: PasswordResetProps) => {
 
     const validate = () => { //logic to identify valid emails. once i figure out how to work the database to check for all existing emails, this method will be different
         if(email.indexOf("@") == -1){
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
     return <Center w="100%">
@@ -31,9 +31,9 @@ const ResetScreen = ({navigation}: PasswordResetProps) => {
                 <FormControl>
                 <FormControl.Label>Email</FormControl.Label>
                 <Input value={email} onChangeText={setEmail}/>
-                <FormControl.HelperText>{validate() ? "Please enter a valid email" : ""}</FormControl.HelperText>
+                <FormControl.HelperText>{validate() ? "" : "Please enter a valid email"}</FormControl.HelperText>
                 </FormControl>
-                <Button mt="2" disabled = {validate()} onPress={() => navigation.navigate('Login')}>
+                <Button mt="2" disabled = {!validate()} onPress={() => navigation.navigate('Login')}>
                 Reset
                 </Button>
                 <Button variant="outline" onPress={() => navigation.navigate('Login')}>
