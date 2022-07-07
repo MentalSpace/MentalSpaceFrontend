@@ -32,7 +32,7 @@ const StudentRegistration = ({navigation}: StudentRegistrationProps) => {
   useEffect(() => {
     if (request.isSuccess) {
       console.log(request.data.status);
-      navigation.navigate('StudentSignup');
+      if (request.data.status === "success") navigation.navigate('StudentSignup');
     }
   }, [request.isSuccess]);
 
