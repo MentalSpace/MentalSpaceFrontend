@@ -1,54 +1,56 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Box, Button, Center, Modal, Checkbox, FlatList, FormControl, Heading, Content, Icon, Input, VStack, Text, View} from "native-base";
+import { Box, Button, Center, Checkbox, Text, View, Heading} from "native-base";
+import { Alert } from 'react-native'
 import { propsFlattener } from "native-base/lib/typescript/hooks/useThemeProps/propsFlattener";
 import React from "react";
 import { LoginStackList } from "../components/login_stack";
 
-
-type TeacherClassScreenProps = NativeStackScreenProps<LoginStackList, 'TeacherClass'>;
-
 function AddClass () {
-  prompt("Add a class.")
+  Alert.prompt("Add a class.") //for mobile
 }
+
 function ModifyClass () {
-  prompt("Edit this class.")
+  Alert.prompt("Edit this class.")
 }
 function DeleteClass () {
   alert("Class deleted.")
 }
 
+type TeacherClassScreenProps = NativeStackScreenProps<LoginStackList, 'TeacherClass'>;
+
 function TeacherClassScreen({ navigation }: TeacherClassScreenProps) {
     return (
       <Center>
         <View style = {{alignItems: "center"}}>
-        <br />
-          <Center> <Text style = {{fontSize: 41, textAlign: 'center', fontWeight: 'bold'}}>My Classes</Text></Center>
-            <br />
-            <br />
+          
+          {/* <Center> <Text style = {{fontSize: 41, textAlign: 'center', fontWeight: 'bold'}}>My Classes</Text></Center> */}
+          <Heading size = "xl" color = "coolGray.800" _dark = {{
+               color: "warmGray.50"
+            }} fontWeight = "semibold" paddingBottom= '30' paddingTop = '20%'>
+            My Classes
+           </Heading>
+              <View>
             <Center>
-            <View>
-                    <Checkbox style = {{height: 25, width: 25}}><Text style = {{fontSize: 24}}>Period 1</Text></Checkbox>
-                    <Checkbox style = {{height: 25, width: 25}}><Text style = {{fontSize: 24}}>Period 2</Text></Checkbox>
-                    <Checkbox style = {{height: 25, width: 25}}><Text style = {{fontSize: 24}}>Period 3</Text></Checkbox>
-                    <Checkbox style = {{height: 25, width: 25}}><Text style = {{fontSize: 24}}>Period 4</Text></Checkbox>
-                    <Checkbox style = {{height: 25, width: 25}}><Text style = {{fontSize: 24}}>Period 5</Text></Checkbox>
+            <View style = {{paddingBottom: 30}}>
+              
+                    <Checkbox style = {{height: 26, width: 26}}><Text style = {{fontSize: 24, paddingTop: '2%'}}>Period 1</Text></Checkbox>
+                    <Checkbox style = {{height: 26, width: 26}}><Text style = {{fontSize: 24, paddingTop: '2%'}}>Period 2</Text></Checkbox>
+                    <Checkbox style = {{height: 26, width: 26}}><Text style = {{fontSize: 24, paddingTop: '2%'}}>Period 3</Text></Checkbox>
+                    <Checkbox style = {{height: 26, width: 26}}><Text style = {{fontSize: 24, paddingTop: '2%'}}>Period 4</Text></Checkbox>
+                    <Checkbox style = {{height: 26, width: 26}}><Text style = {{fontSize: 24, paddingTop: '2%'}}>Period 5</Text></Checkbox>
 
             </View>
             </Center>
-            <br />
-            <br />
+            </View>
             <Center>
-              <table>
-                <tr>
-                  <td><Button onPress = {AddClass} style = {{width: 100}}>Add </Button></td>
-              <br />
-              <td><Button onPress = {ModifyClass} style = {{width: 100}}>Edit</Button></td>
-              <br />
-              <td><Button onPress = {DeleteClass} style = {{width: 100}}>Delete</Button></td>
-              </tr>
-              </table>
+              <View style = {{alignSelf: 'stretch', flexDirection: 'row' }}>
+              <View style = {{marginRight:10}}><Button onPress = {AddClass} style = {{width: 100}}>Add</Button></View>
+              <View style = {{marginRight:10}}><Button onPress = {ModifyClass} style = {{width: 100}}>Edit</Button></View>
+              <View><Button onPress = {DeleteClass} style = {{width: 100}}>Delete</Button></View>
+              </View>
               </Center>
-        </View>
+              </View>
+            
         </Center>
       );
 }
