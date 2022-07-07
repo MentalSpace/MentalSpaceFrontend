@@ -36,13 +36,14 @@ function AddNonHWScreen({navigation}:AddNonHWScreenProps) {
       <Box safeArea p="2" py="8" w="90%" maxW="290">
         <VStack space = {3} mt = '5'>
           <Heading 
-            size = "lg"
-            color = "coolGray.800"
+            size = "lg" 
+            color = "coolGray.800" 
             _dark = {{
-            color: "warmGray.50"
-            }} fontWeight = "semibold">
-            Add Extracurriculars
-          </Heading>
+              color: "warmGray.50"
+            }} 
+            fontWeight = "semibold" 
+            paddingTop = "5" 
+            paddingBottom = "30"> Add Extracurriculars</Heading>
           <Heading>Activity Name</Heading>
           <Input 
             placeholder = "Extracurricular Name"
