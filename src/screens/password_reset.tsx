@@ -1,11 +1,20 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Box, Button, Center, FormControl, Heading, Input, VStack } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import { LoginStackList } from "../components/login_stack";
 
 type PasswordResetProps = NativeStackScreenProps<LoginStackList, 'Reset'>;
 
 const ResetScreen = ({navigation}: PasswordResetProps) => {
+    var [email, setEmail] = useState("");
+
+    const validate = () => { //logic to identify valid emails. once i figure out how to work the database to check for all existing emails, this method will be different
+        if(email.indexOf("@") == -1){
+            return true;
+        } else {
+            return false;
+        }
+    }
     return <Center w="100%">
         <Box safeArea p="2" w="90%" maxW="290" py="8">
             <Heading size = "lg" color = "coolGray.800" _dark = {{
@@ -21,9 +30,10 @@ const ResetScreen = ({navigation}: PasswordResetProps) => {
             <VStack space = {3} mt = '5'>
                 <FormControl>
                 <FormControl.Label>Email</FormControl.Label>
-                <Input />
+                <Input value={email} onChangeText={setEmail}/>
+                <FormControl.HelperText>{validate() ? "Please enter a valid email" : ""}</FormControl.HelperText>
                 </FormControl>
-                <Button mt="2">
+                <Button mt="2" disabled = {validate()} onPress={() => navigation.navigate('Login')}>
                 Reset
                 </Button>
                 <Button variant="outline" onPress={() => navigation.navigate('Login')}>
