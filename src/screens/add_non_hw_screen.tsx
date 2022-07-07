@@ -1,11 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Box, Button, Center, FormControl, Heading, Input, VStack, TextArea, View} from "native-base";
+import { Box, Button, Center, Heading, Input, VStack, TextArea} from "native-base";
 import React from "react";
 import { useState } from "react";
 import { SideBarList } from "../components/main_stack";
-import { Platform } from "react-native";
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { Text } from "react-native-svg";
+import { NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
 
 type AddNonHWScreenProps = NativeStackScreenProps<SideBarList, 'AddNonHW'>
 
@@ -28,8 +27,7 @@ function AddNonHWScreen({navigation}:AddNonHWScreenProps) {
 
   const [textAreaValue, setTextAreaValue] = useState("");
 
-  const demoValueControlledTextArea = e => {setTextAreaValue(e.currentTarget.value)};
-
+  const demoValueControlledTextArea = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {setTextAreaValue(e.nativeEvent.text)};
 
   return (
     <Center w = "100%">
