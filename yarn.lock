@@ -3073,6 +3073,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/datetimepicker@npm:6.1.2":
+  version: 6.1.2
+  resolution: "@react-native-community/datetimepicker@npm:6.1.2"
+  dependencies:
+    invariant: ^2.2.4
+  checksum: 0fa3ac48151b7fa86fa495459f1b58d3e842339a6e5af0a57b2797a6304d657622e895cfe99a495e4ef5627003c70d64efdee9f3121cf4756b07178fdcc8b755
+  languageName: node
+  linkType: hard
+
 "@react-native/assets@npm:1.0.0":
   version: 1.0.0
   resolution: "@react-native/assets@npm:1.0.0"
@@ -11498,6 +11507,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.12.9
     "@config-plugins/android-jsc-intl": ^2.0.0
+    "@react-native-community/datetimepicker": 6.1.2
     "@react-navigation/drawer": ^6.4.2
     "@react-navigation/native": ^6.0.10
     "@react-navigation/native-stack": ^6.6.2
@@ -11518,6 +11528,7 @@ __metadata:
     react-native: 0.68.2
     react-native-calendar-strip: ^2.2.6
     react-native-gesture-handler: ~2.2.1
+    react-native-modal-datetime-picker: ^13.1.2
     react-native-reanimated: ~2.8.0
     react-native-safe-area-context: 4.2.4
     react-native-screens: ~3.11.1
@@ -14547,6 +14558,18 @@ __metadata:
   peerDependencies:
     react-native: ">=0.48.4"
   checksum: 5eec2aedb886213dfed4c8428a443b565dce80ba9fcf5897171e4c8829d4dd64c5011ac004d93f29adfc83ad6f88c2838d1a5b45255dc4a49bd1c0a169245800
+  languageName: node
+  linkType: hard
+
+"react-native-modal-datetime-picker@npm:^13.1.2":
+  version: 13.1.2
+  resolution: "react-native-modal-datetime-picker@npm:13.1.2"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    "@react-native-community/datetimepicker": ">=3.0.0"
+    react-native: ">=0.65.0"
+  checksum: 70a7875dbeb550f97aa26786262a434a5c88dfd048e642fa6e4a7e0b8411c8ff191463a5bb4a82bb18d603cc3b2ef60891bfcaa3144b9e0a40cd756bf662b4a1
   languageName: node
   linkType: hard
 
