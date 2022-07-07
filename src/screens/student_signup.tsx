@@ -7,8 +7,9 @@ import { apiUrl } from "../constants";
 
 type StudentSignupProps = NativeStackScreenProps<LoginStackList, 'StudentSignup'>;
 
-type RegisterUserResponse = {
-  status: string
+type RegisterStudentResponse = {
+  status: string,
+  studentId: number
 };
 
 const StudentSignup = ({navigation}: StudentSignupProps) => {
@@ -34,11 +35,11 @@ const StudentSignup = ({navigation}: StudentSignupProps) => {
     })
   };
 
-  const request = useQuery<RegisterUserResponse>('registerUser', async () => await (await fetch(apiUrl + '/student', requestOptions)).json(), {enabled: false});
+  const request = useQuery<RegisterStudentResponse>('registerStudent', async () => await (await fetch(apiUrl + '/student', requestOptions)).json(), {enabled: false});
   useEffect(() => {
     if (request.isSuccess) {
       console.log(request.data.status);
-      if (request.data.status === "success") navigation.navigate('StudentSignup');
+      if (request.data.status === "success") navigation.navigate('Login');
     }
   }, [request.isSuccess]);
 
