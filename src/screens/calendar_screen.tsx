@@ -22,7 +22,8 @@ type ScheduleEventType = {
   eventId: number,
   name: string,
   description: string,
-  time: string
+  startTime: DateTime,
+  duration: number
 };
 
 function CalendarScreen({ navigation }: CalendarScreenProps) {
@@ -119,7 +120,6 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
             setCurrWeek(weekDays);
             let newWeekEvents = [[], [], [], [], [], [], []] as ScheduleEventType[][];
   
-            // TODO: sort RRules in order before parsing
             for (const scheduleRRule of scheduleRRules) {
               const eventRRule = RRule.fromString(scheduleRRule.rrule);
               const events = eventRRule.between(start.startOf('day').toDate(), end.endOf('day').toDate());
@@ -129,10 +129,13 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
                   eventId: scheduleRRule.eventId,
                   name: scheduleRRule.name,
                   description: scheduleRRule.description,
-                  time: DateTime.fromJSDate(event).toLocaleString(DateTime.TIME_SIMPLE) + ' - ' + DateTime.fromMillis(event.getTime() + scheduleRRule.duration).toLocaleString(DateTime.TIME_SIMPLE)
+                  startTime: DateTime.fromJSDate(event),
+                  duration: scheduleRRule.duration
                 })
               }
             }
+
+            newWeekEvents.map((weekEvent) => weekEvent.sort((a, b) => a.startTime.toMillis() - b.startTime.toMillis()));
             setWeekEvents(newWeekEvents);
           }
         }}
@@ -189,7 +192,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
                 style={{marginLeft: 20}}
                 fontSize={theme.fontSizes.xs}  
               >
-                {event.time}
+                {event.startTime.toLocaleString(DateTime.TIME_SIMPLE) + ' - ' + event.startTime.plus(event.duration).toLocaleString(DateTime.TIME_SIMPLE)}
               </Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View 
