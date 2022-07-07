@@ -7,7 +7,25 @@ type LoginScreenProps = NativeStackScreenProps<LoginStackList, 'Login'>;
 
 const LoginScreen = ({navigation}: LoginScreenProps) => {
   return <Center w="100%">
-      <Box safeArea p="2" py="8" w="90%" maxW="290">
+      <Box style={{
+          shadowOffset: { width: 0, height: 0 },
+          shadowColor: "#154c79",
+          shadowOpacity: 0.7,
+          shadowRadius: 4,
+          elevation: 7,
+          marginTop: 40,
+          paddingLeft: 15,
+          paddingRight: 15,
+          paddingTop: 30,
+          backgroundColor: "white",
+          borderRadius: 30,
+        }}
+        safeArea 
+        p="2" 
+        py="8" 
+        w="90%" 
+        maxW="290"
+      >
         <Heading size="lg" fontWeight="600" color="coolGray.800" _dark={{
         color: "warmGray.50"
       }}>
@@ -39,8 +57,17 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
             Sign in
           </Button>
           <TextDivider msg={"or"}/>
-          <Button variant="outline" onPress={() => navigation.navigate('Signup')}>
-            Sign Up
+          <Heading mt="1" _dark={{
+        color: "warmGray.200"
+      }} color="coolGray.600" fontWeight="medium" size="xs" alignSelf="center">
+          Sign up to create an account!
+        </Heading>
+
+          <Button variant="outline" onPress={() => navigation.navigate('TeacherRegistration')}>
+            Teacher 
+          </Button>
+          <Button variant="outline" onPress={() => navigation.navigate('StudentRegistration')}>
+            Student 
           </Button>
         </VStack>
       </Box>

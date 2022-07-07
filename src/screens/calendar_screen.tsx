@@ -2,13 +2,74 @@ import React, { useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SideBarList } from "../components/main_stack";
 import { Box, HamburgerIcon, Menu, Pressable, ScrollView, useTheme, View, Text } from "native-base";
-import CalendarStrip from 'react-native-calendar-strip';
+import CalendarStrip from "react-native-calendar-strip";
+import { TouchableOpacity } from "react-native";
+
+import { DateTime, Interval } from "luxon";
+import { RRule } from 'rrule';
 
 type CalendarScreenProps = NativeStackScreenProps<SideBarList, 'Calendar'>;
 
+type ScheduleRRuleType = {
+  eventId: number,
+  name: string,
+  description: string,
+  rrule: string,
+  duration: number
+};
+
+type ScheduleEventType = {
+  eventId: number,
+  name: string,
+  description: string,
+  startTime: DateTime,
+  duration: number
+};
+
 function CalendarScreen({ navigation }: CalendarScreenProps) {
-  const [schedule, setSchedule] = useState([]);
+  const [scheduleRRules, setScheduleRRules] = useState([
+  {
+    eventId: 1,
+    name: "Test Event",
+    description: "Test text",
+    rrule: "RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU;BYHOUR=12;BYMINUTE=15;BYSECOND=0",
+    duration: 0
+  },
+  {
+    eventId: 2,
+    name: "Test Event 2",
+    description: "Test text 2",
+    rrule: "RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=SA;BYHOUR=19;BYMINUTE=30;BYSECOND=0",
+    duration: 0
+  },
+  {
+    eventId: 3,
+    name: "Test Event 3",
+    description: "Test text 3",
+    rrule: "RRULE:FREQ=WEEKLY;COUNT=10;INTERVAL=1;WKST=MO;BYDAY=MO;BYHOUR=6;BYMINUTE=10;BYSECOND=0",
+    duration: 0
+  },
+  {
+    eventId: 4,
+    name: "Test Event 4",
+    description: "Test text 4",
+    rrule: "RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=SA;BYHOUR=13;BYMINUTE=15;BYSECOND=0",
+    duration: 30 * 60 * 1000
+  },
+  ] as ScheduleRRuleType[]);
+  const [weekEvents, setWeekEvents] = useState([[], [], [], [], [], [], []] as ScheduleEventType[][]);
+  const [currWeek, setCurrWeek] = useState([] as string[]);
+  const [currDateIndex, setCurrDateIndex] = useState<number>();
   const theme = useTheme();
+
+  function* daysInInterval(interval: Interval) {
+    let cursor = interval.start.startOf("day");
+
+    while (cursor < interval.end) {
+      yield cursor;
+      cursor = cursor.plus({days: 1});
+    } 
+  }
 
   return (
     <Box flex={1}>
@@ -31,7 +92,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
           height: 55, 
           width: 55,
           borderRadius: 27.5,
-          //calendar shadow
+          // calendar shadow
           shadowOpacity: 0.5,
           shadowColor: "#154c79",
           shadowOffset: { width: 0, height: 2 },
@@ -43,60 +104,96 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
           justifyContent: 'center',
           alignItems: 'center',
           fontSize: theme.fontSizes.xl,
-          //adds shadow around calendar number highlight
-          // shadowColor: "black",
-          // shadowOffset: { width: 0, height: 0 },
-          // shadowRadius: 10,
-          // elevation: 5
         }}
         highlightDateNameStyle={{color: '#fff'}}
         iconContainer={{ flex: 0.1 }}
+        selectedDate={new Date()}
+        onDateSelected={(date) => {
+          setCurrDateIndex(currWeek.indexOf(DateTime.fromJSDate(date.toDate()).toISODate()));
+        }}
+        onWeekChanged={async (start, end) => {
+          if (currWeek[0] !== DateTime.fromJSDate(start.toDate()).toISODate()) {
+            setCurrDateIndex(undefined);
+
+            const weekInterval = Interval.fromDateTimes(DateTime.fromISO(start.toISOString()), DateTime.fromISO(end.toISOString()));
+            const weekDays = Array.from(daysInInterval(weekInterval)).map(weekDay => weekDay.toISODate());
+
+            setCurrWeek(weekDays);
+            let newWeekEvents = [[], [], [], [], [], [], []] as ScheduleEventType[][];
+  
+            for (const scheduleRRule of scheduleRRules) {
+              const eventRRule = RRule.fromString(scheduleRRule.rrule);
+              const events = eventRRule.between(start.startOf('day').toDate(), end.endOf('day').toDate());
+  
+              for (const event of events) {
+                newWeekEvents[weekDays.indexOf(DateTime.fromJSDate(event).toISODate())].push({
+                  eventId: scheduleRRule.eventId,
+                  name: scheduleRRule.name,
+                  description: scheduleRRule.description,
+                  startTime: DateTime.fromJSDate(event),
+                  duration: scheduleRRule.duration
+                })
+              }
+            }
+
+            newWeekEvents.map((weekEvent) => weekEvent.sort((a, b) => a.startTime.toMillis() - b.startTime.toMillis()));
+            setWeekEvents(newWeekEvents);
+          }
+        }}
       />
-      <Menu trigger={triggerProps => {
-        return (
-          <Pressable 
-            position='absolute' 
-            height='60' 
-            width='60' 
-            borderRadius='30'
-            bottom='30'
-            right='30'
-            justifyContent='center'
-            alignItems='center'
-            backgroundColor={theme.colors.primary[600]} 
-            accessibilityLabel='More options menu' {...triggerProps}
-          >
-              <HamburgerIcon color='#fff'/>
-          </Pressable>);
-      }}>
+      <Menu
+        trigger={triggerProps => {
+          return (
+            <Pressable 
+              position='absolute' 
+              zIndex='1'
+              height='60' 
+              width='60' 
+              borderRadius='30'
+              bottom='30'
+              right='30'
+              justifyContent='center'
+              alignItems='center'
+              backgroundColor={theme.colors.primary[600]} 
+              accessibilityLabel='More options menu' {...triggerProps}
+            >
+                <HamburgerIcon color='#fff'/>
+            </Pressable>);
+        }}
+      >
         <Menu.Item>Subscribe to Classes</Menu.Item>
         <Menu.Item>See Assignments</Menu.Item>
         <Menu.Item>See and Edit Schedule</Menu.Item>
         <Menu.Item>Edit Homework Priorities</Menu.Item>
         <Menu.Item>Edit non-homework activities</Menu.Item>
       </Menu>
-      <View alignItems='center'>
+      <View alignItems='center' style={{flex: 1}}>
         <ScrollView>
-          <Box height='100' width='325' style={{
-              backgroundColor: "white",
-              margin: 10,
-              shadowOffset: { width: 0, height: 0 },
-              shadowColor:"#154c79",
-              shadowOpacity: 0.7,
-              shadowRadius: 4,
-              elevation: 7,
-              borderRadius: 10,
-              borderWidth: 0,
-              borderColor: '#154c79',
-              marginVertical: 10
-            }}>
+          {currDateIndex != undefined ? weekEvents[currDateIndex].map((event) => (
+            <TouchableOpacity key={event.eventId}
+              style={{
+                backgroundColor: "white",
+                margin: 10,
+                shadowOffset: { width: 0, height: 0 },
+                shadowColor:"#154c79",
+                shadowOpacity: 0.7,
+                shadowRadius: 4,
+                elevation: 7,
+                borderRadius: 10,
+                borderWidth: 0,
+                borderColor: '#154c79',
+                marginVertical: 10,
+                height: 100,
+                width: 325
+              }}
+            >
             <View style={{marginLeft: 12, marginVertical: 10}}>
               <Text 
                 color={theme.colors.trueGray[600]}
                 style={{marginLeft: 20}}
                 fontSize={theme.fontSizes.xs}  
               >
-                12:00 PM - 12:45 PM
+                {event.startTime.toLocaleString(DateTime.TIME_SIMPLE) + ' - ' + event.startTime.plus(event.duration).toLocaleString(DateTime.TIME_SIMPLE)}
               </Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View 
@@ -108,17 +205,18 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
                   fontSize={theme.fontSizes.lg} 
                   color={theme.colors.secondary[600]}
                 >
-                  Test Event
+                  {event.name}
                 </Text>
               </View>
               <Text 
                 color={theme.colors.trueGray[500]}
                 style={{marginLeft: 20}}  
               >
-                Test text
+                {event.description}
               </Text>
             </View>
-          </Box>
+          </TouchableOpacity>
+          )) : undefined}
         </ScrollView>
       </View>
     </Box>
