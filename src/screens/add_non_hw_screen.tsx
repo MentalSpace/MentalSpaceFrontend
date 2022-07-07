@@ -12,56 +12,60 @@ type AddNonHWScreenProps = NativeStackScreenProps<SideBarList, 'AddNonHW'>
 
 function AddNonHWScreen({navigation}:AddNonHWScreenProps) {
   const [selectedDate, setSelectedDate] = useState(new Date('2022-05-31'));
-const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
-const showDatePicker = () => {
-  setDatePickerVisible(true);
-};
+  const showDatePicker = () => {
+    setDatePickerVisible(true);
+  };
 
-const hideDatePicker = () => {
-  setDatePickerVisible(false);
-};
-const handleConfirm = (date) => {
-  setSelectedDate(date);
-  hideDatePicker();
-};
+  const hideDatePicker = () => {
+    setDatePickerVisible(false);
+  };
+  const handleConfirm = (date) => {
+    setSelectedDate(date);
+    hideDatePicker();
+  };
 
-const [textAreaValue, setTextAreaValue] = useState("");
+  const [textAreaValue, setTextAreaValue] = useState("");
 
   const demoValueControlledTextArea = e => {setTextAreaValue(e.currentTarget.value)};
 
 
-    return (
-        <Center w = "100%">
-        <Box safeArea p="2" py="8" w="90%" maxW="290">
-          <VStack space = {3} mt = '5'>
-           <Heading size = "lg" color = "coolGray.800" _dark = {{
-               color: "warmGray.50"
+  return (
+    <Center w = "100%">
+      <Box safeArea p="2" py="8" w="90%" maxW="290">
+        <VStack space = {3} mt = '5'>
+          <Heading 
+            size = "lg"
+            color = "coolGray.800"
+            _dark = {{
+            color: "warmGray.50"
             }} fontWeight = "semibold">
             Add Extracurriculars
-           </Heading>
-           <Heading>Activity Name</Heading>
-           <Input 
+          </Heading>
+          <Heading>Activity Name</Heading>
+          <Input 
             placeholder = "Extracurricular Name"
             type="text"
-                />
-           <Heading>Description</Heading>
-           <TextArea value={textAreaValue} onChange={demoValueControlledTextArea} w="100%" maxW="300" autoCompleteType={undefined} />
-           <Heading>Date</Heading>
-           <Button onPress={showDatePicker}>When does it Occur? </Button>
-           <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-              />
+          />
+          <Heading>Description</Heading>
+          <TextArea value={textAreaValue} onChange={demoValueControlledTextArea} w="100%" maxW="300" autoCompleteType={undefined} />
+          <Heading>Date</Heading>
+          <Button onPress={showDatePicker}>When does it Occur? </Button>
+          <DateTimePickerModal
+            themeVariant="light"
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
             
-           <Button>Add to Calendar </Button>
-           <Button onPress={() => navigation.navigate('Calendar')}>Back to the calendar </Button>
-          </VStack>
-        </Box>
-       </Center>
-    )
+          <Button>Add to Calendar </Button>
+          <Button onPress={() => navigation.navigate('Calendar')}>Back to the calendar </Button>
+        </VStack>
+      </Box>
+    </Center>
+  )
 }
 
 
