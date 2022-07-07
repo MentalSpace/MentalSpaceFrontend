@@ -21,7 +21,7 @@ function AddNonHWScreen({navigation}:AddNonHWScreenProps) {
   const hideDatePicker = () => {
     setDatePickerVisible(false);
   };
-  const handleConfirm = (date: React.SetStateAction<Date>) => {
+  const handleConfirm = (date: Date) => {
     setSelectedDate(date);
     hideDatePicker();
   };
