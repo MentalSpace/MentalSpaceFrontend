@@ -7,25 +7,7 @@ type LoginScreenProps = NativeStackScreenProps<LoginStackList, 'Login'>;
 
 const LoginScreen = ({navigation}: LoginScreenProps) => {
   return <Center w="100%">
-      <Box style={{
-          shadowOffset: { width: 0, height: 0 },
-          shadowColor: "#154c79",
-          shadowOpacity: 0.7,
-          shadowRadius: 4,
-          elevation: 7,
-          marginTop: 40,
-          paddingLeft: 15,
-          paddingRight: 15,
-          paddingTop: 30,
-          backgroundColor: "white",
-          borderRadius: 30,
-        }}
-        safeArea 
-        p="2" 
-        py="8" 
-        w="90%" 
-        maxW="290"
-      >
+      <Box safeArea p="2" py="8" w="90%" maxW="290">
         <Heading size="lg" fontWeight="600" color="coolGray.800" _dark={{
         color: "warmGray.50"
       }}>
@@ -40,11 +22,11 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
         <VStack space={3} mt="5">
           <FormControl>
             <FormControl.Label>Email ID</FormControl.Label>
-            <Input />
+            <Input bgColor = "white"/>
           </FormControl>
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
-            <Input type="password" />
+            <Input type="password" bgColor = "white"/>
             <Link _text={{
             fontSize: "xs",
             fontWeight: "500",
@@ -59,14 +41,14 @@ const LoginScreen = ({navigation}: LoginScreenProps) => {
           <TextDivider msg={"or"}/>
           <Heading mt="1" _dark={{
         color: "warmGray.200"
-      }} color="coolGray.600" fontWeight="medium" size="xs" alignSelf="center">
+      }} color="coolGray.600" fontWeight="medium" size="xs">
           Sign up to create an account!
         </Heading>
 
-          <Button variant="outline" onPress={() => navigation.navigate('TeacherRegistration')}>
+          <Button bgColor = "#154c79" color = "white" onPress={() => navigation.navigate('Teacher')}>
             Teacher 
           </Button>
-          <Button variant="outline" onPress={() => navigation.navigate('StudentRegistration')}>
+          <Button bgColor = "#154c79" color = "white" onPress={() => navigation.navigate('Student')}>
             Student 
           </Button>
         </VStack>
