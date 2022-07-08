@@ -107,6 +107,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
         }}
         highlightDateNameStyle={{color: '#fff'}}
         iconContainer={{ flex: 0.1 }}
+        selectedDate={new Date()}
         onDateSelected={(date) => {
           setCurrDateIndex(currWeek.indexOf(DateTime.fromJSDate(date.toDate()).toISODate()));
         }}
