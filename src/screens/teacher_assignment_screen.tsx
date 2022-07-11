@@ -115,11 +115,7 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
     const [selectedTeams, setSelectedTeams] = useState([])
     const [textAreaValue, setTextAreaValue] = useState("");
     //const [text, setText] = useState('');
-
-    function delay(ms: number) {
-        return new Promise( resolve => setTimeout(resolve, ms) );
-    }
-
+    
     function onMultiChange() {
         console.log(selectedTeams);
         return (item: any) => setSelectedTeams(xorBy(selectedTeams, [item], 'id'))
