@@ -9,13 +9,28 @@ import {
   Input,
   Link,
 } from 'native-base';
+import { useEffect, useState } from 'react';
 
 import { LoginStackList } from '../components/login_stack';
 import TextDivider from '../components/text_divider';
+import { useCSRFToken } from '../hooks/useCSRFToken';
+import { useLogin } from '../hooks/useLogin';
 
 type LoginScreenProps = NativeStackScreenProps<LoginStackList, 'Login'>;
 
 const LoginScreen = ({ navigation }: LoginScreenProps) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const csrfToken = useCSRFToken();
+  const login = useLogin();
+  useEffect(() => {
+    if (login.isSuccess) {
+      console.log(login.data.status);
+      if (login.data.status === 'success') navigation.navigate('Home');
+    }
+  }, [login.isSuccess]);
+
   return (
     <Center w="100%">
       <Box
@@ -63,11 +78,11 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
         <VStack space={3} mt="5">
           <FormControl>
             <FormControl.Label>Email ID</FormControl.Label>
-            <Input />
+            <Input onChangeText={setEmail} />
           </FormControl>
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
-            <Input type="password" />
+            <Input type="password" onChangeText={setPassword} />
             <Link
               _text={{
                 fontSize: 'xs',
@@ -81,7 +96,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
               Forget Password?
             </Link>
           </FormControl>
-          <Button mt="2" onPress={() => navigation.navigate('Home')}>
+          <Button mt="2" onPress={() => login.mutate({ email, password })}>
             Sign in
           </Button>
           <TextDivider msg="or" />

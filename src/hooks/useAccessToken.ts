@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient } from 'react-query';
 
 import { apiUrl } from '../constants';
-import { CSRFTokenResponse, useCSRFTokenQuery } from './useCSRFTokenQuery';
-import { LoginResponse } from './useLoginQuery';
+import { CSRFTokenResponse, useCSRFToken } from './useCSRFToken';
+import { LoginResponse } from './useLogin';
 
 type AccessTokenResponse = {
   status: string;
@@ -12,7 +12,7 @@ type AccessTokenResponse = {
   refreshTokenExpiry: number;
 };
 
-export const useAccessTokenQuery = () => {
+export const useAccessToken = () => {
   const queryClient = useQueryClient();
 
   const requestOptions = {

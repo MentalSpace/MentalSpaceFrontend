@@ -10,7 +10,7 @@ export type CSRFTokenResponse = {
 const getCSRFToken = async (): Promise<CSRFTokenResponse> =>
   await (await fetch(apiUrl + '/auth/csrf')).json();
 
-export const useCSRFTokenQuery = () =>
+export const useCSRFToken = () =>
   useQuery<CSRFTokenResponse>('csrfToken', getCSRFToken, {
     cacheTime: Infinity,
   });
