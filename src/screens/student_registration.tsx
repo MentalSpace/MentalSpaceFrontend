@@ -10,6 +10,7 @@ import {
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
+
 import { LoginStackList } from '../components/login_stack';
 import { apiUrl } from '../constants';
 import {
@@ -43,7 +44,7 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
     body: JSON.stringify({
       type: 'Student',
       email: email.trim(),
-      password: password,
+      password,
     }),
   };
   const request = useQuery<RegisterUserResponse>(
