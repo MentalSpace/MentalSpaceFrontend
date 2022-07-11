@@ -55,8 +55,5 @@
     "@types/react": "17.0.39",
     "styled-components": "^5"
   },
-  "eslintConfig": {
-    "extends": ["universe/native", "universe/web"]
-  },
   "private": true
 }
