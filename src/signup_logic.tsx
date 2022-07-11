@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const validateEmail = (email: String) => {
+export const validateEmail = (email: string) => {
   //logic to validate if Email is valid. Returns true if valid, returns false otherwise
   if (email.indexOf('@') == -1) {
     return false;
@@ -9,7 +9,7 @@ export const validateEmail = (email: String) => {
   }
 };
 
-export const validatePassword = (password: String) => {
+export const validatePassword = (password: string) => {
   //logic to validate if password is valid. Returns true if valid, returns false otherwise
   if (password.length < 8) {
     return false;
@@ -18,7 +18,7 @@ export const validatePassword = (password: String) => {
   }
 };
 
-export const validateSame = (password: String, confirm: String) => {
+export const validateSame = (password: string, confirm: string) => {
   //logic to validate if the two passwords match each other. Returns true if they match, returns false otherwise
   if (password === '' || !(password === confirm)) {
     return false;
@@ -28,9 +28,9 @@ export const validateSame = (password: String, confirm: String) => {
 };
 
 export const canContinue = (
-  email: String,
-  password: String,
-  confirm: String
+  email: string,
+  password: string,
+  confirm: string
 ) => {
   //logic to validate if the user can continue. Returns true if the user has filled all 3 fields correctly, returns false otherwise
   if (
@@ -44,7 +44,7 @@ export const canContinue = (
   }
 };
 
-export const validateString = (name: String) => {
+export const validateString = (name: string) => {
   //logic to validate if the user has filled in a name field. Returns true if the user has filled in a field, false otherwise
   if (!(name === '')) {
     return true;
@@ -54,9 +54,9 @@ export const validateString = (name: String) => {
 };
 
 export const canContinueTeacher = (
-  name: String,
-  lastName: String,
-  school: String
+  name: string,
+  lastName: string,
+  school: string
 ) => {
   //logic to validate if a teacher has filled all fields required
   if (
@@ -71,10 +71,10 @@ export const canContinueTeacher = (
 };
 
 export const canContinueStudent = (
-  name: String,
-  lastName: String,
-  studentId: String,
-  school: String
+  name: string,
+  lastName: string,
+  studentId: string,
+  school: string
 ) => {
   //logic to validate if a student has filled all fields required
   if (
