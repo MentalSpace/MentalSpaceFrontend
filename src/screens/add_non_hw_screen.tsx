@@ -7,19 +7,29 @@ import {
   Input,
   VStack,
   TextArea,
-  View
+  View,
 } from 'native-base';
 import React, { useState } from 'react';
-import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
+  Alert,
+} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { SideBarList } from '../components/main_stack';
 
-type ExtracurricularScreenProps = NativeStackScreenProps<SideBarList, 'Extracurricular'>;
+function setName(name: String) {}
+
+type ExtracurricularScreenProps = NativeStackScreenProps<
+  SideBarList,
+  'Extracurricular'
+>;
 
 function AddExtracurricular({ navigation }: ExtracurricularScreenProps) {
   const [selectedStartDate, setSelectedStartDate] = useState(new Date(''));
   const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
+  var StartDate = new Date();
 
   const showStartDatePicker = () => {
     setStartDatePickerVisible(true);
@@ -92,8 +102,7 @@ function AddExtracurricular({ navigation }: ExtracurricularScreenProps) {
             onConfirm={handleConfirm}
             onCancel={hideStartDatePicker}
           />
-
-          <Button onPress={showStartDatePicker}>When does it end? </Button>
+          <Button onPress={showEndDatePicker}>When does it end? </Button>
           <DateTimePickerModal
             themeVariant="dark"
             isVisible={isEndDatePickerVisible}
@@ -103,7 +112,7 @@ function AddExtracurricular({ navigation }: ExtracurricularScreenProps) {
           />
           <Button>Add to Calendar </Button>
           <Button onPress={() => navigation.navigate('Calendar')}>
-            Back to the calendar {' '}
+            Back to the calendar{' '}
           </Button>
         </VStack>
       </Box>
