@@ -1,17 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Button, View } from 'native-base';
-import React from 'react';
-import { SideBarList } from '../components/main_stack';
-import { AlertDialog } from 'native-base';
-import { useState } from 'react';
+import { xorBy } from 'lodash';
 import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-} from 'react-native';
-import {
+  Button,
+  View,
+  AlertDialog,
   Box,
   Center,
   Heading,
@@ -24,13 +16,23 @@ import {
   HStack,
   CheckIcon,
 } from 'native-base';
-import TextDivider from '../components/text_divider';
-import { xorBy } from 'lodash';
-import SelectBox from 'react-native-multi-selectbox';
-import { ScrollView, SafeAreaView, StatusBar } from 'react-native';
+import React, { useState } from 'react';
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  SafeAreaView,
+  StatusBar,
+} from 'react-native';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import FlashMessage from 'react-native-flash-message';
-import { showMessage } from 'react-native-flash-message';
+import SelectBox from 'react-native-multi-selectbox';
+
+import { SideBarList } from '../components/main_stack';
+import TextDivider from '../components/text_divider';
 
 type AssignmentsScreenProps = NativeStackScreenProps<
   SideBarList,
@@ -240,7 +242,7 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
                 onCancel={hideDatePicker}
               />
             </FormControl>
-            <TextDivider msg={''} />
+            <TextDivider msg="" />
             <Center>
               <View style={{ flex: 1, padding: 10 }}>
                 <HStack>
