@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  check:
+  eslint-prettier-checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,4 +21,5 @@ jobs:
       - name: run ESLint
         run: yarn eslint "**/*.ts*"
       - name: run Prettier
+        if: always()
         run: yarn prettier --check "**/*.ts*"
