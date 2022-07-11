@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Radio, Divider, Input, Heading, View, Text, ScrollView } from "native-base";
+import {
+  Button,
+  Checkbox,
+  Radio,
+  Divider,
+  Input,
+  Heading,
+  View,
+  Text,
+  ScrollView,
+} from "native-base";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SideBarList } from "../components/main_stack";
 import TimeInput from "@tighten/react-native-time-input";
@@ -21,9 +31,6 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
   const [value2, setValue2] = React.useState("StartingTime");
   const [value3, setValue3] = React.useState("SplitAssignment");
 
-  //toggles dropdown menu disable
-  const [checkedSelect, setCheckedSelect] = React.useState(true);
-
   //updates and saves the values on each change of the text box for break and work
   const [breakTime, setBreakTime] = React.useState("");
   const [workTime, setWorkTime] = React.useState("");
@@ -39,12 +46,22 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
       Prefer: "code=200",
       "X-CSRF-TOKEN": "123",
     },
-    body: JSON.stringify({studentId: studentId, canonicalId: canonicalId, preferenceId: preferenceId,}),
+    body: JSON.stringify({
+      studentId: studentId,
+      canonicalId: canonicalId,
+      preferenceId: preferenceId,
+    }),
   };
 
   //Fetch student preferences
   const request = useQuery<ScheduleOptionsResponse>(
-    "updateScheduleOptions", async () => await (await fetch(apiUrl + "/student/preference", requestOptions)).json(),{ enabled: false });
+    "updateScheduleOptions",
+    async () =>
+      await (
+        await fetch(apiUrl + "/student/preference", requestOptions)
+      ).json(),
+    { enabled: false }
+  );
 
   useEffect(() => {
     if (request.isSuccess) {
@@ -64,7 +81,6 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
     setTime(time);
   };
 
-  
   //All of the choices for the radio buttons
   const choice1 = "Short Job First";
   const choice2 = "Long Job First";
@@ -77,79 +93,180 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
   return (
     <ScrollView>
       <View alignItems="center">
-          <Heading
-            size="lg" color="coolGray.800" _dark={{color: "warmGray.50",}} fontWeight="semibold" paddingTop="5" paddingBottom="30">
-            Scheduling Options
-          </Heading>
+        <Heading
+          size="lg"
+          color="coolGray.800"
+          _dark={{ color: "warmGray.50" }}
+          fontWeight="semibold"
+          paddingTop="5"
+          paddingBottom="30"
+        >
+          Scheduling Options
+        </Heading>
 
-          <Heading size="md" mb="2" pt="5" color="coolGray.800" fontWeight="semibold"> Work Order: </Heading>
+        <Heading
+          size="md"
+          mb="2"
+          pt="5"
+          color="coolGray.800"
+          fontWeight="semibold"
+        >
+          {" "}
+          Work Order:{" "}
+        </Heading>
 
-          <Divider mb="2" mt="-1.5" ml="-1" maxW="175px" bg="coolGray.800" />
+        <Divider mb="2" mt="-1.5" ml="-1" maxW="175px" bg="coolGray.800" />
 
-          <Radio.Group name="WorkOrderGroup" accessibilityLabel="Work Order Selection" value={value} colorScheme="secondary"
-            onChange={(nextValue) => {
-              setValue(nextValue)
-              { nextValue === choice3 && setCheckedSelect(false)}
-              { nextValue !== choice3 && setCheckedSelect(true)}
+        <Radio.Group
+          name="WorkOrderGroup"
+          accessibilityLabel="Work Order Selection"
+          value={value}
+          colorScheme="secondary"
+          onChange={(nextValue) => {
+            setValue(nextValue);
+          }}
+        >
+          <Radio value={choice1} my={1}>
+            {" "}
+            {" " + choice1}{" "}
+          </Radio>
+          <Radio value={choice2} my={1}>
+            {" "}
+            {" " + choice2}{" "}
+          </Radio>
+          <Radio value={choice3} my={1}>
+            {" "}
+            {" " + choice3}{" "}
+          </Radio>
+        </Radio.Group>
+
+        <Heading
+          size="md"
+          mb="2"
+          pt="10"
+          color="coolGray.800"
+          fontWeight="semibold"
+        >
+          {" "}
+          Starting Time:{" "}
+        </Heading>
+
+        <Divider mb="2" mt="-1.5" ml="-1" maxW="225px" bg="coolGray.800" />
+
+        <Radio.Group
+          name="StartTimeGroup"
+          accessibilityLabel="Start Time Selection"
+          value={value2}
+          colorScheme="secondary"
+          onChange={(nextValue) => {
+            setValue2(nextValue);
+          }}
+        >
+          <Radio value={choice4} my={1}>
+            {" "}
+            {" " + choice4}{" "}
+          </Radio>
+          <Radio value={choice5} my={1}>
+            {" "}
+            {" " + choice5}{" "}
+          </Radio>
+          <Radio value={choice6} my={1}>
+            {" "}
+            {" " + choice6}{" "}
+          </Radio>
+        </Radio.Group>
+
+        <View my={1}>
+          <TimeInput
+            theme={{
+              inputBackgroundColor: "transparent",
+              toggleButtonActiveBackgroundColor: "#154c79",
+              toggleButtonTextColor: "#1697b7",
+              toggleBackgroundColor: "#1697b7",
             }}
-            
-          >
-            <Radio value={choice1} my={1}> {" " + choice1} </Radio>
-            <Radio value={choice2} my={1}> {" " + choice2} </Radio>
-            <Radio value={choice3} my={1}> {" " + choice3} </Radio>
-          </Radio.Group>
-          
-          <Heading size="md" mb="2" pt="10" color="coolGray.800" fontWeight="semibold" > Starting Time: </Heading>
+            onTimeChange={handleTimeChange}
+          />
+        </View>
 
-          <Divider mb="2" mt="-1.5" ml="-1" maxW="225px" bg="coolGray.800" />
+        <Heading
+          size="md"
+          mb="2"
+          pt="10"
+          color="coolGray.800"
+          fontWeight="semibold"
+        >
+          Assignment Split
+        </Heading>
 
-          <Radio.Group name="StartTimeGroup" accessibilityLabel="Start Time Selection" value={value2} colorScheme="secondary"
-            onChange={(nextValue) => {
-              setValue2(nextValue)
-            }}
-          >
-            <Radio value={choice4} my={1}> {" " + choice4} </Radio>
-            <Radio value={choice5} my={1}> {" " + choice5} </Radio>
-            <Radio value={choice6} my={1}> {" " + choice6} </Radio>
-          </Radio.Group>
+        <Divider mb="2" mt="-1.5" ml="0" maxW="225px" bg="coolGray.800" />
 
-          <View my={1}>
-            <TimeInput 
-              theme={{
-                inputBackgroundColor: "transparent",
-                toggleButtonActiveBackgroundColor: "#154c79",
-                toggleButtonTextColor: "#1697b7",
-                toggleBackgroundColor: "#1697b7",
-              }}
-              onTimeChange={handleTimeChange}
-              />
-          </View>
+        <Checkbox
+          value="KeepAssignmentTogether"
+          accessibilityLabel="Keep Assignment Together Choice"
+          colorScheme="secondary"
+          my="2"
+        >
+          {choice7}
+        </Checkbox>
 
-          <Heading size="md" mb="2" pt="10" color="coolGray.800" fontWeight="semibold">Assignment Split</Heading>
+        <Heading
+          size="md"
+          mb="2"
+          pt="10"
+          color="coolGray.800"
+          fontWeight="semibold"
+        >
+          Break To Work Ratio:
+        </Heading>
 
-          <Divider mb="2" mt="-1.5" ml="0" maxW="225px" bg="coolGray.800" />
+        <Divider mb="2" mt="-1.5" ml="-1" maxW="350px" bg="coolGray.800" />
 
-          <Checkbox value="KeepAssignmentTogether" accessibilityLabel="Keep Assignment Together Choice" colorScheme="secondary" my="2">{choice7}</Checkbox>
+        <Text fontSize="md" my="2">
+          {" "}
+          Preferred Break Time:
+        </Text>
+        <Input
+          defaultValue="5"
+          placeholder="Enter a Number"
+          w="100%"
+          maxWidth="350px"
+          onChangeText={setBreakTime}
+          bgColor={"transparent"}
+        />
 
-          <Heading size="md" mb="2" pt="10" color="coolGray.800" fontWeight="semibold">Break To Work Ratio:</Heading>
+        <Text fontSize="md" my="2">
+          {" "}
+          Amount Of Work Time:{" "}
+        </Text>
+        <Input
+          defaultValue="30"
+          placeholder="Enter a Number"
+          w="100%"
+          maxWidth="350px"
+          onChangeText={setWorkTime}
+          bgColor={"transparent"}
+        />
 
-          <Divider mb="2" mt="-1.5" ml="-1" maxW="350px" bg="coolGray.800" />
-    
-          <Text fontSize="md" my="2"> Preferred Break Time:</Text>
-          <Input defaultValue="5" placeholder="Enter a Number" w="100%" maxWidth="350px" onChangeText={setBreakTime} bgColor={"transparent"}/>
+        <Text fontSize="sm" mt="2">
+          *Default is 5 minutes of Break
+        </Text>
+        <Text fontSize="sm" mb="2">
+          for every 30 minutes of Work
+        </Text>
 
-          <Text fontSize="md" my="2"> Amount Of Work Time: </Text>
-          <Input defaultValue="30" placeholder="Enter a Number" w="100%" maxWidth="350px" onChangeText={setWorkTime} bgColor={"transparent"}/>
-
-          <Text fontSize="sm" mt="2">*Default is 5 minutes of Break</Text>
-          <Text fontSize="sm" mb="2">for every 30 minutes of Work</Text>
-
-          <Button maxWidth="75px" mt="5" mb="10" onPress={() => request.refetch()} bg="#154c79" colorScheme="secondary">
-            <Text color="white">Submit</Text>
-          </Button>
+        <Button
+          maxWidth="75px"
+          mt="5"
+          mb="10"
+          onPress={() => request.refetch()}
+          bg="#154c79"
+          colorScheme="secondary"
+        >
+          <Text color="white">Submit</Text>
+        </Button>
       </View>
     </ScrollView>
-  )
-} 
+  );
+};
 
 export default ScheduleOptionsScreen;
