@@ -7,6 +7,10 @@ import AddNonHWScreen from '../screens/add_non_hw_screen';
 import CalendarScreen from '../screens/calendar_screen';
 import TaskListScreen from '../screens/student_tasklist';
 
+import {Menu, Pressable, Avatar, Switch } from "native-base";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { LoginStackList } from "../components/login_stack";
+
 export type SideBarList = {
   Calendar: undefined;
   AddClass: undefined;
@@ -14,9 +18,10 @@ export type SideBarList = {
   AddNonHW: undefined;
 };
 
+type ProfileProps = NativeStackScreenProps<LoginStackList, 'SignOut'>;
 const Drawer = createDrawerNavigator<SideBarList>();
 
-function MainStack() {
+function MainStack({navigation}:ProfileProps) {
   return (
     <NavigationContainer independent>
       <Drawer.Navigator initialRouteName="Calendar">
@@ -25,6 +30,30 @@ function MainStack() {
         <Drawer.Screen name="Task" component={TaskListScreen} />
         <Drawer.Screen name="AddNonHW" component={AddNonHWScreen} />
       </Drawer.Navigator>
+      
+      <Menu trigger={triggerProps => {
+    return (
+      <Pressable 
+        position='absolute' 
+        height='60' 
+        width='60' 
+        top='0.5 '
+        right= '2'
+        bottom='5'
+        justifyContent='center'
+        alignItems='center'
+        accessibilityLabel='More options menu' {...triggerProps}
+      >
+          <Avatar bg="#1697b7" source={{uri: "https://bit.ly/broken-link"}}>
+          RM
+          </Avatar>
+      </Pressable>);
+  }}>
+    <Menu.Item onPress={() => navigation.navigate('Login')}>
+      Sign Out
+    </Menu.Item>
+    <Menu.Item><Switch offTrackColor="orange.100" onTrackColor="light.800" onThumbColor="light.900" offThumbColor="orange.50" /></Menu.Item>
+  </Menu>
     </NavigationContainer>
   );
 }
