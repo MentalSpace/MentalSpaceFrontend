@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
 import AddClassScreen from '../screens/add_class_screen';
-import AddNonHWScreen from '../screens/add_non_hw_screen';
+import AddExtracurricular from '../screens/add_non_hw_screen';
 import CalendarScreen from '../screens/calendar_screen';
 import TaskListScreen from '../screens/student_tasklist';
 
@@ -11,7 +11,7 @@ export type SideBarList = {
   Calendar: undefined;
   AddClass: undefined;
   Task: undefined;
-  AddNonHW: undefined;
+  Extracurricular: undefined;
 };
 
 const Drawer = createDrawerNavigator<SideBarList>();
@@ -23,7 +23,7 @@ function MainStack() {
         <Drawer.Screen name="Calendar" component={CalendarScreen} />
         <Drawer.Screen name="AddClass" component={AddClassScreen} />
         <Drawer.Screen name="Task" component={TaskListScreen} />
-        <Drawer.Screen name="AddNonHW" component={AddNonHWScreen} />
+        <Drawer.Screen name="Extracurricular" component={AddExtracurricular} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
