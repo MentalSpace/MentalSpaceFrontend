@@ -6,6 +6,7 @@ import AddClassScreen from '../screens/add_class_screen';
 import AddNonHWScreen from '../screens/add_non_hw_screen';
 import CalendarScreen from '../screens/calendar_screen';
 import TaskListScreen from '../screens/student_tasklist';
+import AssignmentsScreen from '../screens/teacher_assignment_screen';
 
 import {Menu, Pressable, Avatar, Switch } from "native-base";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -16,6 +17,7 @@ export type SideBarList = {
   AddClass: undefined;
   Task: undefined;
   AddNonHW: undefined;
+  Assignments: undefined;
 };
 
 type ProfileProps = NativeStackScreenProps<LoginStackList, 'SignOut'>;
@@ -29,6 +31,7 @@ function MainStack({navigation}:ProfileProps) {
         <Drawer.Screen name="AddClass" component={AddClassScreen} />
         <Drawer.Screen name="Task" component={TaskListScreen} />
         <Drawer.Screen name="AddNonHW" component={AddNonHWScreen} />
+        <Drawer.Screen name="Assignments" component={AssignmentsScreen} />
       </Drawer.Navigator>
       
       <Menu trigger={triggerProps => {
