@@ -9,6 +9,7 @@ import {
   VStack,
 } from 'native-base';
 import React, { useState } from 'react';
+
 import { LoginStackList } from '../components/login_stack';
 import {
   validateEmail,
@@ -23,9 +24,9 @@ type TeacherRegistrationProps = NativeStackScreenProps<
 >;
 
 const TeacherRegistration = ({ navigation }: TeacherRegistrationProps) => {
-  var [email, setEmail] = useState('');
-  var [password, setPassword] = useState('');
-  var [confirm, setConfirm] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
 
   return (
     <Center w="100%">
