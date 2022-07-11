@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@babel/eslint-parser": "^7.18.2",
     "@types/luxon": "^2.3.2",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.66.13",

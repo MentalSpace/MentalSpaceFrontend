@@ -37,8 +37,8 @@ export const useAccessToken = () => {
         queryClient.getQueryData<LoginResponse>('loginResponse')?.status ===
           'success',
       cacheTime: 30 * 60 * 1000,
-      initialData: () =>
-        useQueryClient().getQueryData<LoginResponse>('loginResponse'),
+      // initialData: () =>
+      //   useQueryClient().getQueryData<LoginResponse>('loginResponse'),
     }
   );
 };
