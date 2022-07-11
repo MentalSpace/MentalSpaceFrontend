@@ -20,6 +20,8 @@ export type LoginStackList = {
   StudentRegistration: undefined;
   Home: undefined;
   Reset: undefined;
+  SignOut: undefined;
+
 };
 
 function LoginStack() {
