@@ -19,6 +19,6 @@ jobs:
           node-version: 16
       - run: yarn install --immutable
       - name: run ESLint
-        run: yarn dlx eslint "**/*.ts*"
+        run: yarn eslint "**/*.ts*"
       - name: run Prettier
-        run: yarn dlx prettier --check "**/*.ts*"
+        run: yarn prettier --check "**/*.ts*"
