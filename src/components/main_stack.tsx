@@ -5,9 +5,9 @@ import React from 'react';
 import AddClassScreen from '../screens/add_class_screen';
 import AddNonHWScreen from '../screens/add_non_hw_screen';
 import CalendarScreen from '../screens/calendar_screen';
+import ScheduleOptionsScreen from '../screens/schedule_options';
 import TaskListScreen from '../screens/student_tasklist';
 import AssignmentsScreen from '../screens/teacher_assignment_screen';
-import ScheduleOptionsScreen from "../screens/schedule_options";
 
 export type SideBarList = {
   Calendar: undefined;
