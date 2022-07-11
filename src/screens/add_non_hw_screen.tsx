@@ -22,7 +22,7 @@ type ExtracurricularScreenProps = NativeStackScreenProps<
 function AddExtracurricular({ navigation }: ExtracurricularScreenProps) {
   const [selectedStartDate, setSelectedStartDate] = useState(new Date(''));
   const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
-  var StartDate = new Date();
+  const StartDate = new Date();
 
   const showStartDatePicker = () => {
     setStartDatePickerVisible(true);
