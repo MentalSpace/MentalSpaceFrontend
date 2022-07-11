@@ -7,6 +7,7 @@ import {
   Input,
   VStack,
   TextArea,
+  View
 } from 'native-base';
 import React, { useState } from 'react';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
@@ -14,22 +15,37 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { SideBarList } from '../components/main_stack';
 
-type AddNonHWScreenProps = NativeStackScreenProps<SideBarList, 'AddNonHW'>;
+type ExtracurricularScreenProps = NativeStackScreenProps<SideBarList, 'Extracurricular'>;
 
-function AddNonHWScreen({ navigation }: AddNonHWScreenProps) {
-  const [selectedDate, setSelectedDate] = useState(new Date('2022-05-31'));
-  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+function AddExtracurricular({ navigation }: ExtracurricularScreenProps) {
+  const [selectedStartDate, setSelectedStartDate] = useState(new Date(''));
+  const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
 
-  const showDatePicker = () => {
-    setDatePickerVisible(true);
+  const showStartDatePicker = () => {
+    setStartDatePickerVisible(true);
   };
 
-  const hideDatePicker = () => {
-    setDatePickerVisible(false);
+  const hideStartDatePicker = () => {
+    setStartDatePickerVisible(false);
   };
   const handleConfirm = (date: Date) => {
-    setSelectedDate(date);
-    hideDatePicker();
+    setSelectedStartDate(date);
+    hideStartDatePicker();
+  };
+
+  const [selectedEndDate, setSelectedEndDate] = useState(new Date(''));
+  const [isEndDatePickerVisible, setEndDatePickerVisible] = useState(false);
+
+  const showEndDatePicker = () => {
+    setEndDatePickerVisible(true);
+  };
+
+  const hideEndDatePicker = () => {
+    setEndDatePickerVisible(false);
+  };
+  const handleEndDateConfirm = (date: Date) => {
+    setSelectedEndDate(date);
+    hideEndDatePicker();
   };
 
   const [textAreaValue, setTextAreaValue] = useState('');
@@ -68,18 +84,26 @@ function AddNonHWScreen({ navigation }: AddNonHWScreenProps) {
             autoCompleteType={undefined}
           />
           <Heading>Date</Heading>
-          <Button onPress={showDatePicker}>When does it Occur? </Button>
+          <Button onPress={showStartDatePicker}>When does it start? </Button>
           <DateTimePickerModal
-            themeVariant="light"
-            isVisible={isDatePickerVisible}
-            mode="date"
+            themeVariant="dark"
+            isVisible={isStartDatePickerVisible}
+            mode="datetime"
             onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
+            onCancel={hideStartDatePicker}
           />
 
+          <Button onPress={showStartDatePicker}>When does it end? </Button>
+          <DateTimePickerModal
+            themeVariant="dark"
+            isVisible={isEndDatePickerVisible}
+            mode="datetime"
+            onConfirm={handleEndDateConfirm}
+            onCancel={hideEndDatePicker}
+          />
           <Button>Add to Calendar </Button>
           <Button onPress={() => navigation.navigate('Calendar')}>
-            Back to the calendar{' '}
+            Back to the calendar {' '}
           </Button>
         </VStack>
       </Box>
@@ -87,4 +111,4 @@ function AddNonHWScreen({ navigation }: AddNonHWScreenProps) {
   );
 }
 
-export default AddNonHWScreen;
+export default AddExtracurricular;
