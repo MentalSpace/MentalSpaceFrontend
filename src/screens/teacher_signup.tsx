@@ -9,6 +9,7 @@ import {
   VStack,
 } from 'native-base';
 import React, { useState } from 'react';
+
 import { LoginStackList } from '../components/login_stack';
 import { validateString, canContinueTeacher } from '../signup_logic';
 
