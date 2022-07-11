@@ -12192,8 +12192,10 @@ __metadata:
     react-dom: 17.0.2
     react-native: 0.68.2
     react-native-calendar-strip: ^2.2.6
+    react-native-flash-message: ^0.2.1
     react-native-gesture-handler: ~2.2.1
     react-native-modal-datetime-picker: ^13.1.2
+    react-native-multi-selectbox: ^1.5.0
     react-native-reanimated: ~2.8.0
     react-native-safe-area-context: 4.2.4
     react-native-screens: ~3.11.1
@@ -15286,6 +15288,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-flash-message@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "react-native-flash-message@npm:0.2.1"
+  dependencies:
+    prop-types: ^15.8.1
+    react-native-iphone-x-helper: ^1.3.1
+  peerDependencies:
+    prop-types: ^15.0 || ^16.0
+    react: "*"
+    react-native: "*"
+  checksum: ddb1f9e57c05c5e9789638e64a4008d40b7c8abc9a06b65a3bccee7f386a40e91bf362b6dcfe0ba030fc25c9002f3bf5ca732e6b511128053bd214e24ad177d4
+  languageName: node
+  linkType: hard
+
 "react-native-gesture-handler@npm:~2.2.1":
   version: 2.2.1
   resolution: "react-native-gesture-handler@npm:2.2.1"
@@ -15306,7 +15322,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-iphone-x-helper@npm:^1.0.3":
+"react-native-iphone-x-helper@npm:^1.0.3, react-native-iphone-x-helper@npm:^1.3.1":
   version: 1.3.1
   resolution: "react-native-iphone-x-helper@npm:1.3.1"
   peerDependencies:
@@ -15336,6 +15352,16 @@ __metadata:
     "@react-native-community/datetimepicker": ">=3.0.0"
     react-native: ">=0.65.0"
   checksum: 70a7875dbeb550f97aa26786262a434a5c88dfd048e642fa6e4a7e0b8411c8ff191463a5bb4a82bb18d603cc3b2ef60891bfcaa3144b9e0a40cd756bf662b4a1
+  languageName: node
+  linkType: hard
+
+"react-native-multi-selectbox@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "react-native-multi-selectbox@npm:1.5.0"
+  peerDependencies:
+    lodash: ^4.17.19
+    react-native-svg: ^12.1.0
+  checksum: 4bbc0054a7559dec81faa93021303f95b53263e263497b126032f1b45dfbc5a3ffddcbb8b021bf195cb740cace07b8cbf421eea6c7cf1b13713e235adea2e18b
   languageName: node
   linkType: hard
 
