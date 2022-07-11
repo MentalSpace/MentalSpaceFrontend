@@ -1,14 +1,15 @@
-import React from 'react';
 import { extendTheme, NativeBaseProvider, theme } from 'native-base';
-import LoginStack from './src/components/login_stack';
+import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+
+import LoginStack from './src/components/login_stack';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity
-    }
-  }
+      staleTime: Infinity,
+    },
+  },
 });
 
 export default function App() {
@@ -16,12 +17,12 @@ export default function App() {
     colors: {
       primary: theme.colors.amber,
       secondary: theme.colors.lightBlue,
-    }
-  })
+    },
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
-      <NativeBaseProvider theme={appTheme}> 
+      <NativeBaseProvider theme={appTheme}>
         <LoginStack />
       </NativeBaseProvider>
     </QueryClientProvider>
