@@ -1,18 +1,18 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import React from "react";
-import CalendarScreen from "../screens/calendar_screen";
-import AddClassScreen from "../screens/add_class_screen";
-import TaskListScreen from "../screens/student_tasklist";
-import AddNonHWScreen from "../screens/add_non_hw_screen";
-import AssignmentsScreen from "../screens/teacher_assignment_screen";
+import React from 'react';
+import CalendarScreen from '../screens/calendar_screen';
+import AddClassScreen from '../screens/add_class_screen';
+import TaskListScreen from '../screens/student_tasklist';
+import AddNonHWScreen from '../screens/add_non_hw_screen';
+import AssignmentsScreen from '../screens/teacher_assignment_screen';
 
 export type SideBarList = {
-    Calendar: undefined;
-    AddClass: undefined;
-    Task: undefined;
-    AddNonHW: undefined
-    Assignments: undefined;
+  Calendar: undefined;
+  AddClass: undefined;
+  Task: undefined;
+  AddNonHW: undefined;
+  Assignments: undefined;
 };
 
 const Drawer = createDrawerNavigator<SideBarList>();
