@@ -7,19 +7,12 @@ import {
   Input,
   VStack,
   TextArea,
-  View,
 } from 'native-base';
 import React, { useState } from 'react';
-import {
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
-  Alert,
-} from 'react-native';
+import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { SideBarList } from '../components/main_stack';
-
-function setName(name: String) {}
 
 type ExtracurricularScreenProps = NativeStackScreenProps<
   SideBarList,
