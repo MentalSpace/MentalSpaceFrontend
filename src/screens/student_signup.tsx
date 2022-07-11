@@ -10,6 +10,7 @@ import {
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
+
 import { LoginStackList } from '../components/login_stack';
 import { apiUrl } from '../constants';
 import { validateString, canContinueStudent } from '../signup_logic';
@@ -40,10 +41,10 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
     },
     body: JSON.stringify({
       type: 'Student',
-      firstName: firstName,
-      lastName: lastName,
-      canonicalID: canonicalID,
-      school: school,
+      firstName,
+      lastName,
+      canonicalID,
+      school,
     }),
   };
 
