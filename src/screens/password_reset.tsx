@@ -9,13 +9,14 @@ import {
   VStack,
 } from 'native-base';
 import React, { useState } from 'react';
+
 import { LoginStackList } from '../components/login_stack';
 import { validateEmail } from '../signup_logic';
 
 type PasswordResetProps = NativeStackScreenProps<LoginStackList, 'Reset'>;
 
 const ResetScreen = ({ navigation }: PasswordResetProps) => {
-  var [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
 
   return (
     <Center w="100%">
