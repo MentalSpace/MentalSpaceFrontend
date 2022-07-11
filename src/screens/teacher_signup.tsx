@@ -8,9 +8,10 @@ import {
   Input,
   VStack,
 } from 'native-base';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { LoginStackList } from '../components/login_stack';
+import { validateString, canContinueTeacher } from '../signup_logic';
 
 type TeacherSignupProps = NativeStackScreenProps<
   LoginStackList,
@@ -18,6 +19,10 @@ type TeacherSignupProps = NativeStackScreenProps<
 >;
 
 const TeacherSignup = ({ navigation }: TeacherSignupProps) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [school, setSchool] = useState('');
+
   return (
     <Center w="100%">
       <Box safeArea p="2" w="90%" maxW="290" py="8">
@@ -45,17 +50,32 @@ const TeacherSignup = ({ navigation }: TeacherSignupProps) => {
         <VStack space={3} mt="5">
           <FormControl>
             <FormControl.Label>First name</FormControl.Label>
-            <Input />
+            <Input value={firstName} onChangeText={setFirstName} />
+            <FormControl.HelperText>
+              {validateString(firstName) ? '' : 'Please enter your first name'}
+            </FormControl.HelperText>
           </FormControl>
           <FormControl>
             <FormControl.Label>Last name</FormControl.Label>
-            <Input />
+            <Input value={lastName} onChangeText={setLastName} />
+            <FormControl.HelperText>
+              {validateString(lastName) ? '' : 'Please enter your last name'}
+            </FormControl.HelperText>
           </FormControl>
           <FormControl>
             <FormControl.Label>School</FormControl.Label>
-            <Input />
+            <Input value={school} onChangeText={setSchool} />
+            <FormControl.HelperText>
+              {validateString(school)
+                ? ''
+                : 'Please enter the name of your school'}
+            </FormControl.HelperText>
           </FormControl>
-          <Button mt="2" onPress={() => navigation.navigate('Home')}>
+          <Button
+            mt="2"
+            onPress={() => navigation.navigate('Home')}
+            disabled={!canContinueTeacher(firstName, lastName, school)}
+          >
             Sign up
           </Button>
           <Button

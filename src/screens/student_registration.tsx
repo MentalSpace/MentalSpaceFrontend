@@ -13,6 +13,12 @@ import { useQuery } from 'react-query';
 
 import { LoginStackList } from '../components/login_stack';
 import { apiUrl } from '../constants';
+import {
+  validateEmail,
+  validatePassword,
+  validateSame,
+  canContinue,
+} from '../signup_logic';
 
 type StudentRegistrationProps = NativeStackScreenProps<
   LoginStackList,
@@ -26,6 +32,7 @@ type RegisterUserResponse = {
 const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirm, setConfirmPass] = useState('');
 
   const requestOptions = {
     method: 'POST',
@@ -82,9 +89,10 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
           <FormControl>
             <FormControl.Label>Email</FormControl.Label>
             <Input value={email} onChangeText={setEmail} />
+            <FormControl.HelperText>
+              {validateEmail(email) ? '' : 'Please enter a valid email'}
+            </FormControl.HelperText>
           </FormControl>
-          {/* TODO: check if the 2 passwords are equal */}
-          {/* https://docs.nativebase.io/3.0.x/form */}
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
             <Input
@@ -92,12 +100,28 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
               value={password}
               onChangeText={setPassword}
             />
+            <FormControl.HelperText>
+              {validatePassword(password)
+                ? ''
+                : 'Password must be 8 or more characters in length'}
+            </FormControl.HelperText>
           </FormControl>
           <FormControl>
             <FormControl.Label>Confirm Password</FormControl.Label>
-            <Input type="password" />
+            <Input
+              type="password"
+              value={confirm}
+              onChangeText={setConfirmPass}
+            />
+            <FormControl.HelperText>
+              {validateSame(password, confirm) ? '' : 'Passwords must match'}
+            </FormControl.HelperText>
           </FormControl>
-          <Button mt="2" onPress={() => request.refetch()}>
+          <Button
+            mt="2"
+            onPress={() => request.refetch()}
+            disabled={!canContinue(email, password, confirm)}
+          >
             Continue
           </Button>
           <Button

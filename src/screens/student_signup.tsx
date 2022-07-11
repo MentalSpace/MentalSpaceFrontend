@@ -13,6 +13,7 @@ import { useQuery } from 'react-query';
 
 import { LoginStackList } from '../components/login_stack';
 import { apiUrl } from '../constants';
+import { validateString, canContinueStudent } from '../signup_logic';
 
 type StudentSignupProps = NativeStackScreenProps<
   LoginStackList,
@@ -87,20 +88,42 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
           <FormControl>
             <FormControl.Label>First name</FormControl.Label>
             <Input value={firstName} onChangeText={setFirstName} />
+            <FormControl.HelperText>
+              {validateString(firstName) ? '' : 'Please enter your first name'}
+            </FormControl.HelperText>
           </FormControl>
           <FormControl>
             <FormControl.Label>Last name</FormControl.Label>
             <Input value={lastName} onChangeText={setLastName} />
+            <FormControl.HelperText>
+              {validateString(lastName) ? '' : 'Please enter your last name'}
+            </FormControl.HelperText>
           </FormControl>
           <FormControl>
             <FormControl.Label>Student ID</FormControl.Label>
             <Input value={canonicalID} onChangeText={setCanonicalID} />
+            <FormControl.HelperText>
+              {validateString(canonicalID)
+                ? ''
+                : 'Please enter your Student ID'}
+            </FormControl.HelperText>
           </FormControl>
           <FormControl>
             <FormControl.Label>School</FormControl.Label>
             <Input value={school} onChangeText={setSchool} />
+            <FormControl.HelperText>
+              {validateString(school)
+                ? ''
+                : 'Please enter the name of your school'}
+            </FormControl.HelperText>
           </FormControl>
-          <Button mt="2" onPress={() => request.refetch()}>
+          <Button
+            mt="2"
+            onPress={() => request.refetch()}
+            disabled={
+              !canContinueStudent(firstName, lastName, canonicalID, school)
+            }
+          >
             Sign up
           </Button>
           <Button
