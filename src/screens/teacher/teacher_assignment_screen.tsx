@@ -31,8 +31,8 @@ import FlashMessage, { showMessage } from 'react-native-flash-message';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import SelectBox from 'react-native-multi-selectbox';
 
-import { SideBarList } from '../components/main_stack';
-import TextDivider from '../components/text_divider';
+import { SideBarList } from '../../components/student_stack';
+import TextDivider from '../../components/text_divider';
 
 type AssignmentsScreenProps = NativeStackScreenProps<
   SideBarList,

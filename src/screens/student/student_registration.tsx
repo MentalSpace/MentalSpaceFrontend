@@ -8,25 +8,58 @@ import {
   Input,
   VStack,
 } from 'native-base';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 
-import { LoginStackList } from '../components/login_stack';
+import { LoginStackList } from '../../components/login_stack';
+import { apiUrl } from '../../constants';
 import {
   validateEmail,
   validatePassword,
   validateSame,
   canContinue,
-} from '../signup_logic';
+} from '../../signup_logic';
 
-type TeacherRegistrationProps = NativeStackScreenProps<
+type StudentRegistrationProps = NativeStackScreenProps<
   LoginStackList,
-  'TeacherRegistration'
+  'StudentRegistration'
 >;
 
-const TeacherRegistration = ({ navigation }: TeacherRegistrationProps) => {
+type RegisterUserResponse = {
+  status: string;
+};
+
+const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirm, setConfirm] = useState('');
+  const [confirm, setConfirmPass] = useState('');
+
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Prefer: 'code=200',
+      'X-CSRF-TOKEN': '123',
+    },
+    body: JSON.stringify({
+      type: 'Student',
+      email: email.trim(),
+      password,
+    }),
+  };
+  const request = useQuery<RegisterUserResponse>(
+    'registerUser',
+    async () =>
+      await (await fetch(apiUrl + '/user/register', requestOptions)).json(),
+    { enabled: false }
+  );
+  useEffect(() => {
+    if (request.isSuccess) {
+      console.log(request.data.status);
+      if (request.data.status === 'success')
+        navigation.navigate('StudentSignup');
+    }
+  }, [request.isSuccess]);
 
   return (
     <Center w="100%">
@@ -39,7 +72,7 @@ const TeacherRegistration = ({ navigation }: TeacherRegistrationProps) => {
           }}
           fontWeight="semibold"
         >
-          Teacher Sign Up
+          Student Sign Up
         </Heading>
         <Heading
           mt="1"
@@ -63,9 +96,9 @@ const TeacherRegistration = ({ navigation }: TeacherRegistrationProps) => {
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
             <Input
+              type="password"
               value={password}
               onChangeText={setPassword}
-              type="password"
             />
             <FormControl.HelperText>
               {validatePassword(password)
@@ -75,14 +108,18 @@ const TeacherRegistration = ({ navigation }: TeacherRegistrationProps) => {
           </FormControl>
           <FormControl>
             <FormControl.Label>Confirm Password</FormControl.Label>
-            <Input value={confirm} onChangeText={setConfirm} type="password" />
+            <Input
+              type="password"
+              value={confirm}
+              onChangeText={setConfirmPass}
+            />
             <FormControl.HelperText>
               {validateSame(password, confirm) ? '' : 'Passwords must match'}
             </FormControl.HelperText>
           </FormControl>
           <Button
             mt="2"
-            onPress={() => navigation.navigate('TeacherSignup')}
+            onPress={() => request.refetch()}
             disabled={!canContinue(email, password, confirm)}
           >
             Continue
@@ -99,4 +136,4 @@ const TeacherRegistration = ({ navigation }: TeacherRegistrationProps) => {
   );
 };
 
-export default TeacherRegistration;
+export default StudentRegistration;

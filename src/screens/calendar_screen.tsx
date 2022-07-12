@@ -15,7 +15,7 @@ import { TouchableOpacity } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
 import { RRule } from 'rrule';
 
-import { SideBarList } from '../components/main_stack';
+import { SideBarList } from '../components/student_stack';
 
 type CalendarScreenProps = NativeStackScreenProps<SideBarList, 'Calendar'>;
 
@@ -216,7 +216,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
       </Menu>
       <View alignItems="center" style={{ flex: 1 }}>
         <ScrollView>
-          {currDateIndex != undefined
+          {currDateIndex !== undefined
             ? weekEvents[currDateIndex].map((event) => (
                 <TouchableOpacity
                   key={event.eventId}

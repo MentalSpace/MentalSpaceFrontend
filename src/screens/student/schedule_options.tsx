@@ -14,8 +14,8 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
-import { SideBarList } from '../components/main_stack';
-import { apiUrl } from '../constants';
+import { SideBarList } from '../../components/student_stack';
+import { apiUrl } from '../../constants';
 
 type ScheduleOptionsProps = NativeStackScreenProps<
   SideBarList,

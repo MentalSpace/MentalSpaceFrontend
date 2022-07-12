@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import { SideBarList } from '../components/main_stack';
+import { SideBarList } from '../../components/student_stack';
 
 type ExtracurricularScreenProps = NativeStackScreenProps<
   SideBarList,

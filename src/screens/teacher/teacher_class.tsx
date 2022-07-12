@@ -12,7 +12,7 @@ import { propsFlattener } from 'native-base/lib/typescript/hooks/useThemeProps/p
 import React from 'react';
 import { Alert } from 'react-native';
 
-import { LoginStackList } from '../components/login_stack';
+import { LoginStackList } from '../../components/login_stack';
 
 function AddClass() {
   Alert.prompt('Add a class.'); //for mobile

@@ -11,7 +11,7 @@ import {
 } from 'native-base';
 import React from 'react';
 
-import { SideBarList } from '../components/main_stack';
+import { SideBarList } from '../../components/student_stack';
 
 type AddClassScreenProps = NativeStackScreenProps<SideBarList, 'AddClass'>;
 

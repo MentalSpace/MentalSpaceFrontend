@@ -8,57 +8,20 @@ import {
   Input,
   VStack,
 } from 'native-base';
-import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import React, { useState } from 'react';
 
-import { LoginStackList } from '../components/login_stack';
-import { apiUrl } from '../constants';
-import { validateString, canContinueStudent } from '../signup_logic';
+import { LoginStackList } from '../../components/login_stack';
+import { validateString, canContinueTeacher } from '../../signup_logic';
 
-type StudentSignupProps = NativeStackScreenProps<
+type TeacherSignupProps = NativeStackScreenProps<
   LoginStackList,
-  'StudentSignup'
+  'TeacherSignup'
 >;
 
-type RegisterStudentResponse = {
-  status: string;
-  studentId: number;
-};
-
-const StudentSignup = ({ navigation }: StudentSignupProps) => {
+const TeacherSignup = ({ navigation }: TeacherSignupProps) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [canonicalID, setCanonicalID] = useState('');
   const [school, setSchool] = useState('');
-
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Prefer: 'code=200',
-      'X-CSRF-TOKEN': '123',
-      Authorization: 'Bearer SOMETOKENVALUE',
-    },
-    body: JSON.stringify({
-      type: 'Student',
-      firstName,
-      lastName,
-      canonicalID,
-      school,
-    }),
-  };
-
-  const request = useQuery<RegisterStudentResponse>(
-    'registerStudent',
-    async () => await (await fetch(apiUrl + '/student', requestOptions)).json(),
-    { enabled: false }
-  );
-  useEffect(() => {
-    if (request.isSuccess) {
-      console.log(request.data.status);
-      if (request.data.status === 'success') navigation.navigate('Login');
-    }
-  }, [request.isSuccess]);
 
   return (
     <Center w="100%">
@@ -71,7 +34,7 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
           }}
           fontWeight="semibold"
         >
-          Student Sign Up
+          Teacher Sign Up
         </Heading>
         <Heading
           mt="1"
@@ -100,15 +63,6 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
             </FormControl.HelperText>
           </FormControl>
           <FormControl>
-            <FormControl.Label>Student ID</FormControl.Label>
-            <Input value={canonicalID} onChangeText={setCanonicalID} />
-            <FormControl.HelperText>
-              {validateString(canonicalID)
-                ? ''
-                : 'Please enter your Student ID'}
-            </FormControl.HelperText>
-          </FormControl>
-          <FormControl>
             <FormControl.Label>School</FormControl.Label>
             <Input value={school} onChangeText={setSchool} />
             <FormControl.HelperText>
@@ -119,16 +73,14 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
           </FormControl>
           <Button
             mt="2"
-            onPress={() => request.refetch()}
-            disabled={
-              !canContinueStudent(firstName, lastName, canonicalID, school)
-            }
+            onPress={() => navigation.navigate('Home')}
+            disabled={!canContinueTeacher(firstName, lastName, school)}
           >
             Sign up
           </Button>
           <Button
             variant="outline"
-            onPress={() => navigation.navigate('StudentRegistration')}
+            onPress={() => navigation.navigate('TeacherRegistration')}
           >
             Back
           </Button>
@@ -138,4 +90,4 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
   );
 };
 
-export default StudentSignup;
+export default TeacherSignup;

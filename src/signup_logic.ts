@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-
 export const validateEmail = (email: string) => {
   //logic to validate if Email is valid. Returns true if valid, returns false otherwise
-  if (email.indexOf('@') == -1) {
+  if (email.indexOf('@') === -1) {
     return false;
   } else {
     return true;
