@@ -8,7 +8,7 @@ import {
   Input,
   VStack,
   Select,
-  CheckIcon
+  CheckIcon,
 } from 'native-base';
 import React, { useState } from 'react';
 
@@ -55,12 +55,23 @@ const TeacherSignup = ({ navigation }: TeacherSignupProps) => {
           </FormControl>
           <FormControl>
             <FormControl.Label>School</FormControl.Label>
-            <Select selectedValue={school} minWidth="200" accessibilityLabel="Choose school" placeholder="Choose school" _selectedItem={{
-              bg: "teal.600",
-              endIcon: <CheckIcon size="5" />
-            }} mt={1} onValueChange={itemValue => {setSchool(itemValue); console.log(school)}}>
-                <Select.Item label="Santa Teresa" value="Santa Teresa"/>
-                <Select.Item label="Oak Grove" value="Oak Grove"/>
+            <Select
+              selectedValue={school}
+              minWidth="200"
+              accessibilityLabel="Choose school"
+              placeholder="Choose school"
+              _selectedItem={{
+                bg: 'teal.600',
+                endIcon: <CheckIcon size="5" />,
+              }}
+              mt={1}
+              onValueChange={(itemValue) => {
+                setSchool(itemValue);
+                console.log(school);
+              }}
+            >
+              <Select.Item label="Santa Teresa" value="Santa Teresa" />
+              <Select.Item label="Oak Grove" value="Oak Grove" />
             </Select>
           </FormControl>
           <Button
