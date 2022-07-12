@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  eslint-prettier-checks:
+  eslint-prettier-tsc-checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +18,6 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
-      - run: corepack enable
       - run: yarn install --immutable
       - name: run tsc
         run: yarn tsc --noEmit
