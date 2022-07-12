@@ -17,8 +17,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: yarn install --immutable
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - name: run tsc
+        run: yarn tsc --noEmit
       - name: run ESLint
+        if: always()
         run: yarn eslint "**/*.ts*"
       - name: run Prettier
         if: always()
