@@ -7,7 +7,6 @@ import AddClassScreen from '../screens/student/add_class_screen';
 import AddNonHWScreen from '../screens/student/add_non_hw_screen';
 import ScheduleOptionsScreen from '../screens/student/schedule_options';
 import TaskListScreen from '../screens/student/student_tasklist';
-import AssignmentsScreen from '../screens/teacher/teacher_assignment_screen';
 
 export type SideBarList = {
   Calendar: undefined;
