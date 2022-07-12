@@ -18,7 +18,8 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
-      - run: yarn install --frozen-lockfile
+      - run: corepack enable
+      - run: yarn install --immutable
       - name: run tsc
         run: yarn tsc --noEmit
       - name: run ESLint
