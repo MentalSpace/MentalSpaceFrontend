@@ -13,9 +13,10 @@ import FlashMessage from "react-native-flash-message";
 import { showMessage} from "react-native-flash-message";
 import TimeInput from '@tighten/react-native-time-input';
 
+
 type AssignmentsScreenProps = NativeStackScreenProps<SideBarList, 'Assignments'>
 
-const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
+const EditAssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
     const K_OPTIONS = [
         {
             item: 'Period 1',
@@ -51,12 +52,46 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
         },
     ]
 
+    var pastTitle = '';
+    var pastSubject = '';
+    var pastDescription = '';
+    var pastPoints = '';
+    var pastTimeEstimate = '';
+    var pastDueDate = '';
+
+    const [time, setTime] = useState('');
+    const handleTimeChange = (time: any, validTime: any) => {
+        if (!validTime) return;
+        setTime(time);
+    }
+    const [selectedTeams, setSelectedTeams] = useState([]);
+    const [type, setType] = useState("");
+        
+    // if () {
+    //     pastTitle = 
+    //     pastSubject = 
+    //     setSelectedTeams( ? )
+    //     pastDescription =
+    //     pastPoints = 
+    //     pastTimeEstimate =
+    //     pastDueDate = 
+    //     setType( ? )
+    //     setTime( ? )
+    
+    // }
+
+    //TODO: BACKEND pass the assignment information to here if the user is editing an assignment
+
+    var title = pastTitle;
+    var subject = pastSubject;
+    var description = pastDescription;
+    var points = pastPoints;
+    var timeEstimate = pastTimeEstimate;
+    var dueDate = pastDueDate;
+
     const [shouldOverlapWithTrigger] = React.useState(false);
-    const [position, setPosition] = React.useState("auto");
-    const [selectedTeam, setSelectedTeam] = useState({});
 
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -68,83 +103,61 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
         console.warn("A date has been picked: ", date);
         hideDatePicker();
     };
-
-    // const showTimePicker = () => {
-    //     setTimePickerVisibility(true);
-    // };
-    // const hideTimePicker = () => {
-    //     setTimePickerVisibility(false);
-    // };
-    // const handleConfirmt = (time: any) => {
-    //     console.warn("A time has been picked: ", time);
-    //     hideTimePicker();
-    // };
-
-    const theme = useTheme();
     
     const demoValueControlledTextArea = (e: any) => {setTextAreaValue(e.currentTarget.value)};
 
-    const [isOpen, setIsOpen] = React.useState(false);
-    const [alertIsOpen, alertSetIsOpen] = React.useState(false);
-
-    const onClose = () => setIsOpen(false);
-    const alertOnClose = () => alertSetIsOpen(false);
-
     const cancelRef = React.useRef(null);
-    const [selectedTeams, setSelectedTeams] = useState([])
     const [textAreaValue, setTextAreaValue] = useState("");
-    //const [text, setText] = useState('');
 
-    function delay(ms: number) {
-        return new Promise( resolve => setTimeout(resolve, ms) );
-    }
-
-    const [time, setTime] = useState('');
-    const [dueDate, setDueDate] = useState('');
-    const handleTimeChange = (time: any, validTime: any) => {
-        if (!validTime) return;
-        setTime(time);
-    }
 
     function onMultiChange() {
+        console.log(selectedTeams);
         return (item: any) => setSelectedTeams(xorBy(selectedTeams, [item], 'id'))
     }
 
-    const [type, setType] = useState('');
-    const [title, setTitle] = useState('');
-    const [subject, setSubject] = useState('');
-    const [description, setDescription] = useState('');
-    const [points, setPoints] = useState('');
-    const [timeEstimate, setTimeEstimate] = useState('');
- 
     function onFormSubmit (newTitle: any, newSubject: any, newPeriods: any, newDescription: any, newPoints: any, newEstimatedTime: any, newCategory: any, newTimeDue: any, newDueDate: any) {
-      setTitle('');
-      setSelectedTeams([]);
-      setSubject('');
-      setDescription('');
-      setPoints('');
-      setTimeEstimate('');
-      setType('');
-      setDueDate('');
+        return [
+            newTitle, 
+            newSubject, 
+            newPeriods, 
+            newDescription, 
+            newPoints, 
+            newEstimatedTime, 
+            newCategory, 
+            newTimeDue, 
+            newDueDate
+        ];
+    }
 
-      return [
-          newTitle, 
-          newSubject, 
-          newPeriods, 
-          newDescription, 
-          newPoints, 
-          newEstimatedTime, 
-          newCategory, 
-          newTimeDue, 
-          newDueDate
-      ];
+    function editSubject (text: any) {
+        subject = text;
+    }
+
+    function editTitle (text: any) {
+        title = text;
+    }
+
+    function editDescription (text: any) {
+        description = text;
+    }
+
+    function editPoints (text: any) {
+        points = text;
+    }
+
+    function editTimeEstimate (text: any) {
+        timeEstimate = text
+    }
+
+    function editDueDate (text: any) {
+        dueDate = text
     }
 
     return (
         <ScrollView>
             <Center w="100%">
               <Heading paddingTop="30" size="lg" fontWeight="600" color="coolGray.800" _dark={{color: "warmGray.50"}}>
-                Add New Assignment
+                Edit Assignment
               </Heading>
                 <Box safeArea w="90%"  maxW="500" style={{
                     marginTop: 10,
@@ -156,52 +169,57 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
                     <VStack space={3} >
                         <FormControl>
                             <FormControl.Label>Title</FormControl.Label>
-                            <Input backgroundColor="white" placeholder = "Enter Title" defaultValue={title} value={title} onChangeText={setTitle}
-                            // onChangeText={(newText) => {editTitle(newText)}}
+                            <Input backgroundColor="white" placeholder = "Enter Title" defaultValue={title} onChangeText={(newText) => {editTitle(newText)}}
                             />
                         </FormControl>
                         <FormControl>
                             <FormControl.Label>Subject</FormControl.Label>
-                            <Input backgroundColor="white" placeholder = "Enter Subject " defaultValue={subject} value={subject} onChangeText={setSubject}/>
+                            <Input backgroundColor="white" placeholder = "Enter Subject " defaultValue={subject} onChangeText={(newText) => {editSubject(newText)}}
+                            />
                         </FormControl>
                         <SafeAreaView>
                             <FormControl>
-                                <FormControl.Label>Period(s)</FormControl.Label>
-                                <Box backgroundColor="white">
-                                    <SelectBox
-                                        label=""
-                                        placeholder="Select your periods"
-                                        options={K_OPTIONS}
-                                        selectedValues={selectedTeams}
-                                        onMultiSelect={onMultiChange()}
-                                        onTapClose={onMultiChange()}
-                                        isMulti
-                                        toggleIconColor="orange"
-                                        searchIconColor="orange"
-                                        arrowIconColor="orange"
-                                        listOptionProps={{ nestedScrollEnabled: true }}
-                                    />
-                                </Box>
+                              <FormControl.Label>Period(s)</FormControl.Label>
+                              <Box backgroundColor="white">
+                                <SelectBox
+                                  label=""
+                                  placeholder="Select your periods"
+                                  options={K_OPTIONS}
+                                  selectedValues={selectedTeams}
+                                  onMultiSelect={onMultiChange()}
+                                  onTapClose={onMultiChange()}
+                                  isMulti
+                                  toggleIconColor="orange"
+                                  searchIconColor="orange"
+                                  arrowIconColor="orange"
+                                  listOptionProps={{ nestedScrollEnabled: true }}
+                                />
+                              </Box>
                             </FormControl>
+                          
                         </SafeAreaView>
                         <FormControl>
                             <FormControl.Label>Description</FormControl.Label>
-                            <TextArea backgroundColor="white" placeholder = "Enter Description" defaultValue={description} value={description} onChangeText={setDescription} autoCompleteType={undefined} />
+                            <TextArea backgroundColor="white" placeholder = "Enter Description" defaultValue={description}
+                              onChangeText={(newText) => {editDescription(newText)}} autoCompleteType={undefined} 
+                             />
                         </FormControl>
                         <FormControl>
                             <FormControl.Label>Points</FormControl.Label>
-                            <Input backgroundColor="white" placeholder="Enter max points" keyboardType="numeric" defaultValue={points} value={points} onChangeText={setPoints} />
+                            <Input backgroundColor="white" placeholder="Enter max points" keyboardType="numeric" 
+                             defaultValue={points} onChangeText={(newText) => {editPoints(newText)}} 
+                            />
                         </FormControl>
                         <FormControl>
                             <FormControl.Label>Estimated Time</FormControl.Label>
-                            <Input backgroundColor="white" placeholder="Enter estimated time to complete" defaultValue={timeEstimate} value={timeEstimate} onChangeText={setTimeEstimate} />
+                            <Input backgroundColor="white" placeholder="Enter estimated time to complete" defaultValue={timeEstimate} onChangeText={(newText) => {editTimeEstimate(newText)}} />
                         </FormControl>
                         <FormControl>
                             <FormControl.Label>Category</FormControl.Label>
                             <Select backgroundColor="white" selectedValue={type} minWidth={200} accessibilityLabel="Please enter the type of assignment (e.g. homework, quiz)" placeholder="Please enter the type of assignment (e.g. homework, quiz)" onValueChange={itemValue => setType(itemValue)} _selectedItem={{
                                 bg: "cyan.600",
                                 endIcon: <CheckIcon size={4}/>
-                            }}>
+                                }}>
                                 <Select.Item label="Homework" value="homeWork"/>
                                 <Select.Item label="Class Work" value="classWork"/>
                                 <Select.Item label="Quiz" value="quiz"/>
@@ -212,7 +230,7 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
                         <FormControl>
                             <FormControl.Label>Due Date and Time Due</FormControl.Label>
                             <HStack>
-                                <TimeInput 
+                                <TimeInput
                                 setCurrentTime 
                                 onTimeChange={handleTimeChange}
                                 />
@@ -221,8 +239,7 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
                                         backgroundColor="white"
                                         placeholder="mm/dd/yyyy"
                                         defaultValue={dueDate}
-                                        value={dueDate}
-                                        onChangeText={setDueDate}
+                                        onChangeText={(newText) => {editDueDate(newText)}}
                                     />
                                 </Box>
                             </HStack>
@@ -232,15 +249,17 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
                         <Center>
                             <View style={{ flex: 1, padding:10}}>
                                 <HStack>
-                                    <Button mr="10" onPress={() => {showMessage({
-                                        message: "Success!",
-                                        description: "This assignment has now been added to your calendar.",
-                                        type: "success",
-                                        backgroundColor: "#16a34a",
-                                        duration: 3000,
-                                        icon:"success"
-                                        }); onFormSubmit(title, subject, selectedTeams, description, points, timeEstimate, type, time, dueDate)}}>
-                                        Add Assignment
+                                    <Button mr="10" onPress={() => {
+                                          onFormSubmit(title, subject, selectedTeams, description, points, timeEstimate, type, time, dueDate);
+                                         showMessage({
+                                            message: "Success!",
+                                            description: "This assignment has now been saved.",
+                                            type: "success",
+                                            backgroundColor: "#16a34a",
+                                            duration: 3000,
+                                            icon:"success",
+                                            });}}>
+                                        Save Assignment
                                     </Button>
                                     <Button onPress={() => navigation.navigate('Calendar')}>
                                         Back to Calendar
@@ -256,26 +275,4 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
   );
 };
 
-export default AssignmentsScreen;
-
-{/* <Button onPress={() => setIsOpen(true)}>Delete</Button>
-        <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
-            <AlertDialog.Content>
-            <AlertDialog.CloseButton />
-                <AlertDialog.Header>Delete Assignment</AlertDialog.Header>
-                <AlertDialog.Body>
-                    This will remove -Assignment Name- for -period-. This action cannot be
-                    reversed. Deleted data can not be recovered.
-                </AlertDialog.Body>
-                <AlertDialog.Footer>
-                    <Button.Group space={2}>
-                    <Button variant="unstyled" colorScheme="coolGray" onPress={onClose} ref={cancelRef}>
-                        Cancel
-                    </Button>
-                    <Button colorScheme="danger" onPress={onClose}>
-                        Delete
-                    </Button>
-                </Button.Group>
-                </AlertDialog.Footer>
-            </AlertDialog.Content>
-        </AlertDialog> */}
+export default EditAssignmentsScreen;
