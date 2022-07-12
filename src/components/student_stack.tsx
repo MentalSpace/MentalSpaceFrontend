@@ -16,6 +16,7 @@ export type SideBarList = {
   AddNonHW: undefined;
   Assignments: undefined;
   ScheduleOptions: undefined;
+  Extracurricular: undefined;
 };
 
 const Drawer = createDrawerNavigator<SideBarList>();
