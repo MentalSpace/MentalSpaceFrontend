@@ -1,0 +1,29 @@
+name: ESLint & Prettier checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  eslint-prettier-tsc-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+      - run: yarn install --immutable
+      - name: run tsc
+        run: yarn tsc --noEmit
+      - name: run ESLint
+        if: always()
+        run: yarn eslint "**/*.ts*"
+      - name: run Prettier
+        if: always()
+        run: yarn prettier --check "**/*.ts*"
