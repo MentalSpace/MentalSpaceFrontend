@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  eslint-prettier-checks:
+  eslint-prettier-tsc-checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,8 +17,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          cache: 'yarn'
       - run: yarn install --immutable
+      - name: run tsc
+        run: yarn tsc --noEmit
       - name: run ESLint
+        if: always()
         run: yarn eslint "**/*.ts*"
       - name: run Prettier
         if: always()

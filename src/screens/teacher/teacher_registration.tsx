@@ -8,51 +8,25 @@ import {
   Input,
   VStack,
 } from 'native-base';
-import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import React, { useState } from 'react';
 
-import { LoginStackList } from '../components/login_stack';
-import { apiUrl } from '../constants';
+import { LoginStackList } from '../../components/login_stack';
+import {
+  validateEmail,
+  validatePassword,
+  validateSame,
+  canContinue,
+} from '../../signup_logic';
 
-type StudentRegistrationProps = NativeStackScreenProps<
+type TeacherRegistrationProps = NativeStackScreenProps<
   LoginStackList,
-  'StudentRegistration'
+  'TeacherRegistration'
 >;
 
-type RegisterUserResponse = {
-  status: string;
-};
-
-const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
+const TeacherRegistration = ({ navigation }: TeacherRegistrationProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Prefer: 'code=200',
-      'X-CSRF-TOKEN': '123',
-    },
-    body: JSON.stringify({
-      type: 'Student',
-      email: email.trim(),
-      password,
-    }),
-  };
-  const request = useQuery<RegisterUserResponse>(
-    'registerUser',
-    async () =>
-      await (await fetch(apiUrl + '/user/register', requestOptions)).json(),
-    { enabled: false }
-  );
-  useEffect(() => {
-    if (request.isSuccess) {
-      console.log(request.data.status);
-      if (request.data.status === 'success')
-        navigation.navigate('StudentSignup');
-    }
-  }, [request.isSuccess]);
+  const [confirm, setConfirm] = useState('');
 
   return (
     <Center w="100%">
@@ -65,7 +39,7 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
           }}
           fontWeight="semibold"
         >
-          Student Sign Up
+          Teacher Sign Up
         </Heading>
         <Heading
           mt="1"
@@ -82,22 +56,35 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
           <FormControl>
             <FormControl.Label>Email</FormControl.Label>
             <Input value={email} onChangeText={setEmail} />
+            <FormControl.HelperText>
+              {validateEmail(email) ? '' : 'Please enter a valid email'}
+            </FormControl.HelperText>
           </FormControl>
-          {/* TODO: check if the 2 passwords are equal */}
-          {/* https://docs.nativebase.io/3.0.x/form */}
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
             <Input
-              type="password"
               value={password}
               onChangeText={setPassword}
+              type="password"
             />
+            <FormControl.HelperText>
+              {validatePassword(password)
+                ? ''
+                : 'Password must be 8 or more characters in length'}
+            </FormControl.HelperText>
           </FormControl>
           <FormControl>
             <FormControl.Label>Confirm Password</FormControl.Label>
-            <Input type="password" />
+            <Input value={confirm} onChangeText={setConfirm} type="password" />
+            <FormControl.HelperText>
+              {validateSame(password, confirm) ? '' : 'Passwords must match'}
+            </FormControl.HelperText>
           </FormControl>
-          <Button mt="2" onPress={() => request.refetch()}>
+          <Button
+            mt="2"
+            onPress={() => navigation.navigate('TeacherSignup')}
+            disabled={!canContinue(email, password, confirm)}
+          >
             Continue
           </Button>
           <Button
@@ -112,4 +99,4 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
   );
 };
 
-export default StudentRegistration;
+export default TeacherRegistration;
