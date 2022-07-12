@@ -64,17 +64,21 @@ function StudentStack({ navigation }: ProfileProps) {
           );
         }}
       >
-        <Menu.Item onPress={() => navigation.navigate('Login')}>
-          Sign Out
-        </Menu.Item>
-        <Menu.Item>
-          <Switch
-            offTrackColor="orange.100"
-            onTrackColor="light.800"
-            onThumbColor="light.900"
-            offThumbColor="orange.50"
-          />
-        </Menu.Item>
+        <Menu.OptionGroup title="Options" type="radio">
+          <Menu.Item onPress={() => navigation.navigate('Login')}>
+            Sign Out
+          </Menu.Item>
+        </Menu.OptionGroup>
+        <Menu.OptionGroup title="Change Appearance" type="radio">
+          <Menu.Item>
+            <Switch
+              offTrackColor="orange.100"
+              onTrackColor="light.800"
+              onThumbColor="light.900"
+              offThumbColor="orange.50"
+            />
+          </Menu.Item>
+        </Menu.OptionGroup>
       </Menu>
     </NavigationContainer>
   );
