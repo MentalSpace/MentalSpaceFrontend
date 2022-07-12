@@ -22,7 +22,10 @@ function StudentStack() {
       <Drawer.Navigator initialRouteName="Calendar">
         <Drawer.Screen name="Calendar" component={CalendarScreen} />
         <Drawer.Screen name="Assignments" component={AssignmentsScreen} />
-        <Drawer.Screen name="EditAssignments" component={EditAssignmentsScreen} />
+        <Drawer.Screen
+          name="EditAssignments"
+          component={EditAssignmentsScreen}
+        />
         <Drawer.Screen name="TeacherClass" component={TeacherClassScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
