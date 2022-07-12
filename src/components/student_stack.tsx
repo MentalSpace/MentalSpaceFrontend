@@ -13,7 +13,6 @@ export type SideBarList = {
   AddClass: undefined;
   Task: undefined;
   AddNonHW: undefined;
-  Assignments: undefined;
   ScheduleOptions: undefined;
   Extracurricular: undefined;
 };
@@ -28,7 +27,6 @@ function StudentStack() {
         <Drawer.Screen name="AddClass" component={AddClassScreen} />
         <Drawer.Screen name="Task" component={TaskListScreen} />
         <Drawer.Screen name="AddNonHW" component={AddNonHWScreen} />
-        <Drawer.Screen name="Assignments" component={AssignmentsScreen} />
         <Drawer.Screen
           name="ScheduleOptions"
           component={ScheduleOptionsScreen}
