@@ -18,8 +18,8 @@ import React, { useState, Component, useEffect } from 'react';
 
 import { LoginStackList } from '../../components/login_stack';
 import { SideBarList } from '../../components/student_stack';
-import AddClassScreen from './add_class_screen';
 import CalendarScreen from '../calendar_screen';
+import AddClassScreen from './add_class_screen';
 
 {
   /*const Please = () => {
