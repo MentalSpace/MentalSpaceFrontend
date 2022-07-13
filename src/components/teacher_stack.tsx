@@ -1,7 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-
 import CalendarScreen from '../screens/calendar_screen';
 import AssignmentsScreen from '../screens/teacher/teacher_assignment_screen';
 import TeacherClassScreen from '../screens/teacher/teacher_class';
