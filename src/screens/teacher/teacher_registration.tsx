@@ -41,17 +41,6 @@ const TeacherRegistration = ({ navigation }: TeacherRegistrationProps) => {
         >
           Teacher Sign Up
         </Heading>
-        <Heading
-          mt="1"
-          color="coolGray.600"
-          _dark={{
-            color: 'warmGray.200',
-          }}
-          fontWeight="medium"
-          size="xs"
-        >
-          Sign up to continue!
-        </Heading>
         <VStack space={3} mt="5">
           <FormControl>
             <FormControl.Label>Email</FormControl.Label>
