@@ -10,10 +10,11 @@ import {
   Link,
 } from 'native-base';
 import { useEffect, useState } from 'react';
+import { useQueryClient } from 'react-query';
 
 import { LoginStackList } from '../components/login_stack';
 import TextDivider from '../components/text_divider';
-import { useCSRFToken } from '../hooks/useCSRFToken';
+import { AccessTokenResponse } from '../hooks/useAccessToken';
 import { useLogin } from '../hooks/useLogin';
 
 type LoginScreenProps = NativeStackScreenProps<LoginStackList, 'Login'>;
@@ -21,13 +22,19 @@ type LoginScreenProps = NativeStackScreenProps<LoginStackList, 'Login'>;
 const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const queryClient = useQueryClient();
 
-  const csrfToken = useCSRFToken();
   const login = useLogin();
   useEffect(() => {
     if (login.isSuccess) {
       console.log(login.data.status);
-      if (login.data.status === 'success') navigation.navigate('Home');
+      if (login.data.status === 'success') {
+        queryClient.setQueryData(
+          'accessTokenResponse',
+          login.data as AccessTokenResponse
+        );
+        navigation.navigate('Home');
+      }
     }
   }, [login.isSuccess]);
 

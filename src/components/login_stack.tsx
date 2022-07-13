@@ -4,11 +4,11 @@ import React from 'react';
 
 import LoginScreen from '../screens/login_screen';
 import ResetScreen from '../screens/password_reset';
-import StudentRegistration from '../screens/student_registration';
-import StudentSignup from '../screens/student_signup';
-import TeacherRegistration from '../screens/teacher_registration';
-import TeacherSignup from '../screens/teacher_signup';
-import MainStack from './main_stack';
+import StudentRegistration from '../screens/student/student_registration';
+import StudentSignup from '../screens/student/student_signup';
+import TeacherRegistration from '../screens/teacher/teacher_registration';
+import TeacherSignup from '../screens/teacher/teacher_signup';
+import StudentStack from './student_stack';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +37,7 @@ function LoginStack() {
           name="StudentRegistration"
           component={StudentRegistration}
         />
-        <Stack.Screen name="Home" component={MainStack} />
+        <Stack.Screen name="Home" component={StudentStack} />
         <Stack.Screen name="Reset" component={ResetScreen} />
       </Stack.Navigator>
     </NavigationContainer>

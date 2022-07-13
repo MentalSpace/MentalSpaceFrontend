@@ -8,58 +8,25 @@ import {
   Input,
   VStack,
 } from 'native-base';
-import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import React, { useState } from 'react';
 
-import { LoginStackList } from '../components/login_stack';
-import { apiUrl } from '../constants';
+import { LoginStackList } from '../../components/login_stack';
 import {
   validateEmail,
   validatePassword,
   validateSame,
   canContinue,
-} from '../signup_logic';
+} from '../../signup_logic';
 
-type StudentRegistrationProps = NativeStackScreenProps<
+type TeacherRegistrationProps = NativeStackScreenProps<
   LoginStackList,
-  'StudentRegistration'
+  'TeacherRegistration'
 >;
 
-type RegisterUserResponse = {
-  status: string;
-};
-
-const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
+const TeacherRegistration = ({ navigation }: TeacherRegistrationProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirm, setConfirmPass] = useState('');
-
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Prefer: 'code=200',
-      'X-CSRF-TOKEN': '123',
-    },
-    body: JSON.stringify({
-      type: 'Student',
-      email: email.trim(),
-      password,
-    }),
-  };
-  const request = useQuery<RegisterUserResponse>(
-    'registerUser',
-    async () =>
-      await (await fetch(apiUrl + '/user/register', requestOptions)).json(),
-    { enabled: false }
-  );
-  useEffect(() => {
-    if (request.isSuccess) {
-      console.log(request.data.status);
-      if (request.data.status === 'success')
-        navigation.navigate('StudentSignup');
-    }
-  }, [request.isSuccess]);
+  const [confirm, setConfirm] = useState('');
 
   return (
     <Center w="100%">
@@ -72,18 +39,7 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
           }}
           fontWeight="semibold"
         >
-          Student Sign Up
-        </Heading>
-        <Heading
-          mt="1"
-          color="coolGray.600"
-          _dark={{
-            color: 'warmGray.200',
-          }}
-          fontWeight="medium"
-          size="xs"
-        >
-          Sign up to continue!
+          Teacher Sign Up
         </Heading>
         <VStack space={3} mt="5">
           <FormControl>
@@ -96,9 +52,9 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
             <Input
-              type="password"
               value={password}
               onChangeText={setPassword}
+              type="password"
             />
             <FormControl.HelperText>
               {validatePassword(password)
@@ -108,18 +64,14 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
           </FormControl>
           <FormControl>
             <FormControl.Label>Confirm Password</FormControl.Label>
-            <Input
-              type="password"
-              value={confirm}
-              onChangeText={setConfirmPass}
-            />
+            <Input value={confirm} onChangeText={setConfirm} type="password" />
             <FormControl.HelperText>
               {validateSame(password, confirm) ? '' : 'Passwords must match'}
             </FormControl.HelperText>
           </FormControl>
           <Button
             mt="2"
-            onPress={() => request.refetch()}
+            onPress={() => navigation.navigate('TeacherSignup')}
             disabled={!canContinue(email, password, confirm)}
           >
             Continue
@@ -136,4 +88,4 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
   );
 };
 
-export default StudentRegistration;
+export default TeacherRegistration;

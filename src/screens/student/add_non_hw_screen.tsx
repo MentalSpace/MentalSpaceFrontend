@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import { SideBarList } from '../components/main_stack';
+import { SideBarList } from '../../components/student_stack';
 
 type ExtracurricularScreenProps = NativeStackScreenProps<
   SideBarList,
@@ -22,7 +22,7 @@ type ExtracurricularScreenProps = NativeStackScreenProps<
 function AddExtracurricular({ navigation }: ExtracurricularScreenProps) {
   const [selectedStartDate, setSelectedStartDate] = useState(new Date(''));
   const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
-  var StartDate = new Date();
+  const StartDate = new Date();
 
   const showStartDatePicker = () => {
     setStartDatePickerVisible(true);

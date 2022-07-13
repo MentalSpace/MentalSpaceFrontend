@@ -7,13 +7,15 @@ import {
   Heading,
   Input,
   VStack,
+  Select,
+  CheckIcon,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
-import { LoginStackList } from '../components/login_stack';
-import { apiUrl } from '../constants';
-import { validateString, canContinueStudent } from '../signup_logic';
+import { LoginStackList } from '../../components/login_stack';
+import { apiUrl } from '../../constants';
+import { validateString, canContinueStudent } from '../../signup_logic';
 
 type StudentSignupProps = NativeStackScreenProps<
   LoginStackList,
@@ -73,17 +75,6 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
         >
           Student Sign Up
         </Heading>
-        <Heading
-          mt="1"
-          color="coolGray.600"
-          _dark={{
-            color: 'warmGray.200',
-          }}
-          fontWeight="medium"
-          size="xs"
-        >
-          Sign up to continue!
-        </Heading>
         <VStack space={3} mt="5">
           <FormControl>
             <FormControl.Label>First name</FormControl.Label>
@@ -110,12 +101,24 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
           </FormControl>
           <FormControl>
             <FormControl.Label>School</FormControl.Label>
-            <Input value={school} onChangeText={setSchool} />
-            <FormControl.HelperText>
-              {validateString(school)
-                ? ''
-                : 'Please enter the name of your school'}
-            </FormControl.HelperText>
+            <Select
+              selectedValue={school}
+              minWidth="200"
+              accessibilityLabel="Choose school"
+              placeholder="Choose school"
+              _selectedItem={{
+                bg: 'teal.600',
+                endIcon: <CheckIcon size="5" />,
+              }}
+              mt={1}
+              onValueChange={(itemValue) => {
+                setSchool(itemValue);
+                console.log(school);
+              }}
+            >
+              <Select.Item label="Santa Teresa" value="Santa Teresa" />
+              <Select.Item label="Oak Grove" value="Oak Grove" />
+            </Select>
           </FormControl>
           <Button
             mt="2"
