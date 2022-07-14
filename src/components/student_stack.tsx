@@ -1,19 +1,13 @@
 import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Button } from 'native-base';
 import React, { useState } from 'react';
 
 import CalendarScreen from '../screens/calendar_screen';
 import LoginScreen from '../screens/login_screen';
 import AddClassScreen from '../screens/student/add_class_screen';
 import AddExtracurricular from '../screens/student/add_non_hw_screen';
-import AddNonHWScreen from '../screens/student/add_non_hw_screen';
 import ScheduleOptionsScreen from '../screens/student/schedule_options';
-import StudentMenu from '../screens/student/student_menu';
 import TaskListScreen from '../screens/student/student_tasklist';
-import Sidebar from './customDrawer';
-import LoginStack, { LoginStackList } from './login_stack';
 
 export type SideBarList = {
   Calendar: undefined;
