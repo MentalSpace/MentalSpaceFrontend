@@ -1,42 +1,47 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import CalendarScreen from '../screens/calendar_screen';
-import AddClassScreen from '../screens/student/add_class_screen';
-import AddNonHWScreen from '../screens/student/add_non_hw_screen';
-import ScheduleOptionsScreen from '../screens/student/schedule_options';
-import StudentMenu from '../screens/student/student_menu';
-import TaskListScreen from '../screens/student/student_tasklist';
+import LoginScreen from '../screens/login_screen';
+import ResetScreen from '../screens/password_reset';
+import StudentRegistration from '../screens/student/student_registration';
+import StudentSignup from '../screens/student/student_signup';
+import TeacherRegistration from '../screens/teacher/teacher_registration';
+import TeacherSignup from '../screens/teacher/teacher_signup';
+import StudentStack from './student_stack';
 
-export type SideBarList = {
-  Menu: undefined;
-  Calendar: undefined;
-  AddClass: undefined;
-  Task: undefined;
-  AddNonHW: undefined;
-  ScheduleOptions: undefined;
-  Extracurricular: undefined;
+const Stack = createNativeStackNavigator();
+
+export type LoginStackList = {
+  Login: undefined;
+  TeacherSignup: undefined;
+  StudentSignup: undefined;
+  TeacherRegistration: undefined;
+  StudentRegistration: undefined;
+  Home: undefined;
+  Reset: undefined;
 };
 
-const Drawer = createDrawerNavigator<SideBarList>();
-
-function StudentStack() {
+function LoginStack() {
   return (
-    <NavigationContainer independent>
-      <Drawer.Navigator initialRouteName="Menu">
-        <Drawer.Screen name="Menu" component={StudentMenu} />
-        <Drawer.Screen name="Calendar" component={CalendarScreen} />
-        <Drawer.Screen name="AddClass" component={AddClassScreen} />
-        <Drawer.Screen name="Task" component={TaskListScreen} />
-        <Drawer.Screen name="AddNonHW" component={AddNonHWScreen} />
-        <Drawer.Screen
-          name="ScheduleOptions"
-          component={ScheduleOptionsScreen}
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="TeacherSignup" component={TeacherSignup} />
+        <Stack.Screen name="StudentSignup" component={StudentSignup} />
+        <Stack.Screen
+          name="TeacherRegistration"
+          component={TeacherRegistration}
         />
-      </Drawer.Navigator>
+        <Stack.Screen
+          name="StudentRegistration"
+          component={StudentRegistration}
+        />
+        <Stack.Screen name="Home" component={StudentStack} />
+        <Stack.Screen name="Reset" component={ResetScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-export default StudentStack;
+export default LoginStack;
