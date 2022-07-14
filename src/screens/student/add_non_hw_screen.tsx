@@ -16,7 +16,7 @@ import { SideBarList } from '../../components/student_stack';
 
 type ExtracurricularScreenProps = NativeStackScreenProps<
   SideBarList,
-  'Extracurricular'
+  'Extracurriculars'
 >;
 
 function AddExtracurricular({ navigation }: ExtracurricularScreenProps) {
@@ -105,7 +105,7 @@ function AddExtracurricular({ navigation }: ExtracurricularScreenProps) {
           />
           <Button>Add to Calendar </Button>
           <Button onPress={() => navigation.navigate('Calendar')}>
-            Back to the calendar{' '}
+            Back to the calendar
           </Button>
         </VStack>
       </Box>
