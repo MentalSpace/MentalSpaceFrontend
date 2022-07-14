@@ -4,13 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import LoginStack from './src/components/login_stack';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: Infinity,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 export default function App() {
   const appTheme = extendTheme({

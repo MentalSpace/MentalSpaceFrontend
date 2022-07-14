@@ -18,5 +18,6 @@ const getCSRFToken = async (): Promise<CSRFTokenResponse> =>
 
 export const useCSRFToken = () =>
   useQuery<CSRFTokenResponse>('csrfToken', getCSRFToken, {
+    staleTime: Infinity,
     cacheTime: Infinity,
   });
