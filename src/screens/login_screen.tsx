@@ -114,8 +114,9 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
             >
               {login.data?.errors?.password}
             </FormControl.ErrorMessage>
-            <Heading fontSize= '9' fontWeight= '500' alignSelf="flex-end" mt="1">
-              Forget Password? Please contact ngca@esuhsd.org to reset your password
+            <Heading fontSize="9" fontWeight="500" alignSelf="flex-end" mt="1">
+              Forget Password? Please contact ngca@esuhsd.org to reset your
+              password
             </Heading>
           </FormControl>
           <Button mt="2" onPress={() => login.mutate({ email, password })}>
