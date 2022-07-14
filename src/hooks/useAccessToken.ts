@@ -30,7 +30,9 @@ export const useAccessToken = () => {
     accessTokenRequest,
     {
       enabled: csrfToken.data?.status === 'success',
-      cacheTime: 30 * 60 * 1000,
+      staleTime: 30 * 60 * 1000,
+      refetchInterval: 30 * 60 * 1000,
+      refetchIntervalInBackground: true,
     }
   );
 };
