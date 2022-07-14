@@ -1,15 +1,21 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 
 import { apiUrl } from '../constants';
 import { useCSRFToken } from './useCSRFToken';
 
 export type LoginResponse = {
   status: string;
-  userId: number;
-  accessToken: string;
-  accessTokenExpiry: number;
-  refreshToken: string;
-  refreshTokenExpiry: number;
+  errors?: LoginErrors;
+  userId?: number;
+  accessToken?: string;
+  accessTokenExpiry?: number;
+  refreshToken?: string;
+  refreshTokenExpiry?: number;
+};
+
+type LoginErrors = {
+  email?: string;
+  password?: string;
 };
 
 export type LoginCredentials = {

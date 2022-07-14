@@ -8,6 +8,7 @@ import {
   FormControl,
   Input,
   Link,
+  WarningOutlineIcon,
 } from 'native-base';
 import { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
@@ -22,6 +23,7 @@ type LoginScreenProps = NativeStackScreenProps<LoginStackList, 'Login'>;
 const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const queryClient = useQueryClient();
 
   const login = useLogin();
@@ -34,6 +36,8 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
           login.data as AccessTokenResponse
         );
         navigation.navigate('Home');
+      } else if (login.data.status === 'error') {
+        console.log(login.data);
       }
     }
   }, [login.isSuccess]);
@@ -83,13 +87,33 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
         </Heading>
 
         <VStack space={3} mt="5">
-          <FormControl>
+          <FormControl
+            isInvalid={
+              login.isSuccess ? login.data.errors?.email !== undefined : false
+            }
+          >
             <FormControl.Label>Email ID</FormControl.Label>
             <Input onChangeText={setEmail} />
+            <FormControl.ErrorMessage
+              leftIcon={<WarningOutlineIcon size="xs" />}
+            >
+              {login.data?.errors?.email}
+            </FormControl.ErrorMessage>
           </FormControl>
-          <FormControl>
+          <FormControl
+            isInvalid={
+              login.isSuccess
+                ? login.data.errors?.password !== undefined
+                : false
+            }
+          >
             <FormControl.Label>Password</FormControl.Label>
             <Input type="password" onChangeText={setPassword} />
+            <FormControl.ErrorMessage
+              leftIcon={<WarningOutlineIcon size="xs" />}
+            >
+              {login.data?.errors?.password}
+            </FormControl.ErrorMessage>
             <Link
               _text={{
                 fontSize: 'xs',

@@ -1,2 +1,1 @@
-export const apiUrl =
-  'https://stoplight.io/mocks/probablyanasian/school-project/71988164'; //"https://dev-waffle-cone.probablyanasian.dev"
+export const apiUrl = 'http://localhost:19006/api/v0'; //"https://dev-waffle-cone.probablyanasian.dev"

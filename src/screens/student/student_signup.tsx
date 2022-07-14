@@ -15,6 +15,8 @@ import { useQuery } from 'react-query';
 
 import { LoginStackList } from '../../components/login_stack';
 import { apiUrl } from '../../constants';
+import { useAccessToken } from '../../hooks/useAccessToken';
+import { useCSRFToken } from '../../hooks/useCSRFToken';
 import { validateString, canContinueStudent } from '../../signup_logic';
 
 type StudentSignupProps = NativeStackScreenProps<
@@ -33,13 +35,15 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
   const [canonicalID, setCanonicalID] = useState('');
   const [school, setSchool] = useState('');
 
+  const csrfToken = useCSRFToken();
+  const accessToken = useAccessToken();
+
   const requestOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Prefer: 'code=200',
-      'X-CSRF-TOKEN': '123',
-      Authorization: 'Bearer SOMETOKENVALUE',
+      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
+      Authorization: 'Bearer ' + accessToken.data!.accessToken,
     },
     body: JSON.stringify({
       type: 'Student',
