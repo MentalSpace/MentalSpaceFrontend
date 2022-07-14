@@ -30,7 +30,7 @@ type RegisterUserResponse = {
 function AddClassScreen({ navigation }: AddClassScreenProps) {
   const csrfToken = useCSRFToken();
   const accessToken = useAccessToken();
-  
+
   const [classCode, setClassCode] = useState('');
 
   const requestOptions = {
@@ -73,20 +73,25 @@ function AddClassScreen({ navigation }: AddClassScreenProps) {
           >
             Enter a Class Code
           </Heading>
-          <HStack space = "2">
-          <FormControl>
-            <Input
-              placeholder="Class Code"
-              value={classCode}
-              onChangeText={setClassCode}
-            />
-            <FormControl.HelperText>
-              {validateString(classCode) ? '' : 'Please enter a class code'}
-            </FormControl.HelperText>
-          </FormControl>
-          <Pressable disabled = {!validateString(classCode)} onPress = {() => {request.refetch();}}>
-              <CheckCircleIcon color = "amber.600" size = "lg" mt = "1"/>
-          </Pressable>
+          <HStack space="2">
+            <FormControl>
+              <Input
+                placeholder="Class Code"
+                value={classCode}
+                onChangeText={setClassCode}
+              />
+              <FormControl.HelperText>
+                {validateString(classCode) ? '' : 'Please enter a class code'}
+              </FormControl.HelperText>
+            </FormControl>
+            <Pressable
+              disabled={!validateString(classCode)}
+              onPress={() => {
+                request.refetch();
+              }}
+            >
+              <CheckCircleIcon color="amber.600" size="lg" mt="1" />
+            </Pressable>
           </HStack>
           <Button onPress={() => navigation.navigate('Menu')}>
             Go back to the main menu
