@@ -1,56 +1,48 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import TimeInput from '@tighten/react-native-time-input';
 import { xorBy } from 'lodash';
 import {
   Button,
   View,
-  AlertDialog,
+  // AlertDialog,
   Box,
   Center,
   Heading,
   VStack,
   FormControl,
   Input,
-  Link,
   TextArea,
-  Slide,
   HStack,
-  CheckIcon,
-  Select,
   AddIcon,
-  ArrowBackIcon
+  ArrowBackIcon,
 } from 'native-base';
-import React, { useState, Component, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
+  // Text,
+  // TextInput,
+
+  // Alert,
   ScrollView,
   SafeAreaView,
-  StatusBar,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
 import FlashMessage, { showMessage } from 'react-native-flash-message';
-import TimeInput from '@tighten/react-native-time-input';
 import SelectBox from 'react-native-multi-selectbox';
-import { useScrollToTop } from '@react-navigation/native';
+import RNPickerSelect from 'react-native-picker-select';
+import { useQuery } from 'react-query';
 
 import { SideBarList } from '../../components/student_stack';
 import TextDivider from '../../components/text_divider';
 import { apiUrl } from '../../constants';
-import { useQuery } from 'react-query';
-
-import {validateString} from '../../signup_logic'
-import RNPickerSelect from "react-native-picker-select";
+import { validateString } from '../../signup_logic';
 
 type AssignmentsScreenProps = NativeStackScreenProps<
   SideBarList,
   'Assignments'
 >;
 type RegisterTeacherResponse = {
-    status: string;
-}
+  status: string;
+};
 
 const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
   const periods = [
@@ -88,24 +80,26 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
     },
   ];
 
-  const [shouldOverlapWithTrigger] = React.useState(false);
-  const [position, setPosition] = React.useState('auto');
+  // const [shouldOverlapWithTrigger] = React.useState(false);
+  // const [position, setPosition] = React.useState('auto');
 
+  // const [isOpen, setIsOpen] = React.useState(false);
+  // const [alertIsOpen, alertSetIsOpen] = React.useState(false);
 
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [alertIsOpen, alertSetIsOpen] = React.useState(false);
+  // const onClose = () => setIsOpen(false);
+  // const alertOnClose = () => alertSetIsOpen(false);
+  // const cancelRef = React.useRef(null);
 
-  const onClose = () => setIsOpen(false);
-  const alertOnClose = () => alertSetIsOpen(false);
-
-  const cancelRef = React.useRef(null);
   const [classIDs, setclassIDs] = useState([]);
-  
+
   const [time, setTime] = useState('');
-  const handleTimeChange = (time: React.SetStateAction<string>, validTime: any) => {
+  const handleTimeChange = (
+    time: React.SetStateAction<string>,
+    validTime: any
+  ) => {
     if (!validTime) return;
-      setTime(time);
-  }
+    setTime(time);
+  };
 
   function onMultiChange() {
     console.log(classIDs);
@@ -133,22 +127,19 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
     setPoints('');
     setPercentage('');
     setDueDate('');
-    setDateAssigned(0)
-    
+    setDateAssigned(0);
   }
-
-  
 
   const [title, setTitle] = useState('');
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
   const [timeEstimate, setTimeEstimate] = useState('');
-  const [category, setCategory] = useState ('');
+  const [category, setCategory] = useState('');
   const [points, setPoints] = useState('');
-  const[percentage,setPercentage] = useState('');
+  const [percentage, setPercentage] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [dateAssigned, setDateAssigned] = useState(new Date().getDate());
-  
+
   const requestOptions = {
     method: 'POST',
     headers: {
@@ -165,12 +156,13 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
       category,
       timeEstimate,
       title,
-      description
+      description,
     }),
   };
   const request = useQuery<RegisterTeacherResponse>(
     'addAssignment',
-    async () => await (await fetch(apiUrl + '/assignment', requestOptions)).json(),
+    async () =>
+      await (await fetch(apiUrl + '/assignment', requestOptions)).json(),
     { enabled: false }
   );
   useEffect(() => {
@@ -180,203 +172,201 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
   }, [request.isSuccess]);
 
   return (
-    <KeyboardAvoidingView style={{flex:1}} behavior='padding'>
-        <ScrollView>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <ScrollView>
         <Center w="100%">
-            <Heading
+          <Heading
             paddingTop="30"
             size="lg"
             fontWeight="600"
             color="coolGray.800"
             _dark={{ color: 'warmGray.50' }}
-            >
+          >
             Add New Assignment
-            </Heading>
-            <Box
+          </Heading>
+          <Box
             safeArea
             w="90%"
             maxW="500"
             style={{
-                marginTop: 10,
-                paddingLeft: 15,
-                paddingRight: 15,
-                paddingTop: 15,
+              marginTop: 10,
+              paddingLeft: 15,
+              paddingRight: 15,
+              paddingTop: 15,
             }}
-            >
+          >
             <VStack space={3}>
-                <FormControl>
+              <FormControl>
                 <FormControl.Label>Title</FormControl.Label>
                 <Input
-                    backgroundColor="white"
-                    placeholder="Enter Title"
-                    value={title}
-                    onChangeText={setTitle}
+                  backgroundColor="white"
+                  placeholder="Enter Title"
+                  value={title}
+                  onChangeText={setTitle}
                 />
-                </FormControl>
-                <FormControl>
+              </FormControl>
+              <FormControl>
                 <FormControl.Label>Subject</FormControl.Label>
                 <Input
-                    backgroundColor="white"
-                    placeholder="Enter Subject "
-                    value={subject}
-                    onChangeText={setSubject}
+                  backgroundColor="white"
+                  placeholder="Enter Subject "
+                  value={subject}
+                  onChangeText={setSubject}
                 />
-                </FormControl>
-                <SafeAreaView>
+              </FormControl>
+              <SafeAreaView>
                 <FormControl>
-                    <FormControl.Label>Period(s)</FormControl.Label>
-                    <Box backgroundColor="white">
+                  <FormControl.Label>Period(s)</FormControl.Label>
+                  <Box backgroundColor="white">
                     <SelectBox
-                        label=""
-                        placeholder="Select your periods"
-                        options={periods}
-                        selectedValues={classIDs}
-                        onMultiSelect={onMultiChange()}
-                        onTapClose={onMultiChange()}
-                        isMulti
-                        toggleIconColor="orange"
-                        searchIconColor="orange"
-                        arrowIconColor="orange"
-                        listOptionProps={{ nestedScrollEnabled: true }}
+                      label=""
+                      placeholder="Select your periods"
+                      options={periods}
+                      selectedValues={classIDs}
+                      onMultiSelect={onMultiChange()}
+                      onTapClose={onMultiChange()}
+                      isMulti
+                      toggleIconColor="orange"
+                      searchIconColor="orange"
+                      arrowIconColor="orange"
+                      listOptionProps={{ nestedScrollEnabled: true }}
                     />
-                    </Box>
+                  </Box>
                 </FormControl>
-                </SafeAreaView>
-                <FormControl>
+              </SafeAreaView>
+              <FormControl>
                 <FormControl.Label>Description</FormControl.Label>
                 <TextArea
-                    backgroundColor="white"
-                    placeholder="Enter Description"
-                    value={description}
-                    onChangeText={setDescription}
-                    autoCompleteType={undefined}
+                  backgroundColor="white"
+                  placeholder="Enter Description"
+                  value={description}
+                  onChangeText={setDescription}
+                  autoCompleteType={undefined}
                 />
-                </FormControl>
-                <FormControl>
+              </FormControl>
+              <FormControl>
                 <FormControl.Label>Time Estimate (minutes)</FormControl.Label>
                 <Input
-                    backgroundColor="white"
-                    placeholder="Enter time estimate"
-                    value={timeEstimate}
-                    onChangeText={setTimeEstimate}
+                  backgroundColor="white"
+                  placeholder="Enter time estimate"
+                  value={timeEstimate}
+                  onChangeText={setTimeEstimate}
                 />
-                </FormControl>
-                <FormControl backgroundColor="white">
-                  <FormControl.Label>Category</FormControl.Label>
-                    <RNPickerSelect
-                    onValueChange={(value) => console.log(value)}
-                    items={[
-                        { label: "Homework", value: "Homework" },
-                        { label: "Classwork", value: "Classwork" },
-                        { label: "Quiz", value: "Quiz" },
-                        { label: "Test", value: "Test" },
-                        { label: "Other", value: "Other" }
-                    ]}
-                    />
-                  </FormControl>
-            <HStack>
+              </FormControl>
+              <FormControl backgroundColor="white">
+                <FormControl.Label>Category</FormControl.Label>
+                <RNPickerSelect
+                  onValueChange={(value) => console.log(value)}
+                  items={[
+                    { label: 'Homework', value: 'Homework' },
+                    { label: 'Classwork', value: 'Classwork' },
+                    { label: 'Quiz', value: 'Quiz' },
+                    { label: 'Test', value: 'Test' },
+                    { label: 'Other', value: 'Other' },
+                  ]}
+                />
+              </FormControl>
+              <HStack>
                 <FormControl width="46%">
-                <FormControl.Label>Points</FormControl.Label>
-                <Input 
+                  <FormControl.Label>Points</FormControl.Label>
+                  <Input
                     backgroundColor="white"
                     placeholder="Enter max points"
                     keyboardType="numeric"
                     value={points}
                     onChangeText={setPoints}
-                />
+                  />
                 </FormControl>
                 <FormControl ml="10" width="45.5%">
-                <FormControl.Label>Percentage</FormControl.Label>
-                <Input 
+                  <FormControl.Label>Percentage</FormControl.Label>
+                  <Input
                     backgroundColor="white"
                     placeholder="%"
-                    keyboardType='numeric'
+                    keyboardType="numeric"
                     value={percentage}
                     onChangeText={setPercentage}
-                    />
+                  />
                 </FormControl>
-            </HStack>
-                <FormControl>
+              </HStack>
+              <FormControl>
                 <FormControl.Label>Due Date and Time Due</FormControl.Label>
                 <HStack>
-                    <Input 
+                  <Input
                     height="10"
-                    mr="5" 
-                    w="30%" 
+                    mr="5"
+                    w="30%"
                     maxW="250"
                     backgroundColor="white"
                     placeholder="mm/dd/yyyy"
                     value={dueDate}
                     onChangeText={setDueDate}
-                    />
-                    <TimeInput
-                    onTimeChange={handleTimeChange}
-                    />
-                    
-                </HStack>
-                
-                
-                </FormControl>
-                <FormControl>
-                  <FormControl.Label>Date Assigned</FormControl.Label>
-                  <Input
-                      backgroundColor="white"
-                      keyboardType="numeric"
-                      // value={dateAssigned}
-                      // onChangeText={setTimeEstimate}
                   />
-                </FormControl>
+                  <TimeInput onTimeChange={handleTimeChange} />
+                </HStack>
+              </FormControl>
+              <FormControl>
+                <FormControl.Label>Date Assigned</FormControl.Label>
+                <Input
+                  backgroundColor="white"
+                  keyboardType="numeric"
+                  // value={dateAssigned}
+                  // onChangeText={setTimeEstimate}
+                />
+              </FormControl>
 
-                
-                <TextDivider msg="" />
-                <Center>
+              <TextDivider msg="" />
+              <Center>
                 <View style={{ flex: 1, padding: 10 }}>
-                    <HStack>
-                    <Button style = {{borderRadius: 45}} mr="10" ml="10" onPress={() => navigation.navigate('Calendar')}>
-                        <ArrowBackIcon size="7" mt="0.5" color="white"/>
+                  <HStack>
+                    <Button
+                      style={{ borderRadius: 45 }}
+                      mr="10"
+                      ml="10"
+                      onPress={() => navigation.navigate('Calendar')}
+                    >
+                      <ArrowBackIcon size="7" mt="0.5" color="white" />
                     </Button>
-                    <Button style = {{borderRadius: 45}}
-                        mr="10"
-                        ml="10"
-                        onPress={() => {
+                    <Button
+                      style={{ borderRadius: 45 }}
+                      mr="10"
+                      ml="10"
+                      onPress={() => {
                         request.refetch();
 
                         onFormSubmit(
-                            title,
-                            subject,
-                            classIDs,
-                            description,
-                            timeEstimate,
-                            category,
-                            points,
-                            percentage,
-                            dueDate,
-                            time,
+                          title,
+                          subject,
+                          classIDs,
+                          description,
+                          timeEstimate,
+                          category,
+                          points,
+                          percentage,
+                          dueDate,
+                          time
                         );
                         showMessage({
-                            message: 'Success!',
-                            description:
+                          message: 'Success!',
+                          description:
                             'This assignment has now been added to your calendar.',
-                            type: 'success',
-                            backgroundColor: '#16a34a',
-                            duration: 3000,
-                            icon: 'success',
+                          type: 'success',
+                          backgroundColor: '#16a34a',
+                          duration: 3000,
+                          icon: 'success',
                         });
-                        }}
-                        disabled={
-                          !validateString(title)
-                        }
+                      }}
+                      disabled={!validateString(title)}
                     >
-                        <AddIcon size="7" mt="0.5" color="white"/>
+                      <AddIcon size="7" mt="0.5" color="white" />
                     </Button>
-                    </HStack>
+                  </HStack>
                 </View>
-                </Center>
+              </Center>
             </VStack>
-            </Box>
+          </Box>
         </Center>
         <FlashMessage position="top" />
-        </ScrollView>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };

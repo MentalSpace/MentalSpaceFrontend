@@ -36,7 +36,7 @@ function StudentStack() {
           name="ScheduleOptions"
           component={ScheduleOptionsScreen}
         />
-        <Drawer.Screen name="Assignments" component={AssignmentsScreen}/>
+        <Drawer.Screen name="Assignments" component={AssignmentsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
