@@ -1,47 +1,46 @@
+import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useState } from 'react';
 
+import CalendarScreen from '../screens/calendar_screen';
 import LoginScreen from '../screens/login_screen';
-import ResetScreen from '../screens/password_reset';
-import StudentRegistration from '../screens/student/student_registration';
-import StudentSignup from '../screens/student/student_signup';
-import TeacherRegistration from '../screens/teacher/teacher_registration';
-import TeacherSignup from '../screens/teacher/teacher_signup';
-import StudentStack from './student_stack';
+import AddClassScreen from '../screens/student/add_class_screen';
+import AddExtracurricular from '../screens/student/add_non_hw_screen';
+import ScheduleOptionsScreen from '../screens/student/schedule_options';
+import TaskListScreen from '../screens/student/student_tasklist';
 
-const Stack = createNativeStackNavigator();
-
-export type LoginStackList = {
-  Login: undefined;
-  TeacherSignup: undefined;
-  StudentSignup: undefined;
-  TeacherRegistration: undefined;
-  StudentRegistration: undefined;
-  Home: undefined;
-  Reset: undefined;
+export type SideBarList = {
+  Calendar: undefined;
+  Enroll: undefined;
+  SchedueleHomework: undefined;
+  HomeworkAdjustments: undefined;
+  Extracurriculars: undefined;
+  ScheduleOptions: undefined;
+  Events: undefined;
+  SignOut: undefined;
 };
 
-function LoginStack() {
+const Drawer = createDrawerNavigator<SideBarList>();
+
+function StudentStack() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="TeacherSignup" component={TeacherSignup} />
-        <Stack.Screen name="StudentSignup" component={StudentSignup} />
-        <Stack.Screen
-          name="TeacherRegistration"
-          component={TeacherRegistration}
+    <NavigationContainer independent>
+      <Drawer.Navigator initialRouteName="Calendar">
+        <Drawer.Screen name="Calendar" component={CalendarScreen} />
+        <Drawer.Screen name="Enroll" component={AddClassScreen} />
+        <Drawer.Screen name="SchedueleHomework" component={TaskListScreen} />
+        <Drawer.Screen name="HomeworkAdjustments" component={TaskListScreen} />
+        <Drawer.Screen name="Events" component={CalendarScreen} />
+        <Drawer.Screen name="Extracurriculars" component={AddExtracurricular} />
+        <Drawer.Screen
+          name="ScheduleOptions"
+          component={ScheduleOptionsScreen}
         />
-        <Stack.Screen
-          name="StudentRegistration"
-          component={StudentRegistration}
-        />
-        <Stack.Screen name="Home" component={StudentStack} />
-        <Stack.Screen name="Reset" component={ResetScreen} />
-      </Stack.Navigator>
+        <Drawer.Screen name="SignOut" component={LoginScreen} />
+        {/* TODO: find a way to properly implement sign out.*/}
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
 
-export default LoginStack;
+export default StudentStack;
