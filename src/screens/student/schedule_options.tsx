@@ -16,6 +16,7 @@ import { useQuery } from 'react-query';
 
 import { SideBarList } from '../../components/student_stack';
 import { apiUrl } from '../../constants';
+import { useAccessToken } from '../../hooks/useAccessToken';
 import { useCSRFToken } from '../../hooks/useCSRFToken';
 
 type ScheduleOptionsProps = NativeStackScreenProps<
@@ -42,10 +43,12 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
   const [preferenceId, setPreferenceId] = useState(0);
 
   const csrfToken = useCSRFToken();
+  const accessToken = useAccessToken();
 
   const requestOptions = {
     method: 'PATCH',
     headers: {
+      Authorization: 'Bearer ' + accessToken.data!.accessToken,
       'Content-Type': 'application/json',
       Prefer: 'code=200',
       'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
