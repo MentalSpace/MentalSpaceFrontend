@@ -86,7 +86,7 @@ const TeacherSignup = ({ navigation }: TeacherSignupProps) => {
             onPress={() => navigation.navigate('TeacherRegistration')}
           >
             Back
-          </Button>
+          </Button>   
         </VStack>
       </Box>
     </Center>
