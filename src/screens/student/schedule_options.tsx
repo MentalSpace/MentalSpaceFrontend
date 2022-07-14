@@ -16,6 +16,7 @@ import { useQuery } from 'react-query';
 
 import { SideBarList } from '../../components/student_stack';
 import { apiUrl } from '../../constants';
+import { useAccessToken } from '../hooks/useAccessToken';
 import { useCSRFToken } from '../../hooks/useCSRFToken';
 
 type ScheduleOptionsProps = NativeStackScreenProps<
