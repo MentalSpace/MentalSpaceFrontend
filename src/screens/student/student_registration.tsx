@@ -13,6 +13,7 @@ import { useQuery } from 'react-query';
 
 import { LoginStackList } from '../../components/login_stack';
 import { apiUrl } from '../../constants';
+import { useCSRFToken } from '../../hooks/useCSRFToken';
 import {
   validateEmail,
   validatePassword,
@@ -34,12 +35,14 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
   const [password, setPassword] = useState('');
   const [confirm, setConfirmPass] = useState('');
 
+  const csrfToken = useCSRFToken();
+
   const requestOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Prefer: 'code=200',
-      'X-CSRF-TOKEN': '123',
+      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
     },
     body: JSON.stringify({
       type: 'Student',

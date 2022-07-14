@@ -2296,7 +2296,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/webpack-config@npm:0.16.26":
+"@expo/webpack-config@npm:0.16.26, @expo/webpack-config@npm:^0.16.26":
   version: 0.16.26
   resolution: "@expo/webpack-config@npm:0.16.26"
   dependencies:
@@ -12666,6 +12666,7 @@ __metadata:
     "@babel/core": ^7.12.9
     "@babel/eslint-parser": ^7.18.2
     "@config-plugins/android-jsc-intl": ^2.0.0
+    "@expo/webpack-config": ^0.16.26
     "@react-native-community/datetimepicker": 6.1.2
     "@react-navigation/drawer": ^6.4.2
     "@react-navigation/native": ^6.0.10
