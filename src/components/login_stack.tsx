@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import LoginScreen from '../screens/login_screen';
-import ResetScreen from '../screens/password_reset';
 import StudentRegistration from '../screens/student/student_registration';
 import StudentSignup from '../screens/student/student_signup';
 import TeacherRegistration from '../screens/teacher/teacher_registration';
@@ -19,7 +18,6 @@ export type LoginStackList = {
   TeacherRegistration: undefined;
   StudentRegistration: undefined;
   Home: undefined;
-  Reset: undefined;
 };
 
 function LoginStack() {
@@ -38,7 +36,6 @@ function LoginStack() {
           component={StudentRegistration}
         />
         <Stack.Screen name="Home" component={StudentStack} />
-        <Stack.Screen name="Reset" component={ResetScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
