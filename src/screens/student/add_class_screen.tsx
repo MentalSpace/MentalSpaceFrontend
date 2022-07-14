@@ -3,9 +3,13 @@ import {
   Box,
   Button,
   Center,
+  CheckCircleIcon,
+  CheckIcon,
   FormControl,
   Heading,
+  HStack,
   Input,
+  Pressable,
   VStack,
 } from 'native-base';
 import React, { useState, useEffect } from 'react';
@@ -13,6 +17,8 @@ import { useQuery } from 'react-query';
 
 import { SideBarList } from '../../components/student_stack';
 import { apiUrl } from '../../constants';
+import { useAccessToken } from '../../hooks/useAccessToken';
+import { useCSRFToken } from '../../hooks/useCSRFToken';
 import { validateString } from '../../signup_logic';
 
 type AddClassScreenProps = NativeStackScreenProps<SideBarList, 'AddClass'>;
@@ -22,17 +28,19 @@ type RegisterUserResponse = {
 };
 
 function AddClassScreen({ navigation }: AddClassScreenProps) {
+  const csrfToken = useCSRFToken();
+  const accessToken = useAccessToken();
+  
   const [classCode, setClassCode] = useState('');
 
   const requestOptions = {
     method: 'POST',
     headers: {
+      Authorization: 'Bearer ' + accessToken.data!.accessToken,
       'Content-Type': 'application/json',
-      Prefer: 'code=200',
-      'X-CSRF-TOKEN': '123',
+      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
     },
     body: JSON.stringify({
-      type: 'Student',
       classCode,
     }),
   };
@@ -65,6 +73,7 @@ function AddClassScreen({ navigation }: AddClassScreenProps) {
           >
             Enter a Class Code
           </Heading>
+          <HStack space = "2">
           <FormControl>
             <Input
               placeholder="Class Code"
@@ -75,14 +84,10 @@ function AddClassScreen({ navigation }: AddClassScreenProps) {
               {validateString(classCode) ? '' : 'Please enter a class code'}
             </FormControl.HelperText>
           </FormControl>
-          <Button
-            disabled={!validateString(classCode)}
-            onPress={() => {
-              request.refetch();
-            }}
-          >
-            Enter Code
-          </Button>
+          <Pressable disabled = {!validateString(classCode)} onPress = {() => {request.refetch();}}>
+              <CheckCircleIcon color = "amber.600" size = "lg" mt = "1"/>
+          </Pressable>
+          </HStack>
           <Button onPress={() => navigation.navigate('Menu')}>
             Go back to the main menu
           </Button>
