@@ -41,7 +41,6 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Prefer: 'code=200',
       'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
     },
     body: JSON.stringify({

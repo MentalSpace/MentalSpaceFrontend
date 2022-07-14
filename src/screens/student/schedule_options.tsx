@@ -16,6 +16,7 @@ import { useQuery } from 'react-query';
 
 import { SideBarList } from '../../components/student_stack';
 import { apiUrl } from '../../constants';
+import { useCSRFToken } from '../../hooks/useCSRFToken';
 
 type ScheduleOptionsProps = NativeStackScreenProps<
   SideBarList,
@@ -40,12 +41,14 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
   const [canonicalId, setCanonicalId] = useState(0);
   const [preferenceId, setPreferenceId] = useState(0);
 
+  const csrfToken = useCSRFToken();
+
   const requestOptions = {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       Prefer: 'code=200',
-      'X-CSRF-TOKEN': '123',
+      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
     },
     body: JSON.stringify({
       studentId,
