@@ -8,7 +8,11 @@ import {
   Input,
   VStack,
   Select,
+  View,
   CheckIcon,
+  HStack,
+  ArrowForwardIcon,
+  ArrowBackIcon,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
@@ -124,21 +128,28 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
               <Select.Item label="Oak Grove" value="Oak Grove" />
             </Select>
           </FormControl>
-          <Button
-            mt="2"
-            onPress={() => request.refetch()}
-            disabled={
-              !canContinueStudent(firstName, lastName, canonicalID, school)
-            }
-          >
-            Sign up
-          </Button>
-          <Button
-            variant="outline"
-            onPress={() => navigation.navigate('StudentRegistration')}
-          >
-            Back
-          </Button>
+          <View style={{ flex: 1, padding: 10 }}>
+                    <HStack>
+                    <Button 
+                      style={{ borderRadius: 45 }}
+                      mr="10"
+                      ml="10"
+                      onPress={() => navigation.navigate('StudentRegistration')} 
+                      >
+                        <ArrowBackIcon size="7" mt="0.5" color="white" />
+                    </Button>
+                      <Button
+                        style={{ borderRadius: 45 }}
+                        mr="10"
+                        ml="10"
+                        onPress={() => request.refetch()} 
+                      disabled={!canContinueStudent(firstName, lastName, canonicalID, school)} 
+
+                      >
+                        <ArrowForwardIcon size="7" mt="0.5" color="white" />
+                      </Button>
+                      </HStack>
+                      </View>
         </VStack>
       </Box>
     </Center>

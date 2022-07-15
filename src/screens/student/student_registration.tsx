@@ -6,7 +6,11 @@ import {
   FormControl,
   Heading,
   Input,
+  View,
   VStack,
+  HStack,
+  ArrowForwardIcon,
+  ArrowBackIcon,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
@@ -108,19 +112,28 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
               {validateSame(password, confirm) ? '' : 'Passwords must match'}
             </FormControl.HelperText>
           </FormControl>
-          <Button
-            mt="2"
-            onPress={() => request.refetch()}
-            disabled={!canContinue(email, password, confirm)}
-          >
-            Continue
-          </Button>
-          <Button
-            variant="outline"
-            onPress={() => navigation.navigate('Login')}
-          >
-            Back
-          </Button>
+          
+          <View style={{ flex: 1, padding: 10 }}>
+                    <HStack>
+                    <Button 
+                      style={{ borderRadius: 45 }}
+                      mr="10"
+                      ml="10"
+                      onPress={() => navigation.navigate('Login')} 
+                      >
+                        <ArrowBackIcon size="7" mt="0.5" color="white" />
+                    </Button>
+                      <Button
+                        style={{ borderRadius: 45 }}
+                        mr="10"
+                        ml="10"
+                        onPress={() => request.refetch()} 
+                      disabled={!canContinue(email, password, confirm)} 
+                      >
+                        <ArrowForwardIcon size="7" mt="0.5" color="white" />
+                      </Button>
+                      </HStack>
+                      </View>
         </VStack>
       </Box>
     </Center>
