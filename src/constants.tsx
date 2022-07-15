@@ -1,2 +1,2 @@
 export const apiUrl =
-  'https://dev-waffle-cone.probablyanasian.dev'; //"https://dev-waffle-cone.probablyanasian.dev"
+  'http://localhost:19006/api/v0'; //"https://dev-waffle-cone.probablyanasian.dev"
