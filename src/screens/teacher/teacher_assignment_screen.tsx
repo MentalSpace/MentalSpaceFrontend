@@ -256,7 +256,7 @@ const AssignmentsScreen = ({ navigation }: AssignmentsScreenProps) => {
               <FormControl backgroundColor="white">
                 <FormControl.Label>Category</FormControl.Label>
                 <RNPickerSelect
-                  onValueChange={(value) => console.log(value)}
+                  onValueChange={(value: string) => console.log(value)}
                   items={[
                     { label: 'Homework', value: 'Homework' },
                     { label: 'Classwork', value: 'Classwork' },
