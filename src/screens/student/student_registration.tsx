@@ -9,11 +9,13 @@ import {
   VStack,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 import { LoginStackList } from '../../components/login_stack';
 import { apiUrl } from '../../constants';
+import { AccessTokenResponse } from '../../hooks/useAccessToken';
 import { useCSRFToken } from '../../hooks/useCSRFToken';
+import { useLogin } from '../../hooks/useLogin';
 import {
   validateEmail,
   validatePassword,
@@ -36,6 +38,8 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
   const [confirm, setConfirmPass] = useState('');
 
   const csrfToken = useCSRFToken();
+  const login = useLogin();
+  const queryClient = useQueryClient();
 
   const requestOptions = {
     method: 'POST',
@@ -58,10 +62,21 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
   useEffect(() => {
     if (request.isSuccess) {
       console.log(request.data.status);
-      if (request.data.status === 'success')
-        navigation.navigate('StudentSignup');
+      if (request.data.status === 'success') login.mutate({ email, password });
     }
   }, [request.isSuccess]);
+  useEffect(() => {
+    if (login.isSuccess) {
+      console.log(login.data.status);
+      if (login.data.status === 'success') {
+        queryClient.setQueryData(
+          'accessTokenResponse',
+          login.data as AccessTokenResponse
+        );
+        navigation.navigate('StudentSignup');
+      }
+    }
+  }, [login.isSuccess]);
 
   return (
     <Center w="100%">
