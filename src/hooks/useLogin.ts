@@ -1,15 +1,21 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 
 import { apiUrl } from '../constants';
-import { CSRFTokenResponse } from './useCSRFToken';
+import { useCSRFToken } from './useCSRFToken';
 
 export type LoginResponse = {
   status: string;
-  userId: number;
-  accessToken: string;
-  accessTokenExpiry: number;
-  refreshToken: string;
-  refreshTokenExpiry: number;
+  errors?: LoginErrors;
+  userId?: number;
+  accessToken?: string;
+  accessTokenExpiry?: number;
+  refreshToken?: string;
+  refreshTokenExpiry?: number;
+};
+
+type LoginErrors = {
+  email?: string;
+  password?: string;
 };
 
 export type LoginCredentials = {
@@ -18,15 +24,14 @@ export type LoginCredentials = {
 };
 
 export const useLogin = () => {
-  const queryClient = useQueryClient();
+  const csrfToken = useCSRFToken();
 
   const loginMutation = useMutation((credentials: LoginCredentials) => {
     const requestOptions = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-TOKEN':
-          queryClient.getQueryData<CSRFTokenResponse>('csrfToken')!.csrfToken,
+        'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
       },
       body: JSON.stringify({
         email: credentials.email,

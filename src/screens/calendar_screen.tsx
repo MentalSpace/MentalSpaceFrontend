@@ -9,13 +9,18 @@ import {
   useTheme,
   View,
   Text,
+  Spinner,
 } from 'native-base';
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
+import { useQuery } from 'react-query';
 import { RRule } from 'rrule';
 
-import { SideBarList } from '../components/main_stack';
+import { SideBarList } from '../components/student_stack';
+import { apiUrl } from '../constants';
+import { useAccessToken } from '../hooks/useAccessToken';
+import { useCSRFToken } from '../hooks/useCSRFToken';
 
 type CalendarScreenProps = NativeStackScreenProps<SideBarList, 'Calendar'>;
 
@@ -23,7 +28,7 @@ type ScheduleRRuleType = {
   eventId: number;
   name: string;
   description: string;
-  rrule: string;
+  rruleString: string;
   duration: number;
 };
 
@@ -35,41 +40,31 @@ type ScheduleEventType = {
   duration: number;
 };
 
+type StudentEventsResponse = {
+  status: string;
+  events: ScheduleRRuleType[];
+};
+
 function CalendarScreen({ navigation }: CalendarScreenProps) {
-  const [scheduleRRules, setScheduleRRules] = useState([
-    {
-      eventId: 1,
-      name: 'Test Event',
-      description: 'Test text',
-      rrule:
-        'RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=TU;BYHOUR=12;BYMINUTE=15;BYSECOND=0',
-      duration: 0,
+  const csrfToken = useCSRFToken();
+  const accessToken = useAccessToken();
+
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + accessToken.data!.accessToken,
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
     },
-    {
-      eventId: 2,
-      name: 'Test Event 2',
-      description: 'Test text 2',
-      rrule:
-        'RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=SA;BYHOUR=19;BYMINUTE=30;BYSECOND=0',
-      duration: 0,
-    },
-    {
-      eventId: 3,
-      name: 'Test Event 3',
-      description: 'Test text 3',
-      rrule:
-        'RRULE:FREQ=WEEKLY;COUNT=10;INTERVAL=1;WKST=MO;BYDAY=MO;BYHOUR=6;BYMINUTE=10;BYSECOND=0',
-      duration: 0,
-    },
-    {
-      eventId: 4,
-      name: 'Test Event 4',
-      description: 'Test text 4',
-      rrule:
-        'RRULE:FREQ=WEEKLY;COUNT=5;INTERVAL=1;WKST=MO;BYDAY=SA;BYHOUR=13;BYMINUTE=15;BYSECOND=0',
-      duration: 30 * 60 * 1000,
-    },
-  ] as ScheduleRRuleType[]);
+  };
+
+  const studentEventsRequest = async (): Promise<StudentEventsResponse> =>
+    await (await fetch(apiUrl + '/student/events', requestOptions)).json();
+  const studentEvents = useQuery<StudentEventsResponse>(
+    'studentEvents',
+    studentEventsRequest
+  );
+
   const [weekEvents, setWeekEvents] = useState([
     [],
     [],
@@ -82,6 +77,25 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
   const [currWeek, setCurrWeek] = useState([] as string[]);
   const [currDateIndex, setCurrDateIndex] = useState<number>();
   const theme = useTheme();
+
+  if (studentEvents.status === 'loading') {
+    return (
+      <View alignItems="center" justifyContent="center" height="full">
+        <Spinner accessibilityLabel="Loading calendar" />
+      </View>
+    );
+  }
+
+  if (
+    studentEvents.status === 'error' ||
+    studentEvents.data?.status !== 'success'
+  ) {
+    return (
+      <View alignItems="center" justifyContent="center" height="full">
+        <Text>An error has occured!</Text>
+      </View>
+    );
+  }
 
   function* daysInInterval(interval: Interval) {
     let cursor = interval.start.startOf('day');
@@ -135,12 +149,14 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
           );
         }}
         onWeekChanged={async (start, end) => {
-          if (currWeek[0] !== DateTime.fromJSDate(start.toDate()).toISODate()) {
+          const startDateTime = DateTime.fromMillis(start.valueOf());
+
+          if (currWeek[0] !== startDateTime.toISODate()) {
             setCurrDateIndex(undefined);
 
             const weekInterval = Interval.fromDateTimes(
-              DateTime.fromISO(start.toISOString()),
-              DateTime.fromISO(end.toISOString())
+              startDateTime,
+              DateTime.fromMillis(end.valueOf())
             );
             const weekDays = Array.from(daysInInterval(weekInterval)).map(
               (weekDay) => weekDay.toISODate()
@@ -157,8 +173,8 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
               [],
             ] as ScheduleEventType[][];
 
-            for (const scheduleRRule of scheduleRRules) {
-              const eventRRule = RRule.fromString(scheduleRRule.rrule);
+            for (const scheduleRRule of studentEvents.data!.events) {
+              const eventRRule = RRule.fromString(scheduleRRule.rruleString);
               const events = eventRRule.between(
                 start.startOf('day').toDate(),
                 end.endOf('day').toDate()
@@ -216,7 +232,7 @@ function CalendarScreen({ navigation }: CalendarScreenProps) {
       </Menu>
       <View alignItems="center" style={{ flex: 1 }}>
         <ScrollView>
-          {currDateIndex != undefined
+          {currDateIndex !== undefined
             ? weekEvents[currDateIndex].map((event) => (
                 <TouchableOpacity
                   key={event.eventId}

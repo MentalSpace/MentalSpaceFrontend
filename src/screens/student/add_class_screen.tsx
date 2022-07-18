@@ -1,17 +1,8 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import {
-  Box,
-  Button,
-  Center,
-  FormControl,
-  Heading,
-  Input,
-  VStack,
-  View,
-} from 'native-base';
+import { Box, Button, Center, Heading, Input, VStack } from 'native-base';
 import React from 'react';
 
-import { SideBarList } from '../components/main_stack';
+import { SideBarList } from '../../components/student_stack';
 
 type AddClassScreenProps = NativeStackScreenProps<SideBarList, 'AddClass'>;
 
