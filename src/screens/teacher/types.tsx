@@ -37,7 +37,7 @@ const stylesPT2 = StyleSheet.create({
   },
 });
 
-export default class ClassPeriods extends React.Component<any, any> {
+export default class Types extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
