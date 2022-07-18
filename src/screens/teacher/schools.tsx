@@ -1,19 +1,36 @@
-// import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   Button,
   Center,
   Checkbox,
+  HStack,
+  Text,
   View,
   Heading,
   AddIcon,
   DeleteIcon,
+  TextArea,
   Select,
   CheckIcon,
   Box,
+  VStack,
+  Input,
 } from 'native-base';
+import { useQuery } from 'react-query';
 import React, { ClassType, Component, useEffect, useState } from 'react';
-import { Alert, StyleSheet } from 'react-native';
-import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
+import { Alert, StyleSheet, TextInput } from 'react-native';
+import { LoginStackList } from '../components/login_stack';
+import { SideBarList } from '../components/main_stack';
+import {
+  Table,
+  TableWrapper,
+  Row,
+  Rows,
+  Col,
+  Cell,
+} from 'react-native-table-component';
+import { apiUrl } from '../constants';
+import { SelectBox } from 'react-native-multi-selectbox';
 
 const styles = StyleSheet.create({
   text: { textAlign: 'center' },
@@ -29,14 +46,36 @@ const styles = StyleSheet.create({
   btn: { width: 28, height: 18, backgroundColor: 'gray.800', borderRadius: 2 },
 });
 
-const SubjectSelect = () => {
+const stylesPT2 = StyleSheet.create({
+  input: {
+    height: 30,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    width: 100,
+    borderRadius: 4,
+  },
+});
+
+const stylesPT3 = StyleSheet.create({
+  input: {
+    height: 30,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    width: 200,
+    borderRadius: 4,
+  },
+});
+
+const SchoolSelect = () => {
   let [service, setService] = React.useState('');
   return (
-    <Box maxW="200">
+    <Box minW="150" maxW="400">
       <Select
         selectedValue={service}
-        minWidth="20"
-        maxWidth="10000000000000000000"
+        minWidth="60"
+        maxWidth="10000"
         accessibilityLabel="Select"
         placeholder="Select"
         _selectedItem={{
@@ -47,37 +86,8 @@ const SubjectSelect = () => {
         mt={1}
         onValueChange={(itemValue) => setService(itemValue)}
       >
-        <Select.Item label="APCSA" value="APCSA" />
-        <Select.Item label="Calc" value="Calc" />
-      </Select>
-    </Box>
-  );
-};
-
-const PeriodSelect = () => {
-  let [service, setService] = React.useState('');
-  return (
-    <Box maxW="200">
-      <Select
-        selectedValue={service}
-        minWidth="20"
-        maxWidth="10000000000000000000"
-        accessibilityLabel="Select"
-        placeholder="Select"
-        _selectedItem={{
-          bg: 'orange',
-          endIcon: <CheckIcon size="7" />,
-        }}
-        mt={1}
-        onValueChange={(itemValue) => setService(itemValue)}
-      >
-        <Select.Item label="1" value="1" />
-        <Select.Item label="2" value="2" />
-        <Select.Item label="3" value="3" />
-        <Select.Item label="4" value="4" />
-        <Select.Item label="5" value="5" />
-        <Select.Item label="6" value="6" />
-        <Select.Item label="7" value="7" />
+        <Select.Item label="Santa Teresa" value="STHS" />
+        <Select.Item label="Oak Grove" value="OGHS" />
       </Select>
     </Box>
   );
@@ -87,12 +97,40 @@ export default class ClassPeriods extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      tableHead: ['', 'Period', '', 'Subject', '', 'Class Code'],
+      tableHead: ['', '     Short Name', '', ' School Name', '', ' Address'],
       tableData: [
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', '4'],
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', 'd'],
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', '4'],
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', '3'],
+        [
+          '',
+          <TextInput style={stylesPT2.input} />,
+          '',
+          <SchoolSelect />,
+          '',
+          <TextInput style={stylesPT3.input} />,
+        ],
+        [
+          '',
+          <TextInput style={stylesPT2.input} />,
+          '',
+          <SchoolSelect />,
+          '',
+          <TextInput style={stylesPT3.input} />,
+        ],
+        [
+          '',
+          <TextInput style={stylesPT2.input} />,
+          '',
+          <SchoolSelect />,
+          '',
+          <TextInput style={stylesPT3.input} />,
+        ],
+        [
+          '',
+          <TextInput style={stylesPT2.input} />,
+          '',
+          <SchoolSelect />,
+          '',
+          <TextInput style={stylesPT3.input} />,
+        ],
       ],
     };
   }
@@ -100,6 +138,7 @@ export default class ClassPeriods extends React.Component<any, any> {
   _alertIndex(index: any) {
     Alert.alert(`This is row ${index + 1}`);
   }
+
   render() {
     const state = this.state;
     const element = (data: any, index: any) => (
@@ -108,6 +147,7 @@ export default class ClassPeriods extends React.Component<any, any> {
         onChange={() => this._alertIndex(index)}
       ></Checkbox>
     );
+
     return (
       <View style={styles.container}>
         <Center>
@@ -121,7 +161,7 @@ export default class ClassPeriods extends React.Component<any, any> {
             paddingBottom="30"
             paddingTop="2%"
           >
-            Classes
+            Schools
           </Heading>
         </Center>
         <Center>

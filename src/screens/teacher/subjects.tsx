@@ -11,9 +11,17 @@ import {
   CheckIcon,
   Box,
 } from 'native-base';
+// import { useQuery, useQueryClient } from 'react-query';
 import React, { ClassType, Component, useEffect, useState } from 'react';
-import { Alert, StyleSheet } from 'react-native';
-import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
+import { Alert, StyleSheet, TextInput } from 'react-native';
+import {
+  Table,
+  TableWrapper,
+  Row,
+  Rows,
+  Col,
+  Cell,
+} from 'react-native-table-component';
 
 const styles = StyleSheet.create({
   text: { textAlign: 'center' },
@@ -27,6 +35,28 @@ const styles = StyleSheet.create({
   head: { height: 40, backgroundColor: 'amber.200' },
   row: { flexDirection: 'row', backgroundColor: 'gray.800' },
   btn: { width: 28, height: 18, backgroundColor: 'gray.800', borderRadius: 2 },
+});
+
+const stylesPT2 = StyleSheet.create({
+  input: {
+    height: 30,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    width: 100,
+    borderRadius: 4,
+  },
+});
+
+const stylesPT3 = StyleSheet.create({
+  input: {
+    height: 30,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    width: 200,
+    borderRadius: 4,
+  },
 });
 
 const SubjectSelect = () => {
@@ -54,45 +84,16 @@ const SubjectSelect = () => {
   );
 };
 
-const PeriodSelect = () => {
-  let [service, setService] = React.useState('');
-  return (
-    <Box maxW="200">
-      <Select
-        selectedValue={service}
-        minWidth="20"
-        maxWidth="10000000000000000000"
-        accessibilityLabel="Select"
-        placeholder="Select"
-        _selectedItem={{
-          bg: 'orange',
-          endIcon: <CheckIcon size="7" />,
-        }}
-        mt={1}
-        onValueChange={(itemValue) => setService(itemValue)}
-      >
-        <Select.Item label="1" value="1" />
-        <Select.Item label="2" value="2" />
-        <Select.Item label="3" value="3" />
-        <Select.Item label="4" value="4" />
-        <Select.Item label="5" value="5" />
-        <Select.Item label="6" value="6" />
-        <Select.Item label="7" value="7" />
-      </Select>
-    </Box>
-  );
-};
-
 export default class ClassPeriods extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      tableHead: ['', 'Period', '', 'Subject', '', 'Class Code'],
+      tableHead: ['', 'Subjects', '', 'Description'],
       tableData: [
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', '4'],
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', 'd'],
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', '4'],
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', '3'],
+        ['', <SubjectSelect />, '', <TextInput style={stylesPT3.input} />],
+        ['', <SubjectSelect />, '', <TextInput style={stylesPT3.input} />],
+        ['', <SubjectSelect />, '', <TextInput style={stylesPT3.input} />],
+        ['', <SubjectSelect />, '', <TextInput style={stylesPT3.input} />],
       ],
     };
   }
@@ -100,6 +101,7 @@ export default class ClassPeriods extends React.Component<any, any> {
   _alertIndex(index: any) {
     Alert.alert(`This is row ${index + 1}`);
   }
+
   render() {
     const state = this.state;
     const element = (data: any, index: any) => (
@@ -108,6 +110,7 @@ export default class ClassPeriods extends React.Component<any, any> {
         onChange={() => this._alertIndex(index)}
       ></Checkbox>
     );
+
     return (
       <View style={styles.container}>
         <Center>
@@ -121,7 +124,7 @@ export default class ClassPeriods extends React.Component<any, any> {
             paddingBottom="30"
             paddingTop="2%"
           >
-            Classes
+            Subjects
           </Heading>
         </Center>
         <Center>
