@@ -6,6 +6,8 @@ import {
   FormControl,
   Heading,
   Input,
+  ScrollView,
+  View,
   VStack,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
@@ -79,66 +81,68 @@ const StudentRegistration = ({ navigation }: StudentRegistrationProps) => {
   }, [login.isSuccess]);
 
   return (
-    <Center w="100%">
-      <Box safeArea p="2" w="90%" maxW="290" py="8">
-        <Heading
-          size="lg"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}
-          fontWeight="semibold"
-        >
-          Student Sign Up
-        </Heading>
-        <VStack space={3} mt="5">
-          <FormControl>
-            <FormControl.Label>Email</FormControl.Label>
-            <Input value={email} onChangeText={setEmail} />
-            <FormControl.HelperText>
-              {validateEmail(email) ? '' : 'Please enter a valid email'}
-            </FormControl.HelperText>
-          </FormControl>
-          <FormControl>
-            <FormControl.Label>Password</FormControl.Label>
-            <Input
-              type="password"
-              value={password}
-              onChangeText={setPassword}
-            />
-            <FormControl.HelperText>
-              {validatePassword(password)
-                ? ''
-                : 'Password must be 8 or more characters in length'}
-            </FormControl.HelperText>
-          </FormControl>
-          <FormControl>
-            <FormControl.Label>Confirm Password</FormControl.Label>
-            <Input
-              type="password"
-              value={confirm}
-              onChangeText={setConfirmPass}
-            />
-            <FormControl.HelperText>
-              {validateSame(password, confirm) ? '' : 'Passwords must match'}
-            </FormControl.HelperText>
-          </FormControl>
-          <Button
-            mt="2"
-            onPress={() => request.refetch()}
-            disabled={!canContinue(email, password, confirm)}
+    <ScrollView>
+      <Center w="100%">
+        <Box safeArea p="2" w="90%" maxW="290" py="8">
+          <Heading
+            size="lg"
+            color="coolGray.800"
+            _dark={{
+              color: 'warmGray.50',
+            }}
+            fontWeight="semibold"
           >
-            Continue
-          </Button>
-          <Button
-            variant="outline"
-            onPress={() => navigation.navigate('Login')}
-          >
-            Back
-          </Button>
-        </VStack>
-      </Box>
-    </Center>
+            Student Sign Up
+          </Heading>
+          <VStack space={3} mt="5">
+            <FormControl>
+              <FormControl.Label>Email</FormControl.Label>
+              <Input value={email} onChangeText={setEmail} />
+              <FormControl.HelperText>
+                {validateEmail(email) ? '' : 'Please enter a valid email'}
+              </FormControl.HelperText>
+            </FormControl>
+            <FormControl>
+              <FormControl.Label>Password</FormControl.Label>
+              <Input
+                type="password"
+                value={password}
+                onChangeText={setPassword}
+              />
+              <FormControl.HelperText>
+                {validatePassword(password)
+                  ? ''
+                  : 'Password must be 8 or more characters in length'}
+              </FormControl.HelperText>
+            </FormControl>
+            <FormControl>
+              <FormControl.Label>Confirm Password</FormControl.Label>
+              <Input
+                type="password"
+                value={confirm}
+                onChangeText={setConfirmPass}
+              />
+              <FormControl.HelperText>
+                {validateSame(password, confirm) ? '' : 'Passwords must match'}
+              </FormControl.HelperText>
+            </FormControl>
+            <Button
+              mt="2"
+              onPress={() => request.refetch()}
+              disabled={!canContinue(email, password, confirm)}
+            >
+              Continue
+            </Button>
+            <Button
+              variant="outline"
+              onPress={() => navigation.navigate('Login')}
+            >
+              Back
+            </Button>
+          </VStack>
+        </Box>
+      </Center>
+    </ScrollView>
   );
 };
 

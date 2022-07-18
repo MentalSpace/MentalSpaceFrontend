@@ -35,6 +35,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
           'accessTokenResponse',
           login.data as AccessTokenResponse
         );
+        console.log(login.data);
         navigation.navigate('Home');
       } else if (login.data.status === 'error') {
         console.log(login.data);
