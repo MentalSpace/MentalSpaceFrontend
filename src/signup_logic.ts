@@ -72,13 +72,13 @@ export const canContinueStudent = (
   name: string,
   lastName: string,
   studentId: string,
-  school: string
+  school?: string
 ) => {
   //logic to validate if a student has filled all fields required
   if (
     validateString(name) &&
     validateString(lastName) &&
-    validateString(school) &&
+    // validateString(school) &&
     validateString(studentId)
   ) {
     return true;

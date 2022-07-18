@@ -8,10 +8,9 @@ import {
   Input,
   VStack,
   Select,
-  CheckIcon,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 import { LoginStackList } from '../../components/login_stack';
 import { apiUrl } from '../../constants';
@@ -33,10 +32,14 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [canonicalID, setCanonicalID] = useState('');
-  const [school, setSchool] = useState('');
+  const [grade, setGrade] = useState<number>();
+  const [phoneNum, setPhoneNum] = useState<number>();
+  // const [school, setSchool] = useState('');
 
   const csrfToken = useCSRFToken();
   const accessToken = useAccessToken();
+
+  const queryClient = useQueryClient();
 
   const requestOptions = {
     method: 'POST',
@@ -46,11 +49,12 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
       Authorization: 'Bearer ' + accessToken.data!.accessToken,
     },
     body: JSON.stringify({
-      type: 'Student',
       firstName,
       lastName,
       canonicalID,
-      school,
+      grade,
+      phone: phoneNum,
+      // school,
     }),
   };
 
@@ -62,7 +66,10 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
   useEffect(() => {
     if (request.isSuccess) {
       console.log(request.data.status);
-      if (request.data.status === 'success') navigation.navigate('Login');
+      if (request.data.status === 'success') {
+        queryClient.removeQueries('accessTokenResponse');
+        navigation.navigate('Login');
+      }
     }
   }, [request.isSuccess]);
 
@@ -104,6 +111,21 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
             </FormControl.HelperText>
           </FormControl>
           <FormControl>
+            <FormControl.Label>Phone Number</FormControl.Label>
+            <Input onChangeText={(phoneNum) => setPhoneNum(Number(phoneNum))} />
+            <FormControl.HelperText>{}</FormControl.HelperText>
+          </FormControl>
+          <Select
+            onValueChange={(grade) => setGrade(Number(grade))}
+            placeholder="Grade level"
+            accessibilityLabel="Grade level"
+          >
+            <Select.Item label="9" value="9" />
+            <Select.Item label="10" value="10" />
+            <Select.Item label="11" value="11" />
+            <Select.Item label="12" value="12" />
+          </Select>
+          {/* <FormControl>
             <FormControl.Label>School</FormControl.Label>
             <Select
               selectedValue={school}
@@ -123,13 +145,11 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
               <Select.Item label="Santa Teresa" value="Santa Teresa" />
               <Select.Item label="Oak Grove" value="Oak Grove" />
             </Select>
-          </FormControl>
+          </FormControl> */}
           <Button
             mt="2"
             onPress={() => request.refetch()}
-            disabled={
-              !canContinueStudent(firstName, lastName, canonicalID, school)
-            }
+            disabled={!canContinueStudent(firstName, lastName, canonicalID)}
           >
             Sign up
           </Button>
