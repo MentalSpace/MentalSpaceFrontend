@@ -35,6 +35,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
           'accessTokenResponse',
           login.data as AccessTokenResponse
         );
+        console.log(login.data);
         navigation.navigate('Home');
       } else if (login.data.status === 'error') {
         console.log(login.data);
@@ -131,30 +132,11 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
             Sign in
           </Button>
           <TextDivider msg="or" />
-          <Heading
-            mt="1"
-            _dark={{
-              color: 'warmGray.200',
-            }}
-            color="coolGray.600"
-            fontWeight="medium"
-            size="xs"
-            alignSelf="center"
-          >
-            Sign up to create an account!
-          </Heading>
-
           <Button
             variant="outline"
-            onPress={() => navigation.navigate('TeacherRegistration')}
+            onPress={() => navigation.navigate('UserRegistration')}
           >
-            Teacher
-          </Button>
-          <Button
-            variant="outline"
-            onPress={() => navigation.navigate('StudentRegistration')}
-          >
-            Student
+            Sign Up
           </Button>
         </VStack>
       </Box>
