@@ -59,7 +59,7 @@ const SubjectSelect = () => {
       <Select
         selectedValue={service}
         minWidth="20"
-        maxWidth="10000000000000000000"
+        maxWidth="1000"
         accessibilityLabel="Select"
         placeholder="Select"
         _selectedItem={{
@@ -68,7 +68,7 @@ const SubjectSelect = () => {
           endIcon: <CheckIcon size="2" />,
         }}
         mt={1}
-        onValueChange={(itemValue) => setService(itemValue)}
+        onValueChange={(itemValue: any) => setService(itemValue)}
       >
         <Select.Item label="APCSA" value="APCSA" />
         <Select.Item label="Calc" value="Calc" />

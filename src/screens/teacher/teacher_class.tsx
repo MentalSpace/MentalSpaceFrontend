@@ -1,4 +1,4 @@
-// import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   Button,
   Center,
@@ -36,7 +36,7 @@ const SubjectSelect = () => {
       <Select
         selectedValue={service}
         minWidth="20"
-        maxWidth="10000000000000000000"
+        maxWidth="1000"
         accessibilityLabel="Select"
         placeholder="Select"
         _selectedItem={{
@@ -45,7 +45,7 @@ const SubjectSelect = () => {
           endIcon: <CheckIcon size="2" />,
         }}
         mt={1}
-        onValueChange={(itemValue) => setService(itemValue)}
+        onValueChange={(itemValue: any) => setService(itemValue)}
       >
         <Select.Item label="APCSA" value="APCSA" />
         <Select.Item label="Calc" value="Calc" />
@@ -61,7 +61,7 @@ const PeriodSelect = () => {
       <Select
         selectedValue={service}
         minWidth="20"
-        maxWidth="10000000000000000000"
+        maxWidth="1000"
         accessibilityLabel="Select"
         placeholder="Select"
         _selectedItem={{
@@ -69,7 +69,7 @@ const PeriodSelect = () => {
           endIcon: <CheckIcon size="7" />,
         }}
         mt={1}
-        onValueChange={(itemValue) => setService(itemValue)}
+        onValueChange={(itemValue: any) => setService(itemValue)}
       >
         <Select.Item label="1" value="1" />
         <Select.Item label="2" value="2" />

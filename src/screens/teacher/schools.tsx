@@ -58,7 +58,7 @@ const SchoolSelect = () => {
       <Select
         selectedValue={service}
         minWidth="60"
-        maxWidth="10000"
+        maxWidth="1000"
         accessibilityLabel="Select"
         placeholder="Select"
         _selectedItem={{
