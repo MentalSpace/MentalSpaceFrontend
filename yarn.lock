@@ -4459,6 +4459,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-native-table-component@npm:^1.2.4":
+  version: 1.2.4
+  resolution: "@types/react-native-table-component@npm:1.2.4"
+  dependencies:
+    "@types/react": "*"
+    "@types/react-native": "*"
+    csstype: ^3.0.3
+  checksum: ea7326ea3bb6015ff9bbfa09d9b8e1f6d8493d292ac6681d04d3753360d31f65d5827b102f3e73c96f9d0248f835b4430b74bc73e81f455ed688434d7dbd42bd
+  languageName: node
+  linkType: hard
+
+"@types/react-native@npm:*":
+  version: 0.69.3
+  resolution: "@types/react-native@npm:0.69.3"
+  dependencies:
+    "@types/react": "*"
+  checksum: 7d5aa4b30385e232fed74bdebeba1c7ee73b4237ca5a310fee6f9b98432ed2f3a737f2755c528fd5b03485278e98bd0b152692df5e146cb2603827ab939841dc
+  languageName: node
+  linkType: hard
+
 "@types/react-native@npm:~0.66.13":
   version: 0.66.19
   resolution: "@types/react-native@npm:0.66.19"
@@ -7586,7 +7606,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.0.2":
+"csstype@npm:^3.0.2, csstype@npm:^3.0.3":
   version: 3.1.0
   resolution: "csstype@npm:3.1.0"
   checksum: 644e986cefab86525f0b674a06889cfdbb1f117e5b7d1ce0fc55b0423ecc58807a1ea42ecc75c4f18999d14fc42d1d255f84662a45003a52bb5840e977eb2ffd
@@ -12675,6 +12695,7 @@ __metadata:
     "@types/luxon": ^2.3.2
     "@types/react": ~17.0.21
     "@types/react-native": ~0.66.13
+    "@types/react-native-table-component": ^1.2.4
     "@typescript-eslint/eslint-plugin": ^5.30.5
     "@typescript-eslint/parser": ^5.30.5
     babel-plugin-styled-components: ^2.0.7
@@ -12701,6 +12722,7 @@ __metadata:
     react-native-safe-area-context: 4.2.4
     react-native-screens: ~3.11.1
     react-native-svg: ^12.3.0
+    react-native-table-component: ^1.2.2
     react-native-web: 0.17.7
     react-query: ^3.39.1
     rrule: ^2.7.0
@@ -16255,6 +16277,13 @@ __metadata:
     react: "*"
     react-native: ">=0.50.0"
   checksum: 9bed890d030819ed650fdc84ae8127f78f72a28d81a160dd574729b81f237c85be6a5ff4a0951b4dd28bd2836189f18afffef1fd6447fb3b6537c7ecd23f08c2
+  languageName: node
+  linkType: hard
+
+"react-native-table-component@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "react-native-table-component@npm:1.2.2"
+  checksum: 906a0ae3b23bcf4a98237d07853bb416feb3d512a4f28e758470a3c45154f15e92445d57ef272e3c3c24c7355ec6ccbf6b53e7ce917ed1964b9f973084d88c46
   languageName: node
   linkType: hard
 
