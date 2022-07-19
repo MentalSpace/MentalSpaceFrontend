@@ -67,7 +67,7 @@ const SchoolSelect = () => {
           endIcon: <CheckIcon size="2" />,
         }}
         mt={1}
-        onValueChange={(itemValue) => setService(itemValue)}
+        onValueChange={(itemValue: any) => setService(itemValue)}
       >
         <Select.Item label="Santa Teresa" value="STHS" />
         <Select.Item label="Oak Grove" value="OGHS" />
