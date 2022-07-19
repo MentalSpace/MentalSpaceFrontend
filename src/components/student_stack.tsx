@@ -8,6 +8,8 @@ import AddNonHWScreen from '../screens/student/add_non_hw_screen';
 import ScheduleOptionsScreen from '../screens/student/schedule_options';
 import StudentMenu from '../screens/student/student_menu';
 import TaskListScreen from '../screens/student/student_tasklist';
+import MyClassesScreen from '../screens/teacher_display';
+import SubjectScreen from '../screens/subject_screen';
 
 export type SideBarList = {
   Menu: undefined;
@@ -17,6 +19,8 @@ export type SideBarList = {
   AddNonHW: undefined;
   ScheduleOptions: undefined;
   Extracurricular: undefined;
+  MyClasses: undefined;
+  Subject: undefined;
 };
 
 const Drawer = createDrawerNavigator<SideBarList>();
@@ -30,6 +34,8 @@ function StudentStack() {
         <Drawer.Screen name="AddClass" component={AddClassScreen} />
         <Drawer.Screen name="Task" component={TaskListScreen} />
         <Drawer.Screen name="AddNonHW" component={AddNonHWScreen} />
+        <Drawer.Screen name="MyClasses" component={MyClassesScreen} />
+        <Drawer.Screen name="Subject" component={SubjectScreen} />
         <Drawer.Screen
           name="ScheduleOptions"
           component={ScheduleOptionsScreen}
