@@ -9,14 +9,16 @@ import {
   VStack,
 } from 'native-base';
 import React, { useState } from 'react';
+import validator from 'validator';
 
 import { LoginStackList } from '../components/login_stack';
-import { validateEmail } from '../signup_logic';
 
 type PasswordResetProps = NativeStackScreenProps<LoginStackList, 'Reset'>;
 
 const ResetScreen = ({ navigation }: PasswordResetProps) => {
   const [email, setEmail] = useState('');
+
+  const emailValidated = validator.isEmail(email);
 
   return (
     <Center w="100%">
@@ -47,12 +49,12 @@ const ResetScreen = ({ navigation }: PasswordResetProps) => {
             <FormControl.Label>Email</FormControl.Label>
             <Input value={email} onChangeText={setEmail} />
             <FormControl.HelperText>
-              {validateEmail(email) ? '' : 'Please enter a valid email'}
+              {emailValidated ? '' : 'Please enter a valid email'}
             </FormControl.HelperText>
           </FormControl>
           <Button
             mt="2"
-            disabled={!validateEmail(email)}
+            disabled={!emailValidated}
             onPress={() => navigation.navigate('Login')}
           >
             Reset
