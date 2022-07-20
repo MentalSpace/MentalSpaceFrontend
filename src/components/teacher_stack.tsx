@@ -16,7 +16,7 @@ export type SideBarList = {
 
 const Drawer = createDrawerNavigator<SideBarList>();
 
-function StudentStack() {
+function TeacherStack() {
   return (
     <NavigationContainer independent>
       <Drawer.Navigator initialRouteName="ClassPeriods">
@@ -29,4 +29,4 @@ function StudentStack() {
   );
 }
 
-export default StudentStack;
+export default TeacherStack;
