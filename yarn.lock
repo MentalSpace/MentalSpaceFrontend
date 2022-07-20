@@ -6431,6 +6431,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"calendarize@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "calendarize@npm:1.1.1"
+  checksum: a5326f762f0d4800ac92b978f24fb1d52ce37dbf730da8d5e7d7562e70df3f93a0cacc615245fb9b2a1f89e8f59030a715080d13fb4bd14c138d3678a85482c8
+  languageName: node
+  linkType: hard
+
 "call-bind@npm:^1.0.0, call-bind@npm:^1.0.2":
   version: 1.0.2
   resolution: "call-bind@npm:1.0.2"
@@ -7625,6 +7632,13 @@ __metadata:
   version: 3.0.3
   resolution: "dateformat@npm:3.0.3"
   checksum: ca4911148abb09887bd9bdcd632c399b06f3ecad709a18eb594d289a1031982f441e08e281db77ffebcb2cbcbfa1ac578a7cbfbf8743f41009aa5adc1846ed34
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.10.7":
+  version: 1.11.4
+  resolution: "dayjs@npm:1.11.4"
+  checksum: 478c8a2db9e3fc752db9f02ef23f00e12308eebbeb85569913731ea78e8d5616f2335e14f25af48e9f16bbcbd796653092eca4d2f42c0218a948402c31735f59
   languageName: node
   linkType: hard
 
@@ -11556,6 +11570,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-what@npm:^3.14.1":
+  version: 3.14.1
+  resolution: "is-what@npm:3.14.1"
+  checksum: a9a6ce92d33799f1ae0916c7afb6f8128a23ce9d28bd69d9ec3ec88910e7a1f68432e6236c3c8a4d544cf0b864675e5d828437efde60ee0cf8102061d395c1df
+  languageName: node
+  linkType: hard
+
 "is-windows@npm:^1.0.2":
   version: 1.0.2
   resolution: "is-windows@npm:1.0.2"
@@ -12700,6 +12721,7 @@ __metadata:
     react: 17.0.2
     react-dom: 17.0.2
     react-native: 0.68.2
+    react-native-big-calendar: ^3.2.2
     react-native-calendar-strip: ^2.2.6
     react-native-flash-message: ^0.2.1
     react-native-gesture-handler: ~2.2.1
@@ -12718,6 +12740,16 @@ __metadata:
     validator: ^13.7.0
   languageName: unknown
   linkType: soft
+
+"merge-anything@npm:4.0.2":
+  version: 4.0.2
+  resolution: "merge-anything@npm:4.0.2"
+  dependencies:
+    is-what: ^3.14.1
+    ts-toolbelt: ^9.6.0
+  checksum: 39f68b7909f40f58c1a134abc7b10fab6a83fdfe07f6b28dfc71c60f3b10ece3b0c15467d314b7794adb2a0d99715c50b0d9bcf2e070cc3f9c389d80fcaee205
+  languageName: node
+  linkType: hard
 
 "merge-descriptors@npm:1.0.1":
   version: 1.0.1
@@ -16089,6 +16121,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-big-calendar@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "react-native-big-calendar@npm:3.2.2"
+  dependencies:
+    calendarize: ^1.1.1
+    dayjs: ^1.10.7
+    merge-anything: 4.0.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 39a4ff6e3f1f6febb31ac7aa3b697828276daa0c81abe0079fe4a001b4b4893c7025968987e0d615a5705b547b1b174263e66dc57c1a85ce0210c0e5d16620e1
+  languageName: node
+  linkType: hard
+
 "react-native-calendar-strip@npm:^2.2.6":
   version: 2.2.6
   resolution: "react-native-calendar-strip@npm:2.2.6"
@@ -18737,6 +18783,13 @@ __metadata:
     typescript:
       optional: true
   checksum: c2a698b85d521298fe6f2435fbf2d3dc5834b423ea25abd321805ead3f399dbeedce7ca09492d7eb005b9d2c009c6b9587055bc3ab273dc6b9e40eefd7edb5b2
+  languageName: node
+  linkType: hard
+
+"ts-toolbelt@npm:^9.6.0":
+  version: 9.6.0
+  resolution: "ts-toolbelt@npm:9.6.0"
+  checksum: 9f35fd95d895a5d32ea9fd2e532a695b0bae6cbff6832b77292efa188a0ed1ed6e54f63f74a8920390f3d909a7a3adb20a144686372a8e78b420246a9bd3d58a
   languageName: node
   linkType: hard
 

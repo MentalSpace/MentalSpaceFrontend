@@ -18,7 +18,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import validator from 'validator';
 
 import { LoginStackList } from '../components/login_stack';
-import { apiUrl } from '../constants';
+import { AccountType, apiUrl } from '../constants';
 import { AccessTokenResponse } from '../hooks/useAccessToken';
 import { useCSRFToken } from '../hooks/useCSRFToken';
 import { useLogin } from '../hooks/useLogin';
@@ -33,21 +33,16 @@ type RegisterUserResponse = {
 };
 
 type RegisterParameters = {
-  accountType: Account;
+  accountType: AccountType;
   email: string;
   password: string;
 };
-
-enum Account {
-  Student = 'Student',
-  Teacher = 'Teacher',
-}
 
 const UserRegistration = ({ navigation }: UserRegistrationProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
-  const [accountType, setAccountType] = useState<Account>(Account.Student);
+  const [accountType, setAccountType] = useState<AccountType>(AccountType.Student);
 
   const csrfToken = useCSRFToken();
   const login = useLogin();
@@ -87,7 +82,7 @@ const UserRegistration = ({ navigation }: UserRegistrationProps) => {
           'accessTokenResponse',
           login.data as AccessTokenResponse
         );
-        if (accountType === Account.Student) {
+        if (accountType === AccountType.Student) {
           navigation.navigate('StudentSignup');
         } else {
           navigation.navigate('TeacherSignup');
@@ -124,7 +119,7 @@ const UserRegistration = ({ navigation }: UserRegistrationProps) => {
               accessibilityLabel="User account type"
               size="sm"
               value={accountType as string}
-              onChange={(value) => setAccountType(value as Account)}
+              onChange={(value) => setAccountType(value as AccountType)}
             >
               <Stack direction="row" space="4">
                 <Radio value="Student" _text={{ color: 'text.500' }}>
