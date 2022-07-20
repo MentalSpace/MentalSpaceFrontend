@@ -5,12 +5,14 @@ import CalendarScreen from '../screens/calendar_screen';
 // import AssignmentsScreen from '../screens/teacher/teacher_assignment_screen';
 //import TeacherClassScreen from '../screens/teacher/teacher_class';
 //import EditAssignmentsScreen from '../screens/teacher/teacher_edit_assignment_screen';
+//import MyClassesScreen from '../screens/teacher_display';
 
 export type SideBarList = {
   Calendar: undefined;
   //Assignments: undefined;
   //EditAssignments: undefined;
   //TeacherClass: undefined;
+  //MyClasses: undefined;
 };
 
 const Drawer = createDrawerNavigator<SideBarList>();
@@ -26,6 +28,7 @@ function StudentStack() {
           component={EditAssignmentsScreen}
         /> */}
         {/* <Drawer.Screen name="TeacherClass" component={TeacherClassScreen} /> */}
+        {/* <Drawer.Screen name="MyClasses" component={MyClassesScreen} /> */}
       </Drawer.Navigator>
     </NavigationContainer>
   );

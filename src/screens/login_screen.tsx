@@ -12,11 +12,12 @@ import {
 } from 'native-base';
 import { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
-
+import React from 'react';
 import { LoginStackList } from '../components/login_stack';
 import TextDivider from '../components/text_divider';
 import { AccessTokenResponse } from '../hooks/useAccessToken';
 import { useLogin } from '../hooks/useLogin';
+import { NavigationHelpersContext } from '@react-navigation/native';
 
 type LoginScreenProps = NativeStackScreenProps<LoginStackList, 'Login'>;
 
@@ -129,6 +130,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
             </Link>
           </FormControl>
           <Button mt="2" onPress={() => login.mutate({ email, password })}>
+          {/* <Button mt="2" onPress={() => navigation.navigate('Home')}> */}
             Sign in
           </Button>
           <TextDivider msg="or" />
