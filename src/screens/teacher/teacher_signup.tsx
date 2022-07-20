@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import validator from 'validator';
 
 import { LoginStackList } from '../../components/login_stack';
@@ -26,6 +26,13 @@ type TeacherSignupProps = NativeStackScreenProps<
 type RegisterTeacherResponse = {
   status: string;
   returnedId?: number;
+};
+
+type SignupParameters = {
+  firstName: string;
+  lastName: string;
+  phoneNum: string;
+  department: string;
 };
 
 const TeacherSignup = ({ navigation }: TeacherSignupProps) => {
@@ -45,35 +52,36 @@ const TeacherSignup = ({ navigation }: TeacherSignupProps) => {
   const departmentValidated = !validator.isEmpty(department);
   const phoneNumValidated = validator.isMobilePhone(phoneNum);
 
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
-      Authorization: 'Bearer ' + accessToken.data!.accessToken,
-    },
-    body: JSON.stringify({
-      firstName,
-      lastName,
-      phone: phoneNum,
-      department,
-    }),
-  };
+  const signup = useMutation((parameters: SignupParameters) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
+        Authorization: 'Bearer ' + accessToken.data!.accessToken,
+      },
+      body: JSON.stringify({
+        firstName: parameters.firstName,
+        lastName: parameters.lastName,
+        phone: Number(parameters.phoneNum),
+        department: parameters.department,
+      }),
+    };
 
-  const request = useQuery<RegisterTeacherResponse>(
-    'registerTeacher',
-    async () => await (await fetch(apiUrl + '/teacher', requestOptions)).json(),
-    { enabled: false }
-  );
+    const signupRequest = async (): Promise<RegisterTeacherResponse> =>
+      await (await fetch(apiUrl + '/teacher', requestOptions)).json();
+
+    return signupRequest();
+  });
   useEffect(() => {
-    if (request.isSuccess) {
-      console.log(request.data.status);
-      if (request.data.status === 'success') {
+    if (signup.isSuccess) {
+      console.log(signup.data.status);
+      if (signup.data.status === 'success') {
         queryClient.removeQueries('accessTokenResponse');
         navigation.navigate('Login');
       }
     }
-  }, [request.isSuccess]);
+  }, [signup.isSuccess]);
 
   return (
     <ScrollView>
@@ -143,7 +151,9 @@ const TeacherSignup = ({ navigation }: TeacherSignupProps) => {
           </FormControl> */}
             <Button
               mt="2"
-              onPress={() => request.refetch()}
+              onPress={() =>
+                signup.mutate({ firstName, lastName, phoneNum, department })
+              }
               disabled={
                 !(
                   firstNameValidated &&

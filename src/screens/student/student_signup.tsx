@@ -11,7 +11,7 @@ import {
   ScrollView,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import validator from 'validator';
 
 import { LoginStackList } from '../../components/login_stack';
@@ -27,6 +27,14 @@ type StudentSignupProps = NativeStackScreenProps<
 type RegisterStudentResponse = {
   status: string;
   studentId?: number;
+};
+
+type SignupParameters = {
+  firstName: string;
+  lastName: string;
+  canonicalID: string;
+  grade: string;
+  phoneNum: string;
 };
 
 const StudentSignup = ({ navigation }: StudentSignupProps) => {
@@ -48,37 +56,39 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
   const gradeValidated = validator.isInt(grade, { min: 9, max: 12 });
   const phoneNumValidated = validator.isMobilePhone(phoneNum);
 
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
-      Authorization: 'Bearer ' + accessToken.data!.accessToken,
-    },
-    body: JSON.stringify({
-      firstName,
-      lastName,
-      canonicalID,
-      grade,
-      phone: phoneNum,
-      // school,
-    }),
-  };
+  const signup = useMutation((parameters: SignupParameters) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
+        Authorization: 'Bearer ' + accessToken.data!.accessToken,
+      },
+      body: JSON.stringify({
+        firstName: parameters.firstName,
+        lastName: parameters.lastName,
+        canonicalID: parameters.canonicalID,
+        grade: Number(parameters.grade),
+        phone: Number(parameters.phoneNum),
+        // school,
+      }),
+    };
 
-  const request = useQuery<RegisterStudentResponse>(
-    'registerStudent',
-    async () => await (await fetch(apiUrl + '/student', requestOptions)).json(),
-    { enabled: false }
-  );
+    const signupRequest = async (): Promise<RegisterStudentResponse> =>
+      await (await fetch(apiUrl + '/student', requestOptions)).json();
+
+    return signupRequest();
+  });
+
   useEffect(() => {
-    if (request.isSuccess) {
-      console.log(request.data.status);
-      if (request.data.status === 'success') {
+    if (signup.isSuccess) {
+      console.log(signup.data.status);
+      if (signup.data.status === 'success') {
         queryClient.removeQueries('accessTokenResponse');
         navigation.navigate('Login');
       }
     }
-  }, [request.isSuccess]);
+  }, [signup.isSuccess]);
 
   return (
     <ScrollView>
@@ -156,7 +166,15 @@ const StudentSignup = ({ navigation }: StudentSignupProps) => {
           </FormControl> */}
             <Button
               mt="2"
-              onPress={() => request.refetch()}
+              onPress={() =>
+                signup.mutate({
+                  firstName,
+                  lastName,
+                  canonicalID,
+                  grade,
+                  phoneNum,
+                })
+              }
               disabled={
                 !(
                   firstNameValidated &&
