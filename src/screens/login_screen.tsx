@@ -15,6 +15,7 @@ import { useQueryClient } from 'react-query';
 
 import { LoginStackList } from '../components/login_stack';
 import TextDivider from '../components/text_divider';
+import { AccountType } from '../constants';
 import { AccessTokenResponse } from '../hooks/useAccessToken';
 import { useLogin } from '../hooks/useLogin';
 
@@ -36,7 +37,11 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
           login.data as AccessTokenResponse
         );
         console.log(login.data);
-        navigation.navigate('Home');
+        if (login.data.user?.type === AccountType.Student) {
+          navigation.navigate('StudentHome');
+        } else if (login.data.user?.type === AccountType.Teacher) {
+          navigation.navigate('TeacherHome');
+        }
       } else if (login.data.status === 'error') {
         console.log(login.data);
       }

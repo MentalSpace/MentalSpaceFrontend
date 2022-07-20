@@ -14,11 +14,11 @@ import {
   Stack,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import validator from 'validator';
 
 import { LoginStackList } from '../components/login_stack';
-import { apiUrl } from '../constants';
+import { AccountType, apiUrl } from '../constants';
 import { AccessTokenResponse } from '../hooks/useAccessToken';
 import { useCSRFToken } from '../hooks/useCSRFToken';
 import { useLogin } from '../hooks/useLogin';
@@ -32,45 +32,48 @@ type RegisterUserResponse = {
   status: string;
 };
 
-enum Account {
-  Student = 'Student',
-  Teacher = 'Teacher',
-}
+type RegisterParameters = {
+  accountType: AccountType;
+  email: string;
+  password: string;
+};
 
 const UserRegistration = ({ navigation }: UserRegistrationProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
-  const [accountType, setAccountType] = useState<Account>(Account.Student);
+  const [accountType, setAccountType] = useState<AccountType>(AccountType.Student);
 
   const csrfToken = useCSRFToken();
   const login = useLogin();
   const queryClient = useQueryClient();
 
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
-    },
-    body: JSON.stringify({
-      type: accountType as string,
-      email: email.trim(),
-      password,
-    }),
-  };
-  const request = useQuery<RegisterUserResponse>(
-    'registerUser',
-    async () =>
-      await (await fetch(apiUrl + '/user/register', requestOptions)).json(),
-    { enabled: false }
-  );
+  const register = useMutation((parameters: RegisterParameters) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
+      },
+      body: JSON.stringify({
+        type: parameters.accountType as string,
+        email: parameters.email.trim(),
+        password: parameters.password,
+      }),
+    };
+
+    const registerRequest = async (): Promise<RegisterUserResponse> =>
+      await (await fetch(apiUrl + '/user/register', requestOptions)).json();
+
+    return registerRequest();
+  });
+
   useEffect(() => {
-    if (request.isSuccess) {
-      console.log(request.data.status);
-      if (request.data.status === 'success') login.mutate({ email, password });
+    if (register.isSuccess) {
+      console.log(register.data.status);
+      if (register.data.status === 'success') login.mutate({ email, password });
     }
-  }, [request.isSuccess]);
+  }, [register.isSuccess]);
   useEffect(() => {
     if (login.isSuccess) {
       console.log(login.data.status);
@@ -79,7 +82,7 @@ const UserRegistration = ({ navigation }: UserRegistrationProps) => {
           'accessTokenResponse',
           login.data as AccessTokenResponse
         );
-        if (accountType === Account.Student) {
+        if (accountType === AccountType.Student) {
           navigation.navigate('StudentSignup');
         } else {
           navigation.navigate('TeacherSignup');
@@ -116,7 +119,7 @@ const UserRegistration = ({ navigation }: UserRegistrationProps) => {
               accessibilityLabel="User account type"
               size="sm"
               value={accountType as string}
-              onChange={(value) => setAccountType(value as Account)}
+              onChange={(value) => setAccountType(value as AccountType)}
             >
               <Stack direction="row" space="4">
                 <Radio value="Student" _text={{ color: 'text.500' }}>
@@ -160,7 +163,7 @@ const UserRegistration = ({ navigation }: UserRegistrationProps) => {
             </FormControl>
             <Button
               mt="2"
-              onPress={() => request.refetch()}
+              onPress={() => register.mutate({ accountType, email, password })}
               disabled={
                 !(emailValidated && passwordValidated && passwordsMatch)
               }

@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query';
 
-import { apiUrl } from '../constants';
+import { AccountType, apiUrl } from '../constants';
 import { useCSRFToken } from './useCSRFToken';
 
 export type LoginResponse = {
@@ -11,6 +11,17 @@ export type LoginResponse = {
   accessTokenExpiry?: number;
   refreshToken?: string;
   refreshTokenExpiry?: number;
+  user?: User;
+};
+
+type User = {
+  email: string;
+  emailVerified: boolean;
+  schoolId: number;
+  studentId: number;
+  teacherId: number;
+  type: AccountType;
+  userId: number;
 };
 
 type LoginErrors = {

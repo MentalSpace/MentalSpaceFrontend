@@ -8,6 +8,7 @@ import StudentSignup from '../screens/student/student_signup';
 import TeacherSignup from '../screens/teacher/teacher_signup';
 import UserRegistration from '../screens/user_registration';
 import StudentStack from './student_stack';
+import TeacherStack from './teacher_stack';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +17,8 @@ export type LoginStackList = {
   TeacherSignup: undefined;
   StudentSignup: undefined;
   UserRegistration: undefined;
-  Home: undefined;
+  StudentHome: undefined;
+  TeacherHome: undefined;
   Reset: undefined;
 };
 
@@ -28,7 +30,8 @@ function LoginStack() {
         <Stack.Screen name="TeacherSignup" component={TeacherSignup} />
         <Stack.Screen name="StudentSignup" component={StudentSignup} />
         <Stack.Screen name="UserRegistration" component={UserRegistration} />
-        <Stack.Screen name="Home" component={StudentStack} />
+        <Stack.Screen name="StudentHome" component={StudentStack} />
+        <Stack.Screen name="TeacherHome" component={TeacherStack} />
         <Stack.Screen name="Reset" component={ResetScreen} />
       </Stack.Navigator>
     </NavigationContainer>

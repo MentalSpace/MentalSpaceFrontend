@@ -1,5 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
+
 import React from 'react';
 import ClassPeriodsScreen from '../screens/teacher/teacher_class';
 import AssignmentTypesScreen from '../screens/teacher/types';
