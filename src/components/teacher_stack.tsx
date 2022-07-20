@@ -1,16 +1,17 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import CalendarScreen from '../screens/calendar_screen';
-// import AssignmentsScreen from '../screens/teacher/teacher_assignment_screen';
-//import TeacherClassScreen from '../screens/teacher/teacher_class';
-//import EditAssignmentsScreen from '../screens/teacher/teacher_edit_assignment_screen';
+import ClassPeriodsScreen from '../screens/teacher/teacher_class';
+import AssignmentTypesScreen from '../screens/teacher/types';
+import SubjectsScreen from '../screens/teacher/subjects';
+import SchoolsScreen from '../screens/teacher/schools'
 
 export type SideBarList = {
   Calendar: undefined;
-  //Assignments: undefined;
-  //EditAssignments: undefined;
-  //TeacherClass: undefined;
+  ClassPeriods: undefined;
+  AssignmentTypes: undefined;
+  Subjects: undefined;
+  Schools: undefined;
 };
 
 const Drawer = createDrawerNavigator<SideBarList>();
@@ -18,14 +19,11 @@ const Drawer = createDrawerNavigator<SideBarList>();
 function StudentStack() {
   return (
     <NavigationContainer independent>
-      <Drawer.Navigator initialRouteName="Calendar">
-        <Drawer.Screen name="Calendar" component={CalendarScreen} />
-        {/* <Drawer.Screen name="Assignments" component={AssignmentsScreen} />
-        <Drawer.Screen
-          name="EditAssignments"
-          component={EditAssignmentsScreen}
-        /> */}
-        {/* <Drawer.Screen name="TeacherClass" component={TeacherClassScreen} /> */}
+      <Drawer.Navigator initialRouteName="ClassPeriods">
+        <Drawer.Screen name="ClassPeriods" component={ClassPeriodsScreen} />
+        <Drawer.Screen name="AssignmentTypes" component={AssignmentTypesScreen} />
+        <Drawer.Screen name="Subjects" component={SubjectsScreen} />
+        <Drawer.Screen name="Schools" component={SchoolsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
