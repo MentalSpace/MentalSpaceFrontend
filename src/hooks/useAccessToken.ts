@@ -1,10 +1,9 @@
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 
 import { apiUrl } from '../constants';
-import { CSRFTokenResponse, useCSRFToken } from './useCSRFToken';
-import { LoginResponse } from './useLogin';
+import { useCSRFToken } from './useCSRFToken';
 
-type AccessTokenResponse = {
+export type AccessTokenResponse = {
   status: string;
   userId: number;
   accessToken: string;
@@ -13,14 +12,13 @@ type AccessTokenResponse = {
 };
 
 export const useAccessToken = () => {
-  const queryClient = useQueryClient();
+  const csrfToken = useCSRFToken();
 
   const requestOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRF-TOKEN':
-        queryClient.getQueryData<CSRFTokenResponse>('csrfToken')!.csrfToken,
+      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
     },
   };
 
@@ -31,14 +29,10 @@ export const useAccessToken = () => {
     'accessTokenResponse',
     accessTokenRequest,
     {
-      enabled:
-        queryClient.getQueryData<CSRFTokenResponse>('csrfToken')?.status ===
-          'success' &&
-        queryClient.getQueryData<LoginResponse>('loginResponse')?.status ===
-          'success',
-      cacheTime: 30 * 60 * 1000,
-      // initialData: () =>
-      //   useQueryClient().getQueryData<LoginResponse>('loginResponse'),
+      enabled: csrfToken.data?.status === 'success',
+      staleTime: 30 * 60 * 1000,
+      refetchInterval: 30 * 60 * 1000,
+      refetchIntervalInBackground: true,
     }
   );
 };

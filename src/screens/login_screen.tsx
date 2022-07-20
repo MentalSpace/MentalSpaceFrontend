@@ -8,12 +8,14 @@ import {
   FormControl,
   Input,
   Link,
+  WarningOutlineIcon,
 } from 'native-base';
 import { useEffect, useState } from 'react';
+import { useQueryClient } from 'react-query';
 
 import { LoginStackList } from '../components/login_stack';
 import TextDivider from '../components/text_divider';
-import { useCSRFToken } from '../hooks/useCSRFToken';
+import { AccessTokenResponse } from '../hooks/useAccessToken';
 import { useLogin } from '../hooks/useLogin';
 
 type LoginScreenProps = NativeStackScreenProps<LoginStackList, 'Login'>;
@@ -22,12 +24,22 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const csrfToken = useCSRFToken();
+  const queryClient = useQueryClient();
+
   const login = useLogin();
   useEffect(() => {
     if (login.isSuccess) {
       console.log(login.data.status);
-      if (login.data.status === 'success') navigation.navigate('Home');
+      if (login.data.status === 'success') {
+        queryClient.setQueryData(
+          'accessTokenResponse',
+          login.data as AccessTokenResponse
+        );
+        console.log(login.data);
+        navigation.navigate('Home');
+      } else if (login.data.status === 'error') {
+        console.log(login.data);
+      }
     }
   }, [login.isSuccess]);
 
@@ -76,13 +88,33 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
         </Heading>
 
         <VStack space={3} mt="5">
-          <FormControl>
+          <FormControl
+            isInvalid={
+              login.isSuccess ? login.data.errors?.email !== undefined : false
+            }
+          >
             <FormControl.Label>Email ID</FormControl.Label>
             <Input onChangeText={setEmail} />
+            <FormControl.ErrorMessage
+              leftIcon={<WarningOutlineIcon size="xs" />}
+            >
+              {login.data?.errors?.email}
+            </FormControl.ErrorMessage>
           </FormControl>
-          <FormControl>
+          <FormControl
+            isInvalid={
+              login.isSuccess
+                ? login.data.errors?.password !== undefined
+                : false
+            }
+          >
             <FormControl.Label>Password</FormControl.Label>
             <Input type="password" onChangeText={setPassword} />
+            <FormControl.ErrorMessage
+              leftIcon={<WarningOutlineIcon size="xs" />}
+            >
+              {login.data?.errors?.password}
+            </FormControl.ErrorMessage>
             <Link
               _text={{
                 fontSize: 'xs',
@@ -100,30 +132,11 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
             Sign in
           </Button>
           <TextDivider msg="or" />
-          <Heading
-            mt="1"
-            _dark={{
-              color: 'warmGray.200',
-            }}
-            color="coolGray.600"
-            fontWeight="medium"
-            size="xs"
-            alignSelf="center"
-          >
-            Sign up to create an account!
-          </Heading>
-
           <Button
             variant="outline"
-            onPress={() => navigation.navigate('TeacherRegistration')}
+            onPress={() => navigation.navigate('UserRegistration')}
           >
-            Teacher
-          </Button>
-          <Button
-            variant="outline"
-            onPress={() => navigation.navigate('StudentRegistration')}
-          >
-            Student
+            Sign Up
           </Button>
         </VStack>
       </Box>

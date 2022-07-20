@@ -2296,7 +2296,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/webpack-config@npm:0.16.26":
+"@expo/webpack-config@npm:0.16.26, @expo/webpack-config@npm:^0.16.26":
   version: 0.16.26
   resolution: "@expo/webpack-config@npm:0.16.26"
   dependencies:
@@ -4522,6 +4522,13 @@ __metadata:
   dependencies:
     source-map: ^0.6.1
   checksum: 10b0c4a5f361b1389cdef0b705747586ff7ddd37894e55921b8ed02718bc64ee608f4f5493c571f95ce29a3fe8d3538b7236185974dad93c750d8c05b7bceab4
+  languageName: node
+  linkType: hard
+
+"@types/validator@npm:^13.7.4":
+  version: 13.7.4
+  resolution: "@types/validator@npm:13.7.4"
+  checksum: 718e72d86c897861bc7f35e7918e0305d4efa5891ffdce6a8b77dbdc6fd10a70c2c6851f716a7f75ab2b0c12b5534f74e6d6b1040ac6eb8ab40d918c022283e5
   languageName: node
   linkType: hard
 
@@ -8966,33 +8973,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-dev-client@npm:~1.0.0":
-  version: 1.0.0
-  resolution: "expo-dev-client@npm:1.0.0"
+"expo-dev-client@npm:~1.0.1":
+  version: 1.0.1
+  resolution: "expo-dev-client@npm:1.0.1"
   dependencies:
     "@expo/config-plugins": ^4.0.14
-    expo-dev-launcher: 1.0.0
-    expo-dev-menu: 1.0.0
+    expo-dev-launcher: 1.0.1
+    expo-dev-menu: 1.0.1
     expo-dev-menu-interface: 0.7.0
     expo-manifests: ~0.3.0
     expo-updates-interface: ~0.6.0
   peerDependencies:
     expo: "*"
-  checksum: 00607653fef52586fb546aadd6b765f0778e343fb6d503d494d65a614491f902cee2b4b9ca125930e4b44ffa948058b0c25d93f2fd5080f1ad3f3b2862cc1c04
+  checksum: aa78df986cca4ae92dc0415fea77c1949d6c6097962ef2ba79e0dc48377d97f967a2aa13b5ba916481e7cedf53fd7ced358737a492297e7b191a671f3d15a320
   languageName: node
   linkType: hard
 
-"expo-dev-launcher@npm:1.0.0":
-  version: 1.0.0
-  resolution: "expo-dev-launcher@npm:1.0.0"
+"expo-dev-launcher@npm:1.0.1":
+  version: 1.0.1
+  resolution: "expo-dev-launcher@npm:1.0.1"
   dependencies:
     "@expo/config-plugins": ^4.0.14
-    expo-dev-menu: 1.0.0
+    expo-dev-menu: 1.0.1
     resolve-from: ^5.0.0
     semver: ^7.3.5
   peerDependencies:
     expo: "*"
-  checksum: 5ddb223991443011e3477d24f17ec4a2253c306c0d95377f2a342523a65baf26accb87270c111bdeb39912fde25dbed272fa72a35377d81a0105a202a3bffb33
+  checksum: c90f2c28092ed4e03432ad76a4c9d576704290de2e1598b742fe2170270d33fd52572b0a7f071b7875902b0e0d28e701978f20745cf937bce1c8ac6b7187db94
   languageName: node
   linkType: hard
 
@@ -9005,16 +9012,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-dev-menu@npm:1.0.0":
-  version: 1.0.0
-  resolution: "expo-dev-menu@npm:1.0.0"
+"expo-dev-menu@npm:1.0.1":
+  version: 1.0.1
+  resolution: "expo-dev-menu@npm:1.0.1"
   dependencies:
     "@expo/config-plugins": ^4.0.14
     expo-dev-menu-interface: 0.7.0
     semver: ^7.3.5
   peerDependencies:
     expo: "*"
-  checksum: 49fd08db60390f5b54c70dc8fe0e631b47540d674993f6cf7f87b38a8d6988beee4bf22f5ff913f445073141e8fe9031d83a822a0511341656d12743ed3bfb2e
+  checksum: 73ea582524a05c88b136eecb8556c62db9389c93ffe59faf1a5c19602a4db7270aa83cb41002c9173bacb0b5fad53256e201eb6bb3118e5b537c45cd6aaa2489
   languageName: node
   linkType: hard
 
@@ -12666,6 +12673,7 @@ __metadata:
     "@babel/core": ^7.12.9
     "@babel/eslint-parser": ^7.18.2
     "@config-plugins/android-jsc-intl": ^2.0.0
+    "@expo/webpack-config": ^0.16.26
     "@react-native-community/datetimepicker": 6.1.2
     "@react-navigation/drawer": ^6.4.2
     "@react-navigation/native": ^6.0.10
@@ -12674,6 +12682,7 @@ __metadata:
     "@types/luxon": ^2.3.2
     "@types/react": ~17.0.21
     "@types/react-native": ~0.66.13
+    "@types/validator": ^13.7.4
     "@typescript-eslint/eslint-plugin": ^5.30.5
     "@typescript-eslint/parser": ^5.30.5
     babel-plugin-styled-components: ^2.0.7
@@ -12681,7 +12690,7 @@ __metadata:
     eslint-config-universe: ^11.0.0
     expo: ~45.0.0
     expo-cli: ^5.5.1
-    expo-dev-client: ~1.0.0
+    expo-dev-client: ~1.0.1
     expo-splash-screen: ~0.15.1
     expo-status-bar: ~1.3.0
     expo-system-ui: ~1.2.0
@@ -12706,6 +12715,7 @@ __metadata:
     sharp-cli: ^2.1.1
     styled-components: ^5.3.5
     typescript: ~4.3.5
+    validator: ^13.7.0
   languageName: unknown
   linkType: soft
 
@@ -19308,6 +19318,13 @@ __metadata:
   dependencies:
     builtins: ^1.0.3
   checksum: ce4c68207abfb22c05eedb09ff97adbcedc80304a235a0844f5344f1fd5086aa80e4dbec5684d6094e26e35065277b765c1caef68bcea66b9056761eddb22967
+  languageName: node
+  linkType: hard
+
+"validator@npm:^13.7.0":
+  version: 13.7.0
+  resolution: "validator@npm:13.7.0"
+  checksum: 2b83283de1222ca549a7ef57f46e8d49c6669213348db78b7045bce36a3b5843ff1e9f709ebf74574e06223461ee1f264f8cc9a26a0060a79a27de079d8286ef
   languageName: node
   linkType: hard
 
