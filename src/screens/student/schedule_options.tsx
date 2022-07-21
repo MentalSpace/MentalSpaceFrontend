@@ -10,10 +10,12 @@ import {
   View,
   Text,
   ScrollView,
+  CheckIcon,
 } from 'native-base';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 import React, { useEffect, useState } from 'react';
+import { G } from 'react-native-svg';
 import { useQuery } from 'react-query';
-
 import { SideBarList } from '../../components/student_stack';
 import { apiUrl } from '../../constants';
 import { useAccessToken } from '../../hooks/useAccessToken';
@@ -24,15 +26,45 @@ type ScheduleOptionsProps = NativeStackScreenProps<
   'ScheduleOptions'
 >;
 
-type ScheduleOptionsResponse = {
+type GetStudentDetails = {
   status: string;
+  student: {
+    studentId: number;
+    firstName: string;
+    canonicalId: string;
+    lastName: string;
+    phone: number;
+    grade: number;
+  }[];
+};
+type GetStudentPreference = {
+  status: string;
+  preferences: {
+    preferenceId: number;
+    studentId: number;
+    assignmentOrder: number;
+    startType: number;
+    breakLength: number;
+    breakFrequency: number;
+  }[];
 };
 
-const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
+type ScheduleOptionsResponse = {
+  status: string;
+  // preferences: {
+  //   studentId: number;
+  //   assignmentOrder: number;
+  //   startType: number;
+  //   breakLength: number;
+  //   breakFrequency: number;
+  //   preferenceId: number;
+  // }[];
+};
+
+function ScheduleOptionsScreen({ navigation }: ScheduleOptionsProps) {
   //updates and saves the value from the 2 different radio button groups
   const [value, setValue] = React.useState('WorkOrder');
   const [value2, setValue2] = React.useState('StartingTime');
-  const [value3, setValue3] = React.useState('SplitAssignment');
 
   //updates and saves the values on each change of the text box for break and work
   const [breakTime, setBreakTime] = React.useState('');
@@ -46,7 +78,80 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
   const accessToken = useAccessToken();
 
   const requestOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer' + accessToken.data!.accessToken,
+      Prefer: 'code=200',
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
+    },
+  };
+
+  //GET STUDENT DETAILS
+  const GetStudentDetailsParams = new URLSearchParams({
+    studentId: '7',
+    canonicalId: '0',
+  });
+
+  const getStudentDetails = useQuery<GetStudentDetails>(
+    'displayDetails',
+    async () =>
+      await (
+        await fetch(
+          apiUrl + '/student?' + GetStudentDetailsParams.toString(),
+          requestOptions
+        )
+      ).json(),
+    { enabled: false }
+  );
+
+  useEffect(() => {
+    if (getStudentDetails.isSuccess) {
+      console.log(getStudentDetails.data.status);
+      if (getStudentDetails.data.status === 'success')
+        navigation.navigate('Calendar');
+    }
+  }, [getStudentDetails.isSuccess]);
+
+  //GET STUDENT PREFERENCES
+  //const sId = {getStudentDetails.data?.student.studentId}
+  const GetStudentParams = new URLSearchParams({
+    studentId: '0',
+  });
+
+  const requestScheduleOptions = useQuery<GetStudentPreference>(
+    'getScheduleOptions',
+    async () =>
+      await (
+        await fetch(
+          apiUrl + '/student/preference?' + GetStudentParams.toString(),
+          requestOptions
+        )
+      ).json(),
+    { enabled: false }
+  );
+
+  useEffect(() => {
+    if (requestScheduleOptions.isSuccess) {
+      console.log(requestScheduleOptions.data.status);
+      if (requestScheduleOptions.data.status === 'success')
+        navigation.navigate('Calendar');
+    }
+  }, [requestScheduleOptions.isSuccess]);
+
+  // const scheduleOptions = async (): Promise<ScheduleOptionsResponse> =>
+  //   await (await fetch(apiUrl + '/student/preference', requestOptions)).json();
+  // const requestScheduleOptions = useQuery<ScheduleOptionsResponse>(
+  //   'scheduleOptions',
+  //   scheduleOptions
+  // );
+
+  //PATCH STUDENT PREFERENCES
+  const updateOptions = {
     method: 'PATCH',
+    hostname: 'dev-waffle-cone.probablyanasian.dev',
+    port: null,
+    path: '/api/v0/student/preference',
     headers: {
       Authorization: 'Bearer ' + accessToken.data!.accessToken,
       'Content-Type': 'application/json',
@@ -54,21 +159,25 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
       'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
     },
     body: JSON.stringify({
-      studentId,
-      canonicalId,
-      preferenceId,
+      studentId: studentId,
+      canonicalId: canonicalId,
+      preferenceId: preferenceId,
     }),
   };
 
-  //Fetch student preferences
   const request = useQuery<ScheduleOptionsResponse>(
     'updateScheduleOptions',
     async () =>
-      await (
-        await fetch(apiUrl + '/student/preference', requestOptions)
-      ).json(),
-    { enabled: false }
+      await (await fetch(apiUrl + '/student/preference', updateOptions)).json(),
+    { enabled: true }
   );
+
+  // const scheduleOptionsRequest = async (): Promise<ScheduleOptionsResponse> =>
+  //   await (await fetch(apiUrl + '/student/preference', updateOptions)).json();
+  // const request = useQuery<ScheduleOptionsResponse>(
+  //   'scheduleOptions',
+  //   scheduleOptionsRequest
+  // );
 
   useEffect(() => {
     if (request.isSuccess) {
@@ -76,6 +185,12 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
       if (request.data.status === 'success') navigation.navigate('Calendar');
     }
   }, [request.isSuccess]);
+  // const scheduleOptionsRequest = async (): Promise<ScheduleOptionsResponse> =>
+  //   await (await fetch(apiUrl + '/student/preference', requestOptions)).json();
+  // const request = useQuery<ScheduleOptionsResponse>(
+  //   'scheduleOptions',
+  //   scheduleOptionsRequest
+  //   );
 
   //Updates 'time' when something is inputted into the time box
   const [time, setTime] = useState('');
@@ -111,6 +226,8 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
           Scheduling Options
         </Heading>
 
+        {/* <Text>{requestScheduleOptions.data?.preferences.studentId}</Text> */}
+
         <Heading
           size="md"
           mb="2"
@@ -133,15 +250,15 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
             setValue(nextValue);
           }}
         >
-          <Radio value={choice1} my={1}>
+          <Radio value="1" my={1}>
             {' '}
             {' ' + choice1}{' '}
           </Radio>
-          <Radio value={choice2} my={1}>
+          <Radio value="2" my={1}>
             {' '}
             {' ' + choice2}{' '}
           </Radio>
-          <Radio value={choice3} my={1}>
+          <Radio value="3" my={1}>
             {' '}
             {' ' + choice3}{' '}
           </Radio>
@@ -169,15 +286,15 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
             setValue2(nextValue);
           }}
         >
-          <Radio value={choice4} my={1}>
+          <Radio value="4" my={1}>
             {' '}
             {' ' + choice4}{' '}
           </Radio>
-          <Radio value={choice5} my={1}>
+          <Radio value="5" my={1}>
             {' '}
             {' ' + choice5}{' '}
           </Radio>
-          <Radio value={choice6} my={1}>
+          <Radio value="6" my={1}>
             {' '}
             {' ' + choice6}{' '}
           </Radio>
@@ -186,7 +303,7 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
         <View my={1}>
           <TimeInput
             theme={{
-              inputBackgroundColor: 'transparent',
+              inputBackgroundColor: 'white',
               toggleButtonActiveBackgroundColor: '#154c79',
               toggleButtonTextColor: '#1697b7',
               toggleBackgroundColor: '#1697b7',
@@ -238,7 +355,14 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
           w="100%"
           maxWidth="350px"
           onChangeText={setBreakTime}
-          bgColor="transparent"
+          bgColor="white"
+          variant="unstyled"
+          style={{
+            borderWidth: 1,
+            borderColor: '#a6a6a6',
+            borderRadius: 5,
+            fontSize: 14,
+          }}
         />
 
         <Text fontSize="md" my="2">
@@ -251,7 +375,14 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
           w="100%"
           maxWidth="350px"
           onChangeText={setWorkTime}
-          bgColor="transparent"
+          bgColor="white"
+          variant="unstyled"
+          style={{
+            borderWidth: 2,
+            borderColor: '#a6a6a6',
+            borderRadius: 5,
+            fontSize: 14,
+          }}
         />
 
         <Text fontSize="sm" mt="2">
@@ -265,15 +396,39 @@ const ScheduleOptionsScreen = ({ navigation }: ScheduleOptionsProps) => {
           maxWidth="75px"
           mt="5"
           mb="10"
-          onPress={() => request.refetch()}
+          borderRadius="30"
+          onPress={() => {
+            request.refetch();
+            // if (request.isSuccess) {
+            showMessage({
+              message: 'Success!',
+              description: 'Scheduling preferences have been updated!',
+              type: 'success',
+              backgroundColor: '#16a34a',
+              duration: 3000,
+              icon: 'success',
+            });
+            // }
+            // if (!request.isSuccess) {
+            // showMessage({
+            //   message: 'Error!',
+            //   description: 'Failed to Update Scheduling Preferences',
+            //   type: 'danger',
+            //   backgroundColor: '#de0404',
+            //   duration: 3000,
+            //   icon: 'danger',
+            // });
+            // }
+          }}
           bg="#154c79"
           colorScheme="secondary"
         >
-          <Text color="white">Submit</Text>
+          <CheckIcon size="5" mt="0.5" color="white" />
         </Button>
+        <FlashMessage position="top" />
       </View>
     </ScrollView>
   );
-};
+}
 
 export default ScheduleOptionsScreen;
