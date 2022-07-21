@@ -26,40 +26,40 @@ type ScheduleOptionsProps = NativeStackScreenProps<
   'ScheduleOptions'
 >;
 
-type GetStudentDetails = {
-  status: string;
-  student: {
-    studentId: number;
-    firstName: string;
-    canonicalId: string;
-    lastName: string;
-    phone: number;
-    grade: number;
-  }[];
-};
-type GetStudentPreference = {
-  status: string;
-  preferences: {
-    preferenceId: number;
-    studentId: number;
-    assignmentOrder: number;
-    startType: number;
-    breakLength: number;
-    breakFrequency: number;
-  }[];
-};
+// type GetStudentDetails = {
+//   status: string;
+//   student: {
+//     studentId: number;
+//     firstName: string;
+//     canonicalId: string;
+//     lastName: string;
+//     phone: number;
+//     grade: number;
+//   }[];
+// };
+// type GetStudentPreference = {
+//   status: string;
+//   preferences: {
+//     preferenceId: number;
+//     studentId: number;
+//     assignmentOrder: number;
+//     startType: number;
+//     breakLength: number;
+//     breakFrequency: number;
+//   }[];
+// };
 
-type ScheduleOptionsResponse = {
-  status: string;
-  // preferences: {
-  //   studentId: number;
-  //   assignmentOrder: number;
-  //   startType: number;
-  //   breakLength: number;
-  //   breakFrequency: number;
-  //   preferenceId: number;
-  // }[];
-};
+// type ScheduleOptionsResponse = {
+//   status: string;
+//   // preferences: {
+//   //   studentId: number;
+//   //   assignmentOrder: number;
+//   //   startType: number;
+//   //   breakLength: number;
+//   //   breakFrequency: number;
+//   //   preferenceId: number;
+//   // }[];
+// };
 
 function ScheduleOptionsScreen({ navigation }: ScheduleOptionsProps) {
   //updates and saves the value from the 2 different radio button groups
@@ -77,120 +77,120 @@ function ScheduleOptionsScreen({ navigation }: ScheduleOptionsProps) {
   const csrfToken = useCSRFToken();
   const accessToken = useAccessToken();
 
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      Authorization: 'Bearer' + accessToken.data!.accessToken,
-      Prefer: 'code=200',
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
-    },
-  };
+  // const requestOptions = {
+  //   method: 'GET',
+  //   headers: {
+  //     Authorization: 'Bearer' + accessToken.data!.accessToken,
+  //     Prefer: 'code=200',
+  //     'Content-Type': 'application/json',
+  //     'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
+  //   },
+  // };
 
-  //GET STUDENT DETAILS
-  const GetStudentDetailsParams = new URLSearchParams({
-    studentId: '7',
-    canonicalId: '0',
-  });
+  // //GET STUDENT DETAILS
+  // const GetStudentDetailsParams = new URLSearchParams({
+  //   studentId: '7',
+  //   canonicalId: '0',
+  // });
 
-  const getStudentDetails = useQuery<GetStudentDetails>(
-    'displayDetails',
-    async () =>
-      await (
-        await fetch(
-          apiUrl + '/student?' + GetStudentDetailsParams.toString(),
-          requestOptions
-        )
-      ).json(),
-    { enabled: false }
-  );
-
-  useEffect(() => {
-    if (getStudentDetails.isSuccess) {
-      console.log(getStudentDetails.data.status);
-      if (getStudentDetails.data.status === 'success')
-        navigation.navigate('Calendar');
-    }
-  }, [getStudentDetails.isSuccess]);
-
-  //GET STUDENT PREFERENCES
-  //const sId = {getStudentDetails.data?.student.studentId}
-  const GetStudentParams = new URLSearchParams({
-    studentId: '0',
-  });
-
-  const requestScheduleOptions = useQuery<GetStudentPreference>(
-    'getScheduleOptions',
-    async () =>
-      await (
-        await fetch(
-          apiUrl + '/student/preference?' + GetStudentParams.toString(),
-          requestOptions
-        )
-      ).json(),
-    { enabled: false }
-  );
-
-  useEffect(() => {
-    if (requestScheduleOptions.isSuccess) {
-      console.log(requestScheduleOptions.data.status);
-      if (requestScheduleOptions.data.status === 'success')
-        navigation.navigate('Calendar');
-    }
-  }, [requestScheduleOptions.isSuccess]);
-
-  // const scheduleOptions = async (): Promise<ScheduleOptionsResponse> =>
-  //   await (await fetch(apiUrl + '/student/preference', requestOptions)).json();
-  // const requestScheduleOptions = useQuery<ScheduleOptionsResponse>(
-  //   'scheduleOptions',
-  //   scheduleOptions
+  // const getStudentDetails = useQuery<GetStudentDetails>(
+  //   'displayDetails',
+  //   async () =>
+  //     await (
+  //       await fetch(
+  //         apiUrl + '/student?' + GetStudentDetailsParams.toString(),
+  //         requestOptions
+  //       )
+  //     ).json(),
+  //   { enabled: false }
   // );
 
-  //PATCH STUDENT PREFERENCES
-  const updateOptions = {
-    method: 'PATCH',
-    hostname: 'dev-waffle-cone.probablyanasian.dev',
-    port: null,
-    path: '/api/v0/student/preference',
-    headers: {
-      Authorization: 'Bearer ' + accessToken.data!.accessToken,
-      'Content-Type': 'application/json',
-      Prefer: 'code=200',
-      'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
-    },
-    body: JSON.stringify({
-      studentId: studentId,
-      canonicalId: canonicalId,
-      preferenceId: preferenceId,
-    }),
-  };
+  // useEffect(() => {
+  //   if (getStudentDetails.isSuccess) {
+  //     console.log(getStudentDetails.data.status);
+  //     if (getStudentDetails.data.status === 'success')
+  //       navigation.navigate('Calendar');
+  //   }
+  // }, [getStudentDetails.isSuccess]);
 
-  const request = useQuery<ScheduleOptionsResponse>(
-    'updateScheduleOptions',
-    async () =>
-      await (await fetch(apiUrl + '/student/preference', updateOptions)).json(),
-    { enabled: true }
-  );
+  // //GET STUDENT PREFERENCES
+  // //const sId = {getStudentDetails.data?.student.studentId}
+  // const GetStudentParams = new URLSearchParams({
+  //   studentId: '0',
+  // });
 
-  // const scheduleOptionsRequest = async (): Promise<ScheduleOptionsResponse> =>
-  //   await (await fetch(apiUrl + '/student/preference', updateOptions)).json();
-  // const request = useQuery<ScheduleOptionsResponse>(
-  //   'scheduleOptions',
-  //   scheduleOptionsRequest
+  // const requestScheduleOptions = useQuery<GetStudentPreference>(
+  //   'getScheduleOptions',
+  //   async () =>
+  //     await (
+  //       await fetch(
+  //         apiUrl + '/student/preference?' + GetStudentParams.toString(),
+  //         requestOptions
+  //       )
+  //     ).json(),
+  //   { enabled: false }
   // );
 
-  useEffect(() => {
-    if (request.isSuccess) {
-      console.log(request.data.status);
-      if (request.data.status === 'success') navigation.navigate('Calendar');
-    }
-  }, [request.isSuccess]);
-  // const scheduleOptionsRequest = async (): Promise<ScheduleOptionsResponse> =>
-  //   await (await fetch(apiUrl + '/student/preference', requestOptions)).json();
+  // useEffect(() => {
+  //   if (requestScheduleOptions.isSuccess) {
+  //     console.log(requestScheduleOptions.data.status);
+  //     if (requestScheduleOptions.data.status === 'success')
+  //       navigation.navigate('Calendar');
+  //   }
+  // }, [requestScheduleOptions.isSuccess]);
+
+  // // const scheduleOptions = async (): Promise<ScheduleOptionsResponse> =>
+  // //   await (await fetch(apiUrl + '/student/preference', requestOptions)).json();
+  // // const requestScheduleOptions = useQuery<ScheduleOptionsResponse>(
+  // //   'scheduleOptions',
+  // //   scheduleOptions
+  // // );
+
+  // //PATCH STUDENT PREFERENCES
+  // const updateOptions = {
+  //   method: 'PATCH',
+  //   hostname: 'dev-waffle-cone.probablyanasian.dev',
+  //   port: null,
+  //   path: '/api/v0/student/preference',
+  //   headers: {
+  //     Authorization: 'Bearer ' + accessToken.data!.accessToken,
+  //     'Content-Type': 'application/json',
+  //     Prefer: 'code=200',
+  //     'X-CSRF-TOKEN': csrfToken.data!.csrfToken,
+  //   },
+  //   body: JSON.stringify({
+  //     studentId: studentId,
+  //     canonicalId: canonicalId,
+  //     preferenceId: preferenceId,
+  //   }),
+  // };
+
   // const request = useQuery<ScheduleOptionsResponse>(
-  //   'scheduleOptions',
-  //   scheduleOptionsRequest
-  //   );
+  //   'updateScheduleOptions',
+  //   async () =>
+  //     await (await fetch(apiUrl + '/student/preference', updateOptions)).json(),
+  //   { enabled: true }
+  // );
+
+  // // const scheduleOptionsRequest = async (): Promise<ScheduleOptionsResponse> =>
+  // //   await (await fetch(apiUrl + '/student/preference', updateOptions)).json();
+  // // const request = useQuery<ScheduleOptionsResponse>(
+  // //   'scheduleOptions',
+  // //   scheduleOptionsRequest
+  // // );
+
+  // useEffect(() => {
+  //   if (request.isSuccess) {
+  //     console.log(request.data.status);
+  //     if (request.data.status === 'success') navigation.navigate('Calendar');
+  //   }
+  // }, [request.isSuccess]);
+  // // const scheduleOptionsRequest = async (): Promise<ScheduleOptionsResponse> =>
+  // //   await (await fetch(apiUrl + '/student/preference', requestOptions)).json();
+  // // const request = useQuery<ScheduleOptionsResponse>(
+  // //   'scheduleOptions',
+  // //   scheduleOptionsRequest
+  // //   );
 
   //Updates 'time' when something is inputted into the time box
   const [time, setTime] = useState('');
@@ -398,7 +398,7 @@ function ScheduleOptionsScreen({ navigation }: ScheduleOptionsProps) {
           mb="10"
           borderRadius="30"
           onPress={() => {
-            request.refetch();
+            // request.refetch();
             // if (request.isSuccess) {
             showMessage({
               message: 'Success!',
