@@ -1,4 +1,5 @@
 import { Divider, View, Text } from 'native-base';
+import React from 'react';
 
 type TextDividerProps = {
   msg: string;
