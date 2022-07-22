@@ -10,10 +10,55 @@ import {
   Select,
   CheckIcon,
   Box,
+  Drawer,
+  Text,
 } from 'native-base';
 import React, { ClassType, Component, useEffect, useState } from 'react';
 import { Alert, StyleSheet } from 'react-native';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
+import { apiUrl } from '../../constants';
+import { AccessTokenResponse } from '../../hooks/useAccessToken';
+import { useCSRFToken } from '../../hooks/useCSRFToken';
+import { DataTable } from 'react-native-paper';
+import { useQuery, useQueryClient } from 'react-query';
+import { render } from 'react-dom';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationHelpersContext } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
+import { SideBarList } from '../../components/student_stack';
+
+//     const csrfToken = useCSRFToken();
+//     const accessToken = useAccessToken();
+
+// type CreateClass = {
+//   status: string,
+//   subjectId: number,
+// }; 
+
+// const postRequest = {
+//         method: 'POST',
+//         headers: { 
+//           'Content-Type': 'application/json',
+//           'Prefer': 'code=200',
+//           'X-CSRF-TOKEN': csrfToken.data!.csrfToken, //'123'
+//           Authorization: 'Bearer ' + accessToken.data!.accessToken,
+//         },
+//         body: JSON.stringify({
+//           classId: 0,
+//           studentId: checked
+//        })
+//       };
+//   //kick variable with useQuery 
+//       //After rendering, shows status message in console if successful, then re-navigates to original screen
+//       const kick = useQuery<CreateClass>('registerUser', async () => await 
+//       (await fetch(apiUrl + '/class/kick', postRequest)).json(), {enabled: false});
+//       useEffect(() => {
+//         if (kick.isSuccess) {
+//           console.log(kick.data.status);
+//         }
+//       }, [kick.isSuccess]);
+//   //Initialization of CSRF Token and Access Token for use in getRequest and postRequest
+
 
 const styles = StyleSheet.create({
   text: { textAlign: 'center' },
@@ -35,7 +80,7 @@ const SubjectSelect = () => {
     <Box maxW="200">
       <Select
         selectedValue={service}
-        minWidth="20"
+        minWidth="100"
         maxWidth="1000"
         accessibilityLabel="Select"
         placeholder="Select"
@@ -47,8 +92,10 @@ const SubjectSelect = () => {
         mt={1}
         onValueChange={(itemValue: any) => setService(itemValue)}
       >
-        <Select.Item label="APCSA" value="APCSA" />
-        <Select.Item label="Calc" value="Calc" />
+        <Select.Item label="English 3" value="English2" />
+        <Select.Item label="English 1" value="English1" />
+        <Select.Item label="Math 1" value="Math1" />
+        <Select.Item label="Art 1" value="Art1" />
       </Select>
     </Box>
   );
@@ -60,8 +107,8 @@ const PeriodSelect = () => {
     <Box maxW="200">
       <Select
         selectedValue={service}
-        minWidth="20"
-        maxWidth="1000"
+        minWidth="10"
+        maxWidth="100"
         accessibilityLabel="Select"
         placeholder="Select"
         _selectedItem={{
@@ -82,23 +129,31 @@ const PeriodSelect = () => {
     </Box>
   );
 };
-
+type ClassPeriodsProps = NativeStackScreenProps<SideBarList, 'ClassPeriods'>
 export default class ClassPeriods extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      tableHead: ['', 'Period', '', 'Subject', '', 'Class Code'],
+      // rows: ['', <PeriodSelect />, '', <SubjectSelect />, '', '4'] 
+      tableHead: ['', 'Period', '', 'Subject', '', 'Class Code   '],
       tableData: [
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', '4'],
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', 'd'],
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', '4'],
-        ['', <PeriodSelect />, '', <SubjectSelect />, '', '3'],
+        ['', <PeriodSelect />, '', <SubjectSelect />, '', 'WSXCVV'],
+        ['', <PeriodSelect />, '', <SubjectSelect />, '', 'ERRSSS'],
+
       ],
     };
   }
 
+  // handleAddRow = () => {
+  //   this.setState((prevState: any, props: any) => {
+  //     const row = { content:  ['', <PeriodSelect />, '', <SubjectSelect />, '', '4'] };
+  //     return { rows: [...prevState.rows, row] };
+  //   });
+  // };
+
   _alertIndex(index: any) {
     Alert.alert(`This is row ${index + 1}`);
+    console.log(index)
   }
   render() {
     const state = this.state;
@@ -152,13 +207,18 @@ export default class ClassPeriods extends React.Component<any, any> {
                 alignItems: 'center',
               }}
             >
-              <Button
-                style={{ marginTop: 30, marginRight: 21, borderRadius: 30 }}
-              >
+              <Button 
+               style={{ marginTop: 30, marginRight: 21, borderRadius: 30 }}
+              >                  
                 <AddIcon size="5" mt="0.5" color="white" />
               </Button>
-              <Button style={{ marginTop: 30, borderRadius: 30 }}>
+          
+              <Button style={{ marginTop: 30, borderRadius: 30, marginRight: 21 }}>
                 <DeleteIcon size="5" mt="0.5" color="white" />
+              </Button>
+
+              <Button style={{marginTop: 30, borderRadius: 30 }}>
+                <CheckIcon size="5" mt="0.5" color="white"  />
               </Button>
             </View>
           </Center>
@@ -167,3 +227,74 @@ export default class ClassPeriods extends React.Component<any, any> {
     );
   }
 }
+
+
+// export default function App() {
+//   return (
+//     <View style={styles1.container}>
+//       <Center>
+//            <Heading
+//             size="xl"
+//             color="coolGray.800"
+//             _dark={{
+//               color: 'warmGray.50',
+//             }}
+//             fontWeight="semibold"
+//             paddingBottom="30"
+//           >
+//             Classes
+//           </Heading>
+//         </Center>
+//       <DataTable>
+//         <DataTable.Header>
+//           <DataTable.Title></DataTable.Title>
+//           <DataTable.Title>Period </DataTable.Title>
+//           <DataTable.Title>Subject</DataTable.Title>
+//           <DataTable.Title>Class Code</DataTable.Title>
+//         </DataTable.Header>
+//         <DataTable.Row>
+//         <DataTable.Cell><Checkbox value="true" style = {{marginLeft:250}}/></DataTable.Cell>
+//           <DataTable.Cell><PeriodSelect/></DataTable.Cell>
+//           <DataTable.Cell ><SubjectSelect /></DataTable.Cell>
+//           <DataTable.Cell numeric style = {{marginRight: 432}}>33</DataTable.Cell>
+//         </DataTable.Row>
+
+//         <DataTable.Row>
+//         <DataTable.Cell><Checkbox value="true" style = {{marginLeft:250}}/></DataTable.Cell>
+//           <DataTable.Cell><PeriodSelect/></DataTable.Cell>
+//           <DataTable.Cell><SubjectSelect /></DataTable.Cell>
+//           <DataTable.Cell numeric style = {{marginRight: 432}}>105</DataTable.Cell>
+//         </DataTable.Row>
+
+//       </DataTable>
+//       <Center>
+//             <View
+//               style={{
+//                 // alignSelf: 'stretch',
+//                 flexDirection: 'row',
+//                 alignItems: 'center',
+//               }}
+//             >
+//               <Button
+//                 style={{ marginTop: 30, marginRight: 21, borderRadius: 30 }}
+//               >
+//                 <AddIcon size="5" mt="0.5" color="white" />
+//               </Button>
+//               <Button style={{ marginTop: 30, borderRadius: 30 }}>
+//                 <DeleteIcon size="5" mt="0.5" color="white" />
+//               </Button>
+//             </View>
+//           </Center>
+//     </View>
+//   );
+// }
+
+// const styles1 = StyleSheet.create({
+//   container: {
+//     paddingTop: 100,
+//     // paddingHorizontal: 30,
+//   },
+// });
+
+
+

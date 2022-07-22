@@ -47,6 +47,9 @@ export default class Types extends React.Component<any, any> {
         ['', <TextInput style={stylesPT2.input} />],
         ['', <TextInput style={stylesPT2.input} />],
         ['', <TextInput style={stylesPT2.input} />],
+        // ['', <TextInput style={stylesPT2.input} />],
+        // ['', <TextInput style={stylesPT2.input} />],
+        // ['', <TextInput style={stylesPT2.input} />],
       ],
     };
   }
