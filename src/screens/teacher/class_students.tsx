@@ -70,13 +70,13 @@ function ClassStudentsScreen({ navigation }: ClassDisplayProps) {
               alignSelf="center"
             >
               {/*Incorporates dropdown menu with the label set as the name of the period */}
-              <Select.Item label="Period 1" value="Period 1"></Select.Item>
-              <Select.Item label="Period 2" value="Period 2"></Select.Item>
-              <Select.Item label="Period 3" value="Period 3"></Select.Item>
-              <Select.Item label="Period 4" value="Period 4"></Select.Item>
-              <Select.Item label="Period 5" value="Period 5"></Select.Item>
-              <Select.Item label="Period 6" value="Period 6"></Select.Item>
-              <Select.Item label="Period 7" value="Period 7"></Select.Item>
+              <Select.Item label="Period 1" value="0"></Select.Item>
+              <Select.Item label="Period 2" value="1"></Select.Item>
+              <Select.Item label="Period 3" value="2"></Select.Item>
+              <Select.Item label="Period 4" value="3"></Select.Item>
+              <Select.Item label="Period 5" value="4"></Select.Item>
+              <Select.Item label="Period 6" value="5"></Select.Item>
+              <Select.Item label="Period 7" value="6"></Select.Item>
             </Select>
           </VStack>
         </Box>
@@ -85,7 +85,7 @@ function ClassStudentsScreen({ navigation }: ClassDisplayProps) {
         <Box safeArea p="2" pb="8" w="90%" maxW="218">
           {/*Group of checkboxes representing students from a period based on class picked by dropdown menu.
                Displays the student's first name, last name*/}
-          <Checkbox.Group onChange={(checked) => checked.map(Number)}>
+          <Checkbox.Group>
             {/*Create a list of checkboxes with the names of students*/}
             <Checkbox value="Clare Bauer" ml="0">
               Clare Bauer
