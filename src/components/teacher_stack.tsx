@@ -1,17 +1,19 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-
-import SchoolsScreen from '../screens/teacher/schools';
-import SubjectsScreen from '../screens/teacher/subjects';
-import ClassPeriodsScreen from '../screens/teacher/teacher_class';
-import AssignmentTypesScreen from '../screens/teacher/types';
+import { Box, Button, Heading } from 'native-base';
+import React from 'react';
+import CalendarScreen from '../screens/calendar_screen';
+// import AssignmentsScreen from '../screens/teacher/teacher_assignment_screen';
+// import TeacherClassScreen from '../screens/teacher/teacher_class';
+// import EditAssignmentsScreen from '../screens/teacher/teacher_edit_assignment_screen';
 
 export type SideBarList = {
-  Calendar: undefined;
-  ClassPeriods: undefined;
-  AssignmentTypes: undefined;
+  Assignments: undefined;
   Subjects: undefined;
-  Schools: undefined;
+  ClassPeriods: undefined;
+  Students: undefined;
+  //EditAssignments: undefined;
+  //TeacherClass: undefined;
 };
 
 const Drawer = createDrawerNavigator<SideBarList>();
@@ -19,14 +21,34 @@ const Drawer = createDrawerNavigator<SideBarList>();
 function TeacherStack() {
   return (
     <NavigationContainer independent>
-      <Drawer.Navigator initialRouteName="ClassPeriods">
-        <Drawer.Screen name="ClassPeriods" component={ClassPeriodsScreen} />
-        <Drawer.Screen
-          name="AssignmentTypes"
-          component={AssignmentTypesScreen}
-        />
-        <Drawer.Screen name="Subjects" component={SubjectsScreen} />
-        <Drawer.Screen name="Schools" component={SchoolsScreen} />
+      <Drawer.Navigator initialRouteName="Assignments" drawerContent = {props =>
+      {return(
+        <DrawerContentScrollView {...props}>
+          <Heading
+          size="md"
+          color="coolGray.800"
+          _dark={{
+          color: 'warmGray.50',
+          }}
+          fontWeight="semibold"
+          paddingTop="5"
+          paddingBottom="30"
+          alignSelf = "center">
+            Chan Claire
+          </Heading>
+          <DrawerItemList {...props}/>
+          <Box safeArea p="2" py="8" w="100%" maxW="290">
+            <Button mt = "10" >Sign Out</Button>
+          </Box>
+        </DrawerContentScrollView>
+      );
+      }
+      }>
+        <Drawer.Screen name="Assignments" component={CalendarScreen} />
+        <Drawer.Screen name="Subjects" component={CalendarScreen} />
+        <Drawer.Screen name="ClassPeriods" component={CalendarScreen} />
+        <Drawer.Screen name="Students" component={CalendarScreen} />
+
       </Drawer.Navigator>
     </NavigationContainer>
   );
