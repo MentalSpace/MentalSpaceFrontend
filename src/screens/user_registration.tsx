@@ -42,7 +42,9 @@ const UserRegistration = ({ navigation }: UserRegistrationProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
-  const [accountType, setAccountType] = useState<AccountType>(AccountType.Student);
+  const [accountType, setAccountType] = useState<AccountType>(
+    AccountType.Student
+  );
 
   const csrfToken = useCSRFToken();
   const login = useLogin();
