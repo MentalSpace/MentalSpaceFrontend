@@ -5,6 +5,7 @@ import SchoolsScreen from '../screens/teacher/schools';
 import SubjectsScreen from '../screens/teacher/subjects';
 import ClassPeriodsScreen from '../screens/teacher/teacher_class';
 import AssignmentTypesScreen from '../screens/teacher/types';
+import ClassStudentsScreen from '../screens/teacher/class_students';
 
 export type SideBarList = {
   Calendar: undefined;
@@ -12,6 +13,7 @@ export type SideBarList = {
   AssignmentTypes: undefined;
   Subjects: undefined;
   Schools: undefined;
+  Students: undefined;
 };
 
 const Drawer = createDrawerNavigator<SideBarList>();
@@ -27,6 +29,7 @@ function TeacherStack() {
         />
         <Drawer.Screen name="Subjects" component={SubjectsScreen} />
         <Drawer.Screen name="Schools" component={SchoolsScreen} />
+        <Drawer.Screen name="Students" component={ClassStudentsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
